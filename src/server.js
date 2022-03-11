@@ -25,5 +25,6 @@ const faceitfinderRedirect = (req, res) => {
 };
 
 app.get('/id/:userId', steamIdParser, faceitfinderRedirect);
+app.get('/', (req, res) => res.send('hello world'));
 
 module.exports = app;
