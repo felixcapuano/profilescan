@@ -34,6 +34,6 @@ const faceitfinderRedirect = (req, res) => {
   res.redirect(faceitfinderUrl);
 };
 
-router.get('/:pi(profiles|id)/:userId', findId, faceitfinderRedirect);
+router.get('/:userId', findId, faceitfinderRedirect);
 
 module.exports = router;
