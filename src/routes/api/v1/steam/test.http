@@ -8,3 +8,6 @@ Authorization: Bearer 949f8236-b9de-4d42-933e-5e7f8ce50ed2
 ###
 GET https://open.faceit.com/data/v4/players/87307577-6381-40a5-a7c2-97ba3ec94d55
 Authorization: Bearer 949f8236-b9de-4d42-933e-5e7f8ce50ed2
+
+###
+GET https://steamcommunity.com/id/frate2b?xml=1
