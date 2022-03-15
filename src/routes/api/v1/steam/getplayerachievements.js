@@ -20,12 +20,9 @@ router.get("/getplayerachievements/:steamid/", async (req, res) => {
       .contentType("application/json")
       .send(steamResponse.data);
   } catch (error) {
-    console.error(
-      `GET ${req.originalUrl} "Steamid is invalid or/and player as no record for csgo."`
-    );
-    return await res
-      .status(404)
-      .send("The steam id is invalid or player as no record for csgo.");
+    const errorMsg = "Steamid is invalid or/and player has no record for csgo.";
+    console.error(`GET ${req.originalUrl} "${errorMsg}"`);
+    return await res.status(404).send(errorMsg);
   }
 });
 
