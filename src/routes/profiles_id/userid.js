@@ -1,30 +1,41 @@
 const router = require('express').Router();
 const axios = require('axios');
+const { parseStringPromise } = require('xml2js');
+
 
 const findId = async (req, res, next) => {
-  req.steamLink = `https://steamcommunity.com/${req.originalUrl}`;
-  const steamPage = await axios.get(req.steamLink);
-
-  if (steamPage.data.match(/<title>Steam Community :: Error<\/title>/)) {
-    console.error(`GET ${req.originalUrl} Steam profile not found`);
+  // get the xml verion of the steam community page
+  req.steamLink = `https://steamcommunity.com/${req.originalUrl}?xml=1`;
+  let steamPageXml;
+  try {
+    steamPageXml = await axios.get(req.steamLink);
+  } catch (error) {
+    console.error(`GET ${req.originalUrl} "Bad url"`);
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
 
-  const match = [
-    ...steamPage.data.matchAll(/g_rgProfileData = (?<profileData>{.*})/g),
-  ];
-  if (!match) {
+  // parse xml string to nice js object
+  let steamPageObj;
+  try {
+    steamPageObj = await parseStringPromise(steamPageXml.data);
+  }
+  catch (error) {
+    console.error(`GET ${req.originalUrl} "Failed to parse xml"`);
+    return res.status(404).send(`${req.params.userId} Steam profile not found`);
+  }
+
+  if (steamPageObj?.response?.error) {
+    console.error(`GET ${req.originalUrl} "${steamPageObj.response.error.toString()}"`);
+    return res.status(404).send(`${req.params.userId} Steam profile not found`);
+  }
+
+  const { profile } = steamPageObj;
+  if (!profile.steamID64) {
     console.error(`GET ${req.originalUrl} Steam id not found in page`);
     return res.status(500).send(`${req.params.userId} Internal error`);
   }
 
-  const { steamid } = JSON.parse(match[0].groups.profileData);
-  if (!steamid) {
-    console.error(`GET ${req.originalUrl} Steamid not found in match`);
-    return res.status(500).send(`${req.params.userId} Internal error`);
-  }
-
-  req.steamId = steamid;
+  req.steamId = profile.steamID64;
   next();
 };
 
