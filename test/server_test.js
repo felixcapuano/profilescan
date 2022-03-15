@@ -1,33 +1,33 @@
-describe('GET /id/:userId', async () => {
-  it('Correct user id', (done) => {
+describe("GET /id/:userId", async () => {
+  it("Correct user id", (done) => {
     request
-      .get('/id/frate2b')
+      .get("/id/frate2b")
       .expect(302)
       .end((err, res) => {
         done(err);
       });
   });
 
-  it('Correct user id (with backslash)', (done) => {
+  it("Correct user id (with backslash)", (done) => {
     request
-      .get('/id/azidot/')
+      .get("/id/azidot/")
       .expect(302)
       .end((err, res) => {
         done(err);
       });
   });
 
-  it('Bad user id', (done) => {
+  it("Bad user id", (done) => {
     request
-      .get('/id/kjdlkfjqlskjdflkqdsjlkfjsq')
+      .get("/id/kjdlkfjqlskjdflkqdsjlkfjsq")
       .expect(404)
       .end((err, res) => {
         done(err);
       });
   });
-  it('Bad user id (with backslash)', (done) => {
+  it("Bad user id (with backslash)", (done) => {
     request
-      .get('/id/qksjdhfkjheokjfqlk/')
+      .get("/id/qksjdhfkjheokjfqlk/")
       .expect(404)
       .end((err, res) => {
         done(err);
@@ -35,10 +35,10 @@ describe('GET /id/:userId', async () => {
   });
 });
 
-describe('GET /profiles/:userId', async () => {
-  it('Correct user id', (done) => {
+describe("GET /profiles/:userId", async () => {
+  it("Correct user id", (done) => {
     request
-      .get('/profiles/76561198069504185')
+      .get("/profiles/76561198069504185")
       .expect(302)
       .end((err, res) => {
         done(err);

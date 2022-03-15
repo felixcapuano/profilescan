@@ -1,7 +1,6 @@
-const router = require('express').Router();
-const axios = require('axios');
-const { parseStringPromise } = require('xml2js');
-
+const router = require("express").Router();
+const axios = require("axios");
+const { parseStringPromise } = require("xml2js");
 
 const findId = async (req, res, next) => {
   // get the xml verion of the steam community page
@@ -18,14 +17,15 @@ const findId = async (req, res, next) => {
   let steamPageObj;
   try {
     steamPageObj = await parseStringPromise(steamPageXml.data);
-  }
-  catch (error) {
+  } catch (error) {
     console.error(`GET ${req.originalUrl} "Failed to parse xml"`);
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
 
   if (steamPageObj?.response?.error) {
-    console.error(`GET ${req.originalUrl} "${steamPageObj.response.error.toString()}"`);
+    console.error(
+      `GET ${req.originalUrl} "${steamPageObj.response.error.toString()}"`
+    );
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
 
@@ -45,6 +45,6 @@ const faceitfinderRedirect = (req, res) => {
   res.redirect(faceitfinderUrl);
 };
 
-router.get('/:userId', findId, faceitfinderRedirect);
+router.get("/:userId", findId, faceitfinderRedirect);
 
 module.exports = router;
