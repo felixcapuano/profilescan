@@ -7,7 +7,6 @@ router.get("/findcommunityprofile", async (req, res) => {
     return res.status(400).send("'path' must be set in the request query");
   }
   req.steamLink = `https://steamcommunity.com/${req.query.path}?xml=1`;
-  console.log(req.steamLink);
 
   let steamPageXml;
   try {
@@ -32,6 +31,7 @@ router.get("/findcommunityprofile", async (req, res) => {
     );
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
+  console.log(steamPageObj);
   return res.status(200).contentType("application/json").send(steamPageObj);
 });
 

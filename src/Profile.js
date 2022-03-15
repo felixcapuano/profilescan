@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_HOST } from "./globals";
 
 const Profile = () => {
   const { id: profileId } = useParams();
@@ -10,30 +11,41 @@ const Profile = () => {
       username: "username",
       hoursPlayed: 0,
       hoursPlayedLastWeek: 0,
-      steamId: "steamid",
+      id: "steamid",
       numberFriend: 0,
+      vacBan: 0,
+      memberSince: 0,
     },
   });
 
   useEffect(() => {
-    axios(`https://steamcommunity.com${window.location.pathname}?xml=1`, {
-      headers: { "Access-Control-Allow-Origin": "https://steamcommunity.com" },
-    })
-      .then((req, res) => {
-        const domParser = new DOMParser();
-        const steamProfile = domParser.parseFromString(res.data, "text/xml");
-        console.log(steamProfile);
+    axios(
+      `${API_HOST}/api/v1/steam/findcommunityprofile?path=${window.location.pathname}`
+    )
+      .then(({ data }) => {
+        console.log(data.profile)
+        setProfile((p) => ({
+          ...p,
+          steam: {
+            id: data.profile.steamID64.toString(),
+            vacban: parseInt(data.profile.vacBanned.toString()),
+            memberSince: Date.parse(data.profile.memberSince.toString()),
+          },
+        }));
       })
-      .catch((err) => { });
+      .catch((err) => {
+        console.error(err);
+      });
     return () => { };
-  }, [profile, setProfile]);
+  }, []);
 
   return (
     <div className="Profile">
       <h1>CSGO account scanner </h1>
-      <p>Profile id : {profileId}</p>
+      <p>Profile id : {profile.steam.id}</p>
+      <p>VAC ban : {profile.steam.vacBan}</p>
+      <p>Member since : {profile.steam.memberSince}</p>
       <p>Steam username : {profile.steam.username}</p>
-      <p>Steam id : {profile.steam.steamId}</p>
       <p>Number of friend : {profile.steam.numberFriend}</p>
       <p>Hours Played : {profile.steam.hoursPlayed}</p>
       <p>Hours Played (last 2 week) : {profile.steam.hoursPlayedLastWeek}</p>
