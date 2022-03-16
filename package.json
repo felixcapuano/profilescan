@@ -21,10 +21,11 @@
     "xml2js": "^0.4.23"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "node ./server/run",
+    "dev-front": "react-scripts start",
+    "dev-back": "cross-env NODE_ENV=development node ./server/run",
+    "start": "cross-env NODE_ENV=production node ./server/run",
     "build": "react-scripts build",
-    "test": "mocha",
+    "test": "cross-env NODE_ENV=test mocha",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.6",
+    "cross-env": "^7.0.3",
     "mocha": "^9.2.2",
     "prettier": "^2.5.1"
   }
