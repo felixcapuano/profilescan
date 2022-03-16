@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const steamInstance = require("./steamInstance");
 
-router.get("/getplayersummaries/:steamid/", async (req, res) => {
+router.get("/getplayersummaries/:id/", async (req, res) => {
   try {
     const steamResponse = await steamInstance.get(
       "/ISteamUser/GetPlayerSummaries/v0002/",
       {
         params: {
-          steamids: req.params.steamid,
+          steamids: req.params.id,
         },
       }
     );

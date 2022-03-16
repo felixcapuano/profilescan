@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { parseStringPromise } = require("xml2js");
 const axios = require("axios");
 
-router.get("/findcommunityprofile", async (req, res) => {
+router.get("/getcommunityprofile", async (req, res) => {
   if (!req.query.path) {
     return res.status(400).send("'path' must be set in the request query");
   }
@@ -31,7 +31,6 @@ router.get("/findcommunityprofile", async (req, res) => {
     );
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
-  console.log(steamPageObj);
   return res.status(200).contentType("application/json").send(steamPageObj);
 });
 

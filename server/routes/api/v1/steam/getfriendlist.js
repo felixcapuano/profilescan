@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const steamInstance = require("./steamInstance");
 
-router.get("/getfriendlist/:steamid/", async (req, res) => {
+router.get("/getfriendlist/:id/", async (req, res) => {
   try {
     const steamResponse = await steamInstance.get(
       "/ISteamUser/GetFriendList/v0001/",
       {
         params: {
           relationship: "friend",
-          steamid: req.params.steamid,
+          steamid: req.params.id,
         },
       }
     );
