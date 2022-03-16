@@ -1,8 +1,9 @@
 // or  GetUserStatsForGame ???
 const router = require("express").Router();
+const { cache, cacheData } = require("../../../redisInstance");
 const steamInstance = require("./steamInstance");
 
-router.get("/getplayerachievements/:id/", async (req, res) => {
+router.get("/getplayerachievements/:id/", cache, async (req, res) => {
   try {
     const steamResponse = await steamInstance.get(
       "/ISteamUserStats/GetUserStatsForGame/v0002/",
@@ -13,6 +14,8 @@ router.get("/getplayerachievements/:id/", async (req, res) => {
         },
       }
     );
+
+    await cacheData(req.cacheKey, steamResponse.data.playerstats)
 
     console.log(`GET ${req.originalUrl}`);
     return await res

@@ -1,7 +1,8 @@
 const router = require("express").Router();
+const { cache, cacheData } = require("../../../redisInstance");
 const steamInstance = require("./steamInstance");
 
-router.get("/getplayersummaries/:id/", async (req, res) => {
+router.get("/getplayersummaries/:id/", cache, async (req, res) => {
   try {
     const steamResponse = await steamInstance.get(
       "/ISteamUser/GetPlayerSummaries/v0002/",
@@ -11,6 +12,7 @@ router.get("/getplayersummaries/:id/", async (req, res) => {
         },
       }
     );
+    await cacheData(req.cacheKey, steamResponse.data.response);
 
     console.log(`GET ${req.originalUrl}`);
     return await res
