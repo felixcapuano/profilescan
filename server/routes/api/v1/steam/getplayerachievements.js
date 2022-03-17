@@ -15,7 +15,7 @@ router.get("/getplayerachievements/:id/", cache, async (req, res) => {
       }
     );
 
-    await cacheData(req.cacheKey, steamResponse.data.playerstats)
+    await cacheData(req.cacheKey, steamResponse.data.playerstats);
 
     console.log(`GET ${req.originalUrl}`);
     return await res

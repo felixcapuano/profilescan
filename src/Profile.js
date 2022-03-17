@@ -40,7 +40,9 @@ const Profile = () => {
       <h1>CSGO account scanner </h1>
       <p>Profile id : {profile?.steam?.id}</p>
       <p>Steam username : {profile?.steam?.username}</p>
-      <p>Member since : {new Date(profile?.steam?.memberSince).toDateString()}</p>
+      <p>
+        Member since : {new Date(profile?.steam?.memberSince).toDateString()}
+      </p>
       <p>Location : {profile?.steam?.location || "private"}</p>
       <p>VAC ban : {profile?.steam?.vacBan ? "yes" : "no"}</p>
       <p>Number of friend : {profile?.steam?.numberFriend}</p>

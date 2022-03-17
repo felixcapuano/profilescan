@@ -3,7 +3,13 @@ const { createClient } = require("redis");
 let connected = false;
 
 const client = createClient({
-  url: "redis://localhost:6379/",
+  // url: `redis://${process.env.REDIS_URL}`,
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+  },
+  password: process.env.REDIS_PASSWORD,
+  database: process.env.REDIS_DATABASE,
 });
 client.on("error", (err) => console.log("Redis Client Error", err));
 client.on("connect", () => {
