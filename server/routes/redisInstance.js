@@ -8,15 +8,17 @@ const client = createClient({
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
   },
+  username: process.env.REDIS_USERNAME,
   password: process.env.REDIS_PASSWORD,
   database: process.env.REDIS_DATABASE,
 });
-client.on("error", (err) => console.log("Redis Client Error", err));
-client.on("connect", () => {
+
+client.connect().then(() => {
   console.log("Redis Client Connected");
   connected = true;
-});
-client.connect();
+}).catch((err) => {
+  console.error(`Fail to connect with Redis : ${err}`);
+})
 
 const cache = async (req, res, next) => {
   if (!connected) return;
