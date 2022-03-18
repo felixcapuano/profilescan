@@ -29,7 +29,8 @@ const Profile = () => {
 
   useEffect(() => {
     axios(
-      `${API_HOST}/api/v1/steam/findcommunityprofile?path=${window.location.pathname}`
+      `${API_HOST}/api/v1/steam/getcommunityprofile`,
+      { params: { path: window.location.pathname } }
     )
       .then(({ data }) => setProfile({ ...data["profile"], type: "steamPage" }))
       .catch(console.error);

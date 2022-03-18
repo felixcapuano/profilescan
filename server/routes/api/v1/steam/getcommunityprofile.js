@@ -25,12 +25,13 @@ router.get("/getcommunityprofile", async (req, res) => {
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
 
-  if (steamPageObj.response.error) {
+  if (steamPageObj.response?.error) {
     console.error(
       `GET ${req.originalUrl} "${steamPageObj.response.error.toString()}"`
     );
     return res.status(404).send(`${req.params.userId} Steam profile not found`);
   }
+  console.log(`GET ${req.originalUrl}`);
   return res.status(200).contentType("application/json").send(steamPageObj);
 });
 
