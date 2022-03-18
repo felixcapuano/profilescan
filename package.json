@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev-front": "react-scripts start",
-    "dev-back": "cross-env NODE_ENV=development nodemon ./server/entrypoint",
+    "dev-back": "cross-env NODE_ENV=development nodemon --ignore ./src/ ./server/entrypoint",
     "start": "cross-env NODE_ENV=production node ./server/entrypoint",
     "build": "react-scripts build",
     "test": "cross-env NODE_ENV=test mocha",

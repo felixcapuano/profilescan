@@ -1,39 +1,68 @@
-import axios from "axios";
 import { useEffect, useReducer } from "react";
-import { API_HOST } from "./globals";
+import { apiInstance } from "./globals";
 
 const Profile = () => {
-  const [profile, setProfile] = useReducer((currentProfile, profile) => {
-    switch (profile.type) {
+  const [profile, setProfile] = useReducer((currentProfile, d) => {
+    console.log(currentProfile)
+    switch (d.type) {
       case "steamPage":
         return {
           ...currentProfile,
           steam: {
-            id: profile.steamID64.toString(),
-            vacban: parseInt(profile.vacBanned.toString()),
-            memberSince: Date.parse(profile.memberSince.toString()),
-            username: profile.steamID.toString(),
-            location: profile.location.toString(),
+            id: d.profile.steamID64.toString(),
+            vacban: parseInt(d.profile.vacBanned.toString()),
+            memberSince: Date.parse(d.profile.memberSince.toString()),
+            username: d.profile.steamID.toString(),
+            location: d.profile.location.toString(),
             hoursPlayed: 0,
             hoursPlayedLastWeek: 0,
-            numberFriend: 0,
           },
         };
-        break;
-
+      case "friendsList":
+        return {
+          ...currentProfile,
+          steam: { numberFriend: d.friends.length }
+        }
+      case "playerAchievements":
+        return {
+          ...currentProfile,
+          steam: {
+            achievementCompleted: d.achievements.filter(
+              ({ achieved }) => achieved === 1
+            ).length
+          }
+        }
       default:
         return currentProfile;
-        break;
     }
-  }, {});
+  }, { steam: {} });
 
   useEffect(() => {
-    axios(
-      `${API_HOST}/api/v1/steam/getcommunityprofile`,
+    apiInstance(
+      `/api/v1/steam/getcommunityprofile`,
       { params: { path: window.location.pathname } }
     )
-      .then(({ data }) => setProfile({ ...data["profile"], type: "steamPage" }))
+      .then(({ data }) => {
+        setProfile({ ...data, type: "steamPage" })
+        return data.profile.steamID64.toString();
+      })
+      .then(steamId => {
+
+        apiInstance(`/api/v1/steam/getfriendlist/${steamId}`)
+          .then(({ data }) => {
+            setProfile({ ...data, type: "friendsList" })
+          })
+          .catch(console.error);
+
+        apiInstance(`/api/v1/steam/getplayerachievements/${steamId}`)
+          .then(({ data }) => {
+            setProfile({ ...data, type: "playerAchievements" })
+          })
+          .catch(console.error);
+
+      })
       .catch(console.error);
+
   }, []);
 
   return (
@@ -44,11 +73,12 @@ const Profile = () => {
       <p>
         Member since : {new Date(profile?.steam?.memberSince).toDateString()}
       </p>
-      <p>Location : {profile?.steam?.location || "private"}</p>
-      <p>VAC ban : {profile?.steam?.vacBan ? "yes" : "no"}</p>
-      <p>Number of friend : {profile?.steam?.numberFriend}</p>
-      <p>Hours Played : {profile?.steam?.hoursPlayed}</p>
-      <p>Hours Played (last 2 week) : {profile?.steam?.hoursPlayedLastWeek}</p>
+      <p>Location : {profile.steam?.location || "private"}</p>
+      <p>VAC ban : {profile.steam?.vacBan ? "yes" : "no"}</p>
+      <p>Number of friend : {profile.steam?.numberFriend}</p>
+      <p>Hours Played : {profile.steam?.hoursPlayed}</p>
+      <p>Hours Played (last 2 week) : {profile.steam?.hoursPlayedLastWeek}</p>
+      <p>achievement completed : {profile.steam?.achievementCompleted}/167</p>
     </div>
   );
 };
