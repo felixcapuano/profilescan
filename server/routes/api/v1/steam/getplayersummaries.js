@@ -18,7 +18,7 @@ router.get("/getplayersummaries/:id/", cache, async (req, res) => {
     return await res
       .status(200)
       .contentType("application/json")
-      .send(steamResponse.data);
+      .send(steamResponse.data.response);
   } catch (error) {
     const errorMsg = "The steam id is invalid or player has no summaries.";
     console.error(`GET ${req.originalUrl} "${errorMsg}"`);

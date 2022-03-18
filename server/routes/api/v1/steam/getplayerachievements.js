@@ -6,7 +6,7 @@ const steamInstance = require("./steamInstance");
 router.get("/getplayerachievements/:id/", cache, async (req, res) => {
   try {
     const steamResponse = await steamInstance.get(
-      "/ISteamUserStats/GetUserStatsForGame/v0002/",
+      "/ISteamUserStats/GetPlayerAchievements/v0001/",
       {
         params: {
           appid: "730",
@@ -15,13 +15,14 @@ router.get("/getplayerachievements/:id/", cache, async (req, res) => {
       }
     );
 
+    console.log(steamResponse.data)
     await cacheData(req.cacheKey, steamResponse.data.playerstats);
 
     console.log(`GET ${req.originalUrl}`);
     return await res
       .status(200)
       .contentType("application/json")
-      .send(steamResponse.data);
+      .send(steamResponse.data.playerstats);
   } catch (error) {
     const errorMsg = "Steamid is invalid or/and player has no record for csgo.";
     console.error(`GET ${req.originalUrl} "${errorMsg}"`);
