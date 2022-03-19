@@ -2,38 +2,31 @@ import { useEffect, useReducer } from "react";
 import { apiInstance } from "./globals";
 
 const Profile = () => {
-  const [profile, setProfile] = useReducer((profile, d) => {
+  const [profile, setProfile] = useReducer((p, d) => {
     switch (d.type) {
       case "steamPage":
-        return {
-          ...profile,
-          steam: {
-            id: d.profile.steamID64.toString(),
-            vacban: parseInt(d.profile.vacBanned.toString()),
-            memberSince: Date.parse(d.profile.memberSince.toString()),
-            username: d.profile.steamID.toString(),
-            location: d.profile.location.toString(),
-            hoursPlayed: 0,
-            hoursPlayedLastWeek: 0,
-          },
-        };
+        p.steam.id = d.profile.steamID64.toString();
+        p.steam.vacban = parseInt(d.profile.vacBanned.toString());
+        p.steam.memberSince = Date.parse(d.profile.memberSince.toString());
+        p.steam.username = d.profile.steamID.toString();
+        p.steam.location = d.profile.location.toString();
+        break;
       case "friendsList":
-        return {
-          ...profile,
-          steam: { numberFriend: d.friends.length }
-        }
+        p.steam.numberFriend = d.friends.length
+        break;
       case "playerAchievements":
-        return {
-          ...profile,
-          steam: {
-            achievementCompleted: d.achievements.filter(
-              ({ achieved }) => achieved === 1
-            ).length
-          }
+        p.steam.achievementCompleted = d.achievements.filter(
+          ({ achieved }) => achieved === 1
+        ).length;
+        break;
+      case "recentlyPlayedGames":
+        if (d.total_count > 0) {
+          p.steam.hoursPlayed = d.games.filter(({ appid }) => appid === 730)[0].playtime_forever;
+          p.steam.hoursPlayedTwoWeek = d.games.filter(({ appid }) => appid === 730)[0].playtime_2weeks;
         }
-      default:
-        return profile;
+        break
     }
+    return p;
   }, { steam: {} });
 
   useEffect(() => {
@@ -55,7 +48,6 @@ const Profile = () => {
 
         apiInstance(`/api/v1/steam/getrecentlyplayedgames/${steamId}`)
           .then(({ data }) => {
-            console.log(data)
             setProfile({ ...data, type: "recentlyPlayedGames" })
           })
           .catch(console.error);
@@ -83,7 +75,7 @@ const Profile = () => {
       <p>VAC ban : {profile.steam.vacBan ? "yes" : "no"}</p>
       <p>Number of friend : {profile.steam.numberFriend}</p>
       <p>Hours Played : {profile.steam.hoursPlayed}</p>
-      <p>Hours Played (last 2 week) : {profile.steam.hoursPlayedLastWeek}</p>
+      <p>Hours Played (last 2 week) : {profile.steam.hoursPlayedTwoWeek}</p>
       <p>achievement completed : {profile.steam.achievementCompleted ? `${profile.steam.achievementCompleted}/167` : "private"}</p>
     </div>
   );
