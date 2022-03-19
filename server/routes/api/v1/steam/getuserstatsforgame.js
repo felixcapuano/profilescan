@@ -26,7 +26,7 @@ router.get("/getuserstatsforgame/:id/", cache, async (req, res) => {
   } catch (error) {
     const errorMsg = "Steamid is invalid or/and player has no record for csgo.";
     console.error(`GET ${req.originalUrl} "${errorMsg}"`);
-    return await res.status(404).send(errorMsg);
+    return await res.status(404).send(error);
   }
 });
 

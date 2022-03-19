@@ -25,7 +25,7 @@ router.get("/getrecentlyplayedgames/:id/", cache, async (req, res) => {
     const errorMsg =
       "The steam id is invalid or player has no recent played games.";
     console.error(`GET ${req.originalUrl} "${errorMsg}"`);
-    return await res.status(404).send(errorMsg);
+    return await res.status(404).send(error);
   }
 });
 

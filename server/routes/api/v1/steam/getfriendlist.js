@@ -23,7 +23,7 @@ router.get("/getfriendlist/:id/", cache, async (req, res) => {
   } catch (error) {
     const errorMsg = "The steam id is invalid or player has no friend.";
     console.error(`GET ${req.originalUrl} "${errorMsg}"`);
-    return await res.status(404).send(errorMsg);
+    return await res.status(404).send(error);
   }
 });
 

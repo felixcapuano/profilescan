@@ -2,12 +2,11 @@ import { useEffect, useReducer } from "react";
 import { apiInstance } from "./globals";
 
 const Profile = () => {
-  const [profile, setProfile] = useReducer((currentProfile, d) => {
-    console.log(currentProfile)
+  const [profile, setProfile] = useReducer((profile, d) => {
     switch (d.type) {
       case "steamPage":
         return {
-          ...currentProfile,
+          ...profile,
           steam: {
             id: d.profile.steamID64.toString(),
             vacban: parseInt(d.profile.vacBanned.toString()),
@@ -20,12 +19,12 @@ const Profile = () => {
         };
       case "friendsList":
         return {
-          ...currentProfile,
+          ...profile,
           steam: { numberFriend: d.friends.length }
         }
       case "playerAchievements":
         return {
-          ...currentProfile,
+          ...profile,
           steam: {
             achievementCompleted: d.achievements.filter(
               ({ achieved }) => achieved === 1
@@ -33,7 +32,7 @@ const Profile = () => {
           }
         }
       default:
-        return currentProfile;
+        return profile;
     }
   }, { steam: {} });
 
@@ -54,6 +53,13 @@ const Profile = () => {
           })
           .catch(console.error);
 
+        apiInstance(`/api/v1/steam/getrecentlyplayedgames/${steamId}`)
+          .then(({ data }) => {
+            console.log(data)
+            setProfile({ ...data, type: "recentlyPlayedGames" })
+          })
+          .catch(console.error);
+
         apiInstance(`/api/v1/steam/getplayerachievements/${steamId}`)
           .then(({ data }) => {
             setProfile({ ...data, type: "playerAchievements" })
@@ -68,17 +74,17 @@ const Profile = () => {
   return (
     <div className="Profile">
       <h1>CSGO account scanner </h1>
-      <p>Profile id : {profile?.steam?.id}</p>
-      <p>Steam username : {profile?.steam?.username}</p>
+      <p>Profile id : {profile.steam.id}</p>
+      <p>Steam username : {profile.steam.username}</p>
       <p>
-        Member since : {new Date(profile?.steam?.memberSince).toDateString()}
+        Member since : {new Date(profile.steam.memberSince).toDateString()}
       </p>
-      <p>Location : {profile.steam?.location || "private"}</p>
-      <p>VAC ban : {profile.steam?.vacBan ? "yes" : "no"}</p>
-      <p>Number of friend : {profile.steam?.numberFriend}</p>
-      <p>Hours Played : {profile.steam?.hoursPlayed}</p>
-      <p>Hours Played (last 2 week) : {profile.steam?.hoursPlayedLastWeek}</p>
-      <p>achievement completed : {profile.steam?.achievementCompleted}/167</p>
+      <p>Location : {profile.steam.location || "private"}</p>
+      <p>VAC ban : {profile.steam.vacBan ? "yes" : "no"}</p>
+      <p>Number of friend : {profile.steam.numberFriend}</p>
+      <p>Hours Played : {profile.steam.hoursPlayed}</p>
+      <p>Hours Played (last 2 week) : {profile.steam.hoursPlayedLastWeek}</p>
+      <p>achievement completed : {profile.steam.achievementCompleted ? `${profile.steam.achievementCompleted}/167` : "private"}</p>
     </div>
   );
 };
