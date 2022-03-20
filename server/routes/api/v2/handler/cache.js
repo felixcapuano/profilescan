@@ -17,8 +17,10 @@ const pullCache = async (req, res, next) => {
 };
 
 const pushCache = async (req, res, next) => {
+  if (req.cached) await next();
   if (!req.cacheKey) {//|| !connected) { //maybe use .ping()
-    return console.warn("Skipping : cache middleware missing");
+    console.warn("Skipping : cache middleware missing");
+    await next()
   }
   await client.setEx(req.cacheKey, 3600 * 24, JSON.stringify(req.data));
 
