@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const steamInstance = require("./steamInstance");
-const { cache, cacheData } = require("../../../redisInstance");
+const { cache, cacheData } = require("../redisInstance");
 
 router.get("/getfriendlist/:id/", cache, async (req, res) => {
   try {

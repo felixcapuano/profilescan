@@ -21,5 +21,6 @@ const speedLimiter = slowDown({
 // api.use(speedLimiter);
 
 api.use("/v1", require("./v1"));
+api.use("/v2", require("./v2"));
 
 module.exports = api;
