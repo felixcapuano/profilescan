@@ -1,10 +1,13 @@
 const router = require("express").Router();
-const { cache, cacheData } = require("../redisInstance");
 const steamInstance = require("./steamInstance");
+const { pullCache, pushCache } = require("../redisInstance");
+const response = require("../handler/response");
 
-router.get("/getplayersummaries/:id/", cache, async (req, res) => {
+const getPlayerSummaries = async (req, res) => {
+  if (req.cached) await next();
+
   try {
-    const steamResponse = await steamInstance.get(
+    const steamRes = await steamInstance.get(
       "/ISteamUser/GetPlayerSummaries/v0002/",
       {
         params: {
@@ -12,18 +15,19 @@ router.get("/getplayersummaries/:id/", cache, async (req, res) => {
         },
       }
     );
-    await cacheData(req.cacheKey, steamResponse.data.response);
 
-    console.log(`GET ${req.originalUrl}`);
-    return await res
-      .status(200)
-      .contentType("application/json")
-      .send(steamResponse.data.response);
+    req.data = steamRes.data.response;
   } catch (error) {
-    const errorMsg = "The steam id is invalid or player has no summaries.";
-    console.error(`GET ${req.originalUrl} "${errorMsg}"`);
-    return await res.status(404).send(error);
+    await next(error);
   }
-});
+  await next();
+};
+
+router.get("/getplayersummaries/:id/", [
+  pullCache,
+  getPlayerSummaries,
+  pushCache,
+  response,
+]);
 
 module.exports = router;

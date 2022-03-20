@@ -1,11 +1,13 @@
-// or  GetUserStatsForGame ???
 const router = require("express").Router();
-const { cache, cacheData } = require("../redisInstance");
-const steamInstance = require("./steamInstance");
+const steamInstance = require("../instance/steam");
+const { pullCache, pushCache } = require("../handler/cache");
+const response = require("../handler/response");
 
-router.get("/getuserstatsforgame/:id/", cache, async (req, res) => {
+const getUserStatsForGame = async (req, res, next) => {
+  if (req.cached) await next();
+
   try {
-    const steamResponse = await steamInstance.get(
+    const steamRes = await steamInstance.get(
       "/ISteamUserStats/GetUserStatsForGame/v0002/",
       {
         params: {
@@ -15,19 +17,18 @@ router.get("/getuserstatsforgame/:id/", cache, async (req, res) => {
       }
     );
 
-    console.log(steamResponse.data)
-    await cacheData(req.cacheKey, steamResponse.data.playerstats);
-
-    console.log(`GET ${req.originalUrl}`);
-    return await res
-      .status(200)
-      .contentType("application/json")
-      .send(steamResponse.data.playerstats);
+    req.data = steamRes.data.playerstats;
   } catch (error) {
-    const errorMsg = "Steamid is invalid or/and player has no record for csgo.";
-    console.error(`GET ${req.originalUrl} "${errorMsg}"`);
-    return await res.status(404).send(error);
+    await next(error);
   }
-});
+  await next();
+};
+
+router.get("/getuserstatsforgame/:id/", [
+  pullCache,
+  getUserStatsForGame,
+  pushCache,
+  response,
+]);
 
 module.exports = router;

@@ -16,6 +16,7 @@ const getFriendList = async (req, res, next) => {
         },
       }
     );
+
     req.data = steamRes.data.friendslist;
   } catch (error) {
     await next(error);
