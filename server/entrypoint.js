@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const error = require("./routes/api/v2/handler/error");
 const app = express();
 
 console.log(process.env.NODE_ENV);
@@ -19,9 +20,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// app.use(error);
 if (process.env.NODE_ENV !== "test") {
   const port = process.env.SERVER_PORT || 3000;
-
   app.listen(port, () => console.log(`listening on port ${port}`));
 }
 
