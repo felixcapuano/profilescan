@@ -1,6 +1,12 @@
 import { useEffect, useReducer } from "react";
 import { apiInstance } from "./globals";
 
+const time_converter = (num) => {
+  const hours = Math.floor(num / 60);
+  const minute = num % 60;
+  return `${hours}h ${minute}m`;
+}
+
 const Profile = () => {
   const [profile, setProfile] = useReducer((p, d) => {
     switch (d.type) {
@@ -18,15 +24,18 @@ const Profile = () => {
         p.steam.achievementCompleted = d.achievements.filter(
           ({ achieved }) => achieved === 1
         ).length;
+        p.steam.achievementHacked = d.achievements.every(
+          ({ unlocktime }) => unlocktime === d.achievements[0].unlocktime
+        )
         break;
       case "recentlyPlayedGames":
         if (d.total_count > 0) {
-          p.steam.hoursPlayed = d.games.filter(({ appid }) => appid === 730)[0].playtime_forever;
-          p.steam.hoursPlayedTwoWeek = d.games.filter(({ appid }) => appid === 730)[0].playtime_2weeks;
+          p.steam.minPlayed = d.games.filter(({ appid }) => appid === 730)[0].playtime_forever;
+          p.steam.minPlayedTwoWeek = d.games.filter(({ appid }) => appid === 730)[0].playtime_2weeks;
         }
         break
     }
-    return p;
+    return { ...p };
   }, { steam: {} });
 
   useEffect(() => {
@@ -74,9 +83,10 @@ const Profile = () => {
       <p>Location : {profile.steam.location || "private"}</p>
       <p>VAC ban : {profile.steam.vacBan ? "yes" : "no"}</p>
       <p>Number of friend : {profile.steam.numberFriend}</p>
-      <p>Hours Played : {profile.steam.hoursPlayed}</p>
-      <p>Hours Played (last 2 week) : {profile.steam.hoursPlayedTwoWeek}</p>
-      <p>achievement completed : {profile.steam.achievementCompleted ? `${profile.steam.achievementCompleted}/167` : "private"}</p>
+      <p>Time Played : {time_converter(profile.steam.minPlayed)}</p>
+      <p>Time Played (last 2 week) : {time_converter(profile.steam.minPlayedTwoWeek)}</p>
+      <p>Achievements completed : {`${profile.steam.achievementCompleted}/167`}</p>
+      <p>Achievements hacked : {profile.steam.achievementHacked.toString()}</p>
     </div>
   );
 };
