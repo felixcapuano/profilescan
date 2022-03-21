@@ -2,6 +2,7 @@ const router = require("express").Router();
 const steamInstance = require("./steamInstance");
 const { pullCache, pushCache } = require("../redisInstance");
 const response = require("../handler/response");
+const isValidSteamId = require("../handler/verifySteamId");
 
 const getPlayerSummaries = async (req, res) => {
   if (req.cached) await next();
@@ -24,6 +25,7 @@ const getPlayerSummaries = async (req, res) => {
 };
 
 router.get("/getplayersummaries/:id/", [
+  isValidSteamId,
   pullCache,
   getPlayerSummaries,
   pushCache,
