@@ -13,14 +13,16 @@ const client = createClient({
   database: process.env.REDIS_DATABASE,
 });
 
-client
-  .connect()
-  .then(() => {
-    console.log("Redis Client Connected");
-    connected = true;
-  })
-  .catch((err) => {
-    console.error(`Fail to connect with Redis : ${err}`);
-  });
+if (process.env.NODE_ENV !== "test") {
+  client
+    .connect()
+    .then(() => {
+      console.log("Redis Client Connected");
+      connected = true;
+    })
+    .catch((err) => {
+      console.error(`Fail to connect with Redis : ${err}`);
+    });
+}
 
-module.exports = client;
+module.exports = { connected, client };
