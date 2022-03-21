@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const error = require("./routes/api/v2/handler/error");
 const app = express();
 
 console.log(process.env.NODE_ENV);

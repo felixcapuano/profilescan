@@ -9,7 +9,6 @@ const pullCache = async (req, res, next) => {
   try {
     const data = await client.get(req.cacheKey);
     if (data) {
-      console.log(`GET ${req.originalUrl} "use cache"`);
       req.data = data;
       req.cached = true;
     }

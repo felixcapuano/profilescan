@@ -1,6 +1,5 @@
 const response = async (req, res) => {
-
-  console.log(`GET ${req.originalUrl}${req.cached ? " use cache" : ""}`);
+  console.log(`GET ${req.originalUrl}${req.cached ? ' "use cache"' : ""}`);
 
   await res.contentType("application/json");
 
@@ -12,6 +11,6 @@ const response = async (req, res) => {
     await res.status(404);
   }
   await res.send(req.data);
-}
+};
 
 module.exports = response;
