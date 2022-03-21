@@ -7,6 +7,7 @@ const getCommunityProfile = async (req, res, next) => {
   if (req.cached) await next();
   if (!req.query.path) {
     await next({
+      status: 400,
       error: "'path' must be set in the request query",
     });
   }
