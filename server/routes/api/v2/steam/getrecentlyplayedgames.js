@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const isValidSteamId = require("../handler/verifySteamId");
-const { pullCache, pushCache } = require("../redisInstance");
-const steamInstance = require("./steamInstance");
+const { pullCache, pushCache } = require("../handler/cache");
+const steamInstance = require("../instance/steam");
+const response = require("../handler/response");
 
 const getRecentlyPlayedGames = async (req, res) => {
   if (req.cached) await next();
