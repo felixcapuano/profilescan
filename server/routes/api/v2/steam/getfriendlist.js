@@ -2,6 +2,7 @@ const router = require("express").Router();
 const steamInstance = require("../instance/steam");
 const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
+const isValidSteamId = require("../handler/verifySteamId");
 
 const getFriendList = async (req, res, next) => {
   if (req.cached) await next();
@@ -25,6 +26,7 @@ const getFriendList = async (req, res, next) => {
 };
 
 router.get("/getfriendlist/:id/", [
+  isValidSteamId,
   pullCache,
   getFriendList,
   pushCache,
