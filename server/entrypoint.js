@@ -13,14 +13,14 @@ if (process.env.NODE_ENV === "development") {
 app.use(require("./routes"));
 
 if (process.env.NODE_ENV !== "development") {
-  app.use(express.static(path.join(__dirname, "../build")));
+  app.use(express.static(path.join(__dirname, "build")));
   app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../build", "index.html"));
+    res.sendFile(path.join(__dirname, "build", "index.html"));
   });
 }
 
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.SERVER_PORT || 80;
+  const port = process.env.REACT_APP_SERVER_PORT || 80;
   app.listen(port, () => console.log(`listening on port ${port}`));
 }
 

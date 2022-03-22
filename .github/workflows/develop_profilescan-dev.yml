@@ -41,7 +41,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: |
+            server/
+            package-lock.json
+            package.json
 
   deploy:
     runs-on: ubuntu-latest
