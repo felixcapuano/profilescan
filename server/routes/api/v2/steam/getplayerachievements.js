@@ -5,7 +5,7 @@ const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
 const getPlayerAchievements = async (req, res, next) => {
-  if (req.cached) await next();
+  if (req.cached) return await next();
 
   try {
     const steamRes = await steamInstance.get(
@@ -20,9 +20,9 @@ const getPlayerAchievements = async (req, res, next) => {
 
     req.data = steamRes.data.playerstats;
   } catch (error) {
-    await next(error);
+    return await next({ status: 404 });
   }
-  await next();
+  return await next();
 };
 
 router.get("/getplayerachievements/:id/", [

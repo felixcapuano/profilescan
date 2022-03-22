@@ -4,8 +4,8 @@ const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
-const getPlayerSummaries = async (req, res) => {
-  if (req.cached) await next();
+const getPlayerSummaries = async (req, res, next) => {
+  if (req.cached) return await next();
 
   try {
     const steamRes = await steamInstance.get(
@@ -19,9 +19,10 @@ const getPlayerSummaries = async (req, res) => {
 
     req.data = steamRes.data.response;
   } catch (error) {
-    await next(error);
+    return await next({ status: 404 });
   }
-  await next();
+  console.log("<------------------------->");
+  return await next();
 };
 
 router.get("/getplayersummaries/:id/", [

@@ -4,8 +4,8 @@ const { pullCache, pushCache } = require("../handler/cache");
 const steamInstance = require("../instance/steam");
 const response = require("../handler/response");
 
-const getRecentlyPlayedGames = async (req, res) => {
-  if (req.cached) await next();
+const getRecentlyPlayedGames = async (req, res, next) => {
+  if (req.cached) return await next();
 
   try {
     const steamRes = await steamInstance.get(
@@ -20,9 +20,9 @@ const getRecentlyPlayedGames = async (req, res) => {
 
     req.data = steamRes.data.response;
   } catch (error) {
-    await next(error);
+    return await next({ status: 404 });
   }
-  await next();
+  return await next();
 };
 
 router.get("/getrecentlyplayedgames/:id/", [
