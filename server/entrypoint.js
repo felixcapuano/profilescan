@@ -3,15 +3,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-// console.log(PORT);
-// console.log(SERVER_PORT);
-// console.log(STEAM_API_KEY);
-// console.log(FACEIT_API_KEY);
-console.log(process.env.REDIS_HOST);
-console.log(process.env.REDIS_PORT);
-console.log(process.env.REDIS_USERNAME);
-// console.log(REDIS_PASSWORD);
-console.log(process.env.REDIS_DATABASE);
+console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 
 if (process.env.NODE_ENV === "development") {
   const cors = require("cors");
