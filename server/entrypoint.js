@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-console.log(process.env.NODE_ENV);
+console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 
 if (process.env.NODE_ENV === "development") {
   const cors = require("cors");
