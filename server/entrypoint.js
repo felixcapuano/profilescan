@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.SERVER_PORT || 3000;
+  const port = process.env.SERVER_PORT || 80;
   app.listen(port, () => console.log(`listening on port ${port}`));
 }
 
