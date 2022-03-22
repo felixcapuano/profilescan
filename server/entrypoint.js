@@ -19,7 +19,6 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
-// app.use(error);
 if (process.env.NODE_ENV !== "test") {
   const port = process.env.SERVER_PORT || 3000;
   app.listen(port, () => console.log(`listening on port ${port}`));
