@@ -3,6 +3,7 @@ const { client, isRedisAwake, isRedisConnected } = require("../instance/redis");
 const connectToRedis = async () => {
   try {
     await client.connect();
+    await client.flushAll();
     console.log("Redis Client Connected");
   } catch (error) {
     console.error(`Fail to connect with Redis : ${error}`);

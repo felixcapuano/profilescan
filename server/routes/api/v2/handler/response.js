@@ -4,9 +4,11 @@ const response = async (req, res) => {
   await res.contentType("application/json");
 
   if (req.cached) {
-    await res.status(304);
+    await res.status(200);
+    req.data.cached = true;
   } else if (req.data) {
-    await res.status(302);
+    await res.status(200);
+    req.data.cached = false;
   } else {
     await res.status(404);
   }

@@ -13,7 +13,7 @@ const constants = {
 const testValueList = [
   "getfriendlist",
   "getplayerachievements",
-  "getplayersummaries",
+  // "getplayersummaries",
   "getrecentlyplayedgames",
   "getuserstatsforgame",
 ];
@@ -24,7 +24,7 @@ describe("Steam api v2", () => {
       it("Correct user id", (done) => {
         request
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
-          .expect(302)
+          .expect(200)
           .end((err, res) => {
             done(err);
           });
@@ -33,7 +33,7 @@ describe("Steam api v2", () => {
       it("Correct user id cached", (done) => {
         request
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
-          .expect(304)
+          .expect(200)
           .end((err, res) => {
             done(err);
           });
@@ -51,7 +51,7 @@ describe("Steam api v2", () => {
       it("Private user id", (done) => {
         request
           .get(`/api/v2/steam/${value}/${constants.id.private}`)
-          .expect(302)
+          .expect(404)
           .end((err, res) => {
             done(err);
           });
@@ -65,7 +65,7 @@ describe("Steam api v2", () => {
         .get(
           `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.id.correct}`
         )
-        .expect(302)
+        .expect(200)
         .end((err, res) => {
           done(err);
         });
@@ -87,7 +87,7 @@ describe("Steam api v2", () => {
         .get(
           `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.id.private}`
         )
-        .expect(302)
+        .expect(200)
         .end((err, res) => {
           done(err);
         });
@@ -98,7 +98,7 @@ describe("Steam api v2", () => {
         .get(
           `/api/v2/steam/getcommunityprofile/?path=/id/${constants.name.correct}`
         )
-        .expect(302)
+        .expect(200)
         .end((err, res) => {
           done(err);
         });

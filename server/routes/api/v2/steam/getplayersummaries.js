@@ -21,7 +21,6 @@ const getPlayerSummaries = async (req, res, next) => {
   } catch (error) {
     return await next({ status: 404 });
   }
-  console.log("<------------------------->");
   return await next();
 };
 
