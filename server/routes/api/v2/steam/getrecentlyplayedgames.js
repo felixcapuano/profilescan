@@ -20,7 +20,6 @@ const getRecentlyPlayedGames = async (req, res, next) => {
     if (!steamRes.data.response.total_count) {
       throw new Error("No recently played game or profile private.");
     }
-    console.log(steamRes.data)
 
     req.data = steamRes.data.response;
   } catch (error) {
