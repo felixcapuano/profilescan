@@ -5,12 +5,7 @@ const response = require("../handler/response");
 
 const getCommunityProfile = async (req, res, next) => {
   if (req.cached) await next();
-  if (!req.query.path) {
-    await next({
-      status: 400,
-      error: "'path' must be set in the request query",
-    });
-  }
+  if (!req.query.path) return await next({ status: 400 });
 
   req.steamLink = `https://steamcommunity.com/${req.query.path}?xml=1`;
 
@@ -19,10 +14,10 @@ const getCommunityProfile = async (req, res, next) => {
     const { profile } = await parseStringPromise(steamPageXml.data);
     req.data = profile;
   } catch (error) {
-    await next(error);
+    return await next({ status: 404 });
   }
 
-  await next();
+  return await next();
 };
 
 router.get("/getcommunityprofile", [

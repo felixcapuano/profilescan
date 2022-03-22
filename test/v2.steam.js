@@ -2,6 +2,7 @@ const constants = {
   id: {
     correct: "76561198069504185", //mammoth
     bad: "6561198069504185", //mammoth
+    private: "76561197964163827", //Kenshirio
   },
   name: {
     correct: "Xnem",
@@ -9,7 +10,13 @@ const constants = {
   },
 };
 
-const testValueList = ["getfriendlist", "getplayerachievements", "getplayersummaries", "getrecentlyplayedgames", "getuserstatsforgame"];
+const testValueList = [
+  "getfriendlist",
+  "getplayerachievements",
+  "getplayersummaries",
+  "getrecentlyplayedgames",
+  "getuserstatsforgame",
+];
 
 describe("Steam api v2", () => {
   testValueList.forEach((value) => {
@@ -40,6 +47,72 @@ describe("Steam api v2", () => {
             done(err);
           });
       });
+
+      it("Private user id", (done) => {
+        request
+          .get(`/api/v2/steam/${value}/${constants.id.private}`)
+          .expect(302)
+          .end((err, res) => {
+            done(err);
+          });
+      });
+    });
+  });
+
+  describe(`GET /api/v2/steam/getcommunityprofile/`, () => {
+    it("Correct user id", (done) => {
+      request
+        .get(
+          `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.id.correct}`
+        )
+        .expect(302)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+
+    it("Bad user id", (done) => {
+      request
+        .get(
+          `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.id.bad}`
+        )
+        .expect(404)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+
+    it("Private user id", (done) => {
+      request
+        .get(
+          `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.id.private}`
+        )
+        .expect(302)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+
+    it("Correct user name", (done) => {
+      request
+        .get(
+          `/api/v2/steam/getcommunityprofile/?path=/id/${constants.name.correct}`
+        )
+        .expect(302)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+
+    it("Bad user id", (done) => {
+      request
+        .get(
+          `/api/v2/steam/getcommunityprofile/?path=/profiles/${constants.name.bad}`
+        )
+        .expect(404)
+        .end((err, res) => {
+          done(err);
+        });
     });
   });
 });
