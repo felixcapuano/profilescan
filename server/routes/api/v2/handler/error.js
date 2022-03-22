@@ -1,6 +1,5 @@
 const error = async (err, req, res, next) => {
-  // console.error(err.response)
-  res.sendStatus(500)
+  res.sendStatus(err.status)
 }
 
 module.exports = error;

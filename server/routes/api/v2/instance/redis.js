@@ -1,7 +1,5 @@
 const { createClient } = require("redis");
 
-let redisConnected = false;
-
 const client = createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   // socket: {
@@ -13,16 +11,29 @@ const client = createClient({
   database: process.env.REDIS_DATABASE,
 });
 
-if (process.env.NODE_ENV !== "test") {
-  client
-    .connect()
-    .then(() => {
-      console.log("Redis Client Connected");
-      redisConnected = true;
-    })
-    .catch((err) => {
-      console.error(`Fail to connect with Redis : ${err}`);
-    });
-}
+const isRedisAwake = async () => {
+  try {
+    const ping = await client.ping();
+    return ping === "PONG";
+  } catch (error) {
+    return false;
+  }
+};
 
-module.exports = { redisConnected, client };
+let ready = false;
+client.on("ready", () => (ready = true));
+const isRedisReady = () => ready;
+
+let connected = false;
+client.on("connect", () => (connected = true));
+const isRedisConnected = () => connected;
+// client
+//   .connect()
+//   .then(() => {
+//     console.log("Redis Client Connected");
+//   })
+//   .catch((err) => {
+//     console.error(`Fail to connect with Redis : ${err}`);
+//   });
+
+module.exports = { client, isRedisAwake, isRedisReady, isRedisConnected };
