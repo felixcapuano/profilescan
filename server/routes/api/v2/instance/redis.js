@@ -1,6 +1,6 @@
 const { createClient } = require("redis");
 
-let connected = false;
+let redisConnected = false;
 
 const client = createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
@@ -18,11 +18,11 @@ if (process.env.NODE_ENV !== "test") {
     .connect()
     .then(() => {
       console.log("Redis Client Connected");
-      connected = true;
+      redisConnected = true;
     })
     .catch((err) => {
       console.error(`Fail to connect with Redis : ${err}`);
     });
 }
 
-module.exports = { connected, client };
+module.exports = { redisConnected, client };
