@@ -18,7 +18,7 @@ It will provide you every useful faceit and steam stats of a steam community acc
 
 ### Environment variables
 
-`cp .env.example .env`
+Some environments variables a require to start the project. start the project.
 
 ```
 PORT=
@@ -32,6 +32,10 @@ REDIS_USERNAME=
 REDIS_PASSWORD=
 REDIS_DATABASE=
 ```
+
+You can use this command to create a example .env file.
+
+`cp .env.example .env`
 
 ### Development
 
@@ -48,3 +52,7 @@ REDIS_DATABASE=
 `npm run build`
 
 `npm start`
+
+## License
+
+GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
