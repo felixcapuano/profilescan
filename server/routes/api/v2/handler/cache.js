@@ -41,6 +41,7 @@ const pushCache = async (req, res, next) => {
   }
 
   try {
+    req.data.cacheTime = Date.now();
     await client.setEx(req.cacheKey, 3600 * 24, JSON.stringify(req.data));
   } catch (error) {
     return await next({ status: 500 });
