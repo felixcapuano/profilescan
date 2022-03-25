@@ -20,6 +20,11 @@ const initialProfile = {
     minPlayed: "",
     minPlayedTwoWeek: "",
   },
+  faceit: {
+    faceitElo: 0,
+    skillLevel: 0,
+    gamePlayerName: "",
+  },
 };
 
 const Profile = () => {
@@ -52,6 +57,13 @@ const Profile = () => {
             p.steam.minPlayed = csgo[0].playtime_forever;
             p.steam.minPlayedTwoWeek = csgo[0].playtime_2weeks;
           }
+        }
+        break;
+      case "playerFaceit":
+        if (d.games.csgo) {
+          p.faceit.faceitElo = d.games.faceit_elo;
+          p.faceit.skillLevel = d.games.skill_level;
+          p.faceit.gamePlayerName = d.nickname;
         }
         break;
       default:
@@ -87,6 +99,14 @@ const Profile = () => {
             setProfile({ ...data, type: "playerAchievements" });
           })
           .catch(console.error);
+
+        apiInstance(`/api/v2/faceit/players/${steamId}`)
+          .then(({ data }) => {
+            // give id look for use this instead of getcommunity profile
+            console.log(data);
+            // setProfile({ ...data, type: "faceitProfile" });
+          })
+          .catch(console.error);
       })
       .catch(console.error);
   }, []);
@@ -109,6 +129,7 @@ const Profile = () => {
         Achievements completed : {`${profile.steam.achievementCompleted}/167`}
       </p>
       <p>Achievements hacked : {profile.steam.achievementHacked.toString()}</p>
+      {/* <p>Faceit Lvl : {profile.steam.achievementHacked.toString()}</p> */}
     </div>
   );
 };
