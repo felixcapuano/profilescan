@@ -23,7 +23,7 @@ const initialProfile = {
   faceit: {
     faceitElo: 0,
     skillLevel: 0,
-    gamePlayerName: "",
+    playerName: "",
   },
 };
 
@@ -59,11 +59,11 @@ const Profile = () => {
           }
         }
         break;
-      case "playerFaceit":
+      case "faceitProfile":
         if (d.games.csgo) {
-          p.faceit.faceitElo = d.games.faceit_elo;
-          p.faceit.skillLevel = d.games.skill_level;
-          p.faceit.gamePlayerName = d.nickname;
+          p.faceit.faceitElo = d.games.csgo.faceit_elo;
+          p.faceit.skillLevel = d.games.csgo.skill_level;
+          p.faceit.playerName = d.nickname;
         }
         break;
       default:
@@ -103,8 +103,7 @@ const Profile = () => {
         apiInstance(`/api/v2/faceit/players/${steamId}`)
           .then(({ data }) => {
             // give id look for use this instead of getcommunity profile
-            console.log(data);
-            // setProfile({ ...data, type: "faceitProfile" });
+            setProfile({ ...data, type: "faceitProfile" });
           })
           .catch(console.error);
       })
@@ -129,7 +128,9 @@ const Profile = () => {
         Achievements completed : {`${profile.steam.achievementCompleted}/167`}
       </p>
       <p>Achievements hacked : {profile.steam.achievementHacked.toString()}</p>
-      {/* <p>Faceit Lvl : {profile.steam.achievementHacked.toString()}</p> */}
+      <p>Faceit Name : {profile.faceit.playerName}</p>
+      <p>Faceit Level : {profile.faceit.skillLevel}</p>
+      <p>Faceit Elo : {profile.faceit.faceitElo}</p>
     </div>
   );
 };
