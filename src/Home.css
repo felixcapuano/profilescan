@@ -1,0 +1,15 @@
+.Home {
+  height: 80vh;
+}
+
+.Title {
+  height: 50%;
+}
+
+.PrimaryTitle {
+  background-color: greenyellow;
+}
+
+.SecondaryTitle {
+  background-color: red;
+}
