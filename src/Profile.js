@@ -121,7 +121,7 @@ const Profile = () => {
       <p>Number of friend : {profile.steam.numberFriend}</p>
       <p>Time Played : {time_converter(profile.steam.minPlayed)}</p>
       <p>
-        Time Played (last 2 week) :{" "}
+        Time Played (last 2 week) :
         {time_converter(profile.steam.minPlayedTwoWeek)}
       </p>
       <p>

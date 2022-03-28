@@ -1,5 +1,6 @@
 .Home {
   height: 80vh;
+  /* background-color: beige; */
 }
 
 .Title {
@@ -12,4 +13,8 @@
 
 .SecondaryTitle {
   background-color: red;
+}
+
+.SearchInput {
+  background-color: aqua;
 }

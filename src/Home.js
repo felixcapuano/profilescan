@@ -1,14 +1,28 @@
-import { Container } from "react-bootstrap";
-import './Home.css';
+import "./Home.css";
+import Grid from "@mui/material/Grid";
+import { Box, TextField, Typography } from "@mui/material";
 
 const Home = () => {
   return (
-    <div className="Home">
-      <div className="Title">
-        <h3 className="PrimaryTitle text-center">Hello world!!!</h3>
-        <h4 className="SecondaryTitle text-center">Secondary title</h4>
-      </div>
-    </div>
+    <Grid
+      className="Home"
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      spacing={0}
+    >
+      <Grid item className="Content">
+        <Typography align="center" variant="h2">
+          Welcome in the best steam scanner.
+        </Typography>
+        <Typography align="center" variant="h4">
+          Secondary title
+        </Typography>
+        <br /><br />
+        <TextField label="search" variant="outlined" fullWidth={true} />
+      </Grid>
+    </Grid>
   );
 };
 
