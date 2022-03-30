@@ -53,8 +53,8 @@ const Profile = () => {
       newInfos.push({ friendsNumber: data.friends.length })
     }
     if (type === "playerAchievements") {
-      newInfos.push([{ achievementCompleted: data.achievements.filter(el => el.achieved === 1).length }])
-      newInfos.push([{ achievementHacked: data.achievements.every(el => el === data.achievements[0].unlocktime) }])
+      newInfos.push({ achievementCompleted: data.achievements.filter(el => el.achieved === 1).length })
+      newInfos.push({ achievementHacked: data.achievements.every(el => el === data.achievements[0].unlocktime) })
     }
     if (type === "recentlyPlayedGames") {
 

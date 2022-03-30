@@ -27,9 +27,9 @@ const getFriendList = async (req, res, next) => {
 
 router.get("/getfriendlist/:id/", [
   isValidSteamId,
-  pullCache,
+  // pullCache,
   getFriendList,
-  pushCache,
+  // pushCache,
   response,
 ]);
 
