@@ -1,112 +1,76 @@
 import React from "react";
-import { useEffect, useReducer } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { apiInstance } from "../services/globals";
-import { time_converter } from "../services/utils";
 import "../styles/profile.css";
 
 const Profile = () => {
-  const initialProfile = {
-    steam: {
-      id: "",
-      vacban: "",
-      memberSince: "",
-      username: "",
-      location: "",
-      numberFriend: "",
-      achievementCompleted: "",
-      achievementHacked: "",
-      minPlayed: "",
-      minPlayedTwoWeek: "",
-    },
-    faceit: {
-      faceitElo: 0,
-      skillLevel: 0,
-      playerName: "",
-    },
-  };
+  const [profile, setProfile] = React.useState([]);
 
-  const [profile, setProfile] = useReducer((p, d) => {
-    switch (d.type) {
-      case "steamPage":
-        p.steam.id = d.steamID64.toString();
-        p.steam.vacban = parseInt(d.vacBanned.toString());
-        p.steam.memberSince = Date.parse(d.memberSince.toString());
-        p.steam.username = d.steamID.toString();
-        p.steam.location = d.location.toString();
-        break;
-      case "friendsList":
-        p.steam.numberFriend = d.friends.length;
-        break;
-      case "playerAchievements":
-        p.steam.achievementCompleted = d.achievements.filter(
-          ({ achieved }) => achieved === 1
-        ).length;
-        p.steam.achievementHacked = d.achievements.every(
-          ({ unlocktime }) => unlocktime === d.achievements[0].unlocktime
-        );
-        break;
-      case "recentlyPlayedGames":
-        if (d.total_count > 0) {
-          const csgo = (p.steam.minPlayed = d.games.filter(
-            ({ appid }) => appid === 730
-          ));
-          if (csgo.length > 0) {
-            p.steam.minPlayed = csgo[0].playtime_forever;
-            p.steam.minPlayedTwoWeek = csgo[0].playtime_2weeks;
-          }
-        }
-        break;
-      case "faceitProfile":
-        if (d.games.csgo) {
-          p.faceit.faceitElo = d.games.csgo.faceit_elo;
-          p.faceit.skillLevel = d.games.csgo.skill_level;
-          p.faceit.playerName = d.nickname;
-        }
-        break;
-      default:
-        break;
-    }
-    return { ...p };
-  }, initialProfile);
-
-  useEffect(() => {
+  React.useEffect(() => {
     apiInstance(`/api/v2/steam/getcommunityprofile`, {
       params: { path: encodeURI(window.location.pathname) },
     })
       .then(({ data }) => {
-        setProfile({ ...data, type: "steamPage" });
+        fetchUserInfos(data, "steamPage");
         return data.steamID64.toString();
       })
       .then((steamId) => {
         apiInstance(`/api/v2/steam/getfriendlist/${steamId}`)
           .then(({ data }) => {
-            setProfile({ ...data, type: "friendsList" });
+            fetchUserInfos(data, "friendsList");
           })
           .catch(console.error);
 
         apiInstance(`/api/v2/steam/getrecentlyplayedgames/${steamId}`)
           .then(({ data }) => {
-            setProfile({ ...data, type: "recentlyPlayedGames" });
+            fetchUserInfos(data, "recentlyPlayedGames");
           })
           .catch(console.error);
 
         apiInstance(`/api/v2/steam/getplayerachievements/${steamId}`)
           .then(({ data }) => {
             // give id look for use this instead of getcommunity profile
-            setProfile({ ...data, type: "playerAchievements" });
+            fetchUserInfos(data, "playerAchievements");
           })
           .catch(console.error);
 
         apiInstance(`/api/v2/faceit/players/${steamId}`)
           .then(({ data }) => {
             // give id look for use this instead of getcommunity profile
-            setProfile({ ...data, type: "faceitProfile" });
+            fetchUserInfos(data, "faceitProfile");
           })
           .catch(console.error);
       })
       .catch(console.error);
   }, []);
+
+  const fetchUserInfos = (data, type) => {
+    const newInfos = [];
+    if (type === "steamPage") {
+      ["steamID64", "vacBanned", "memberSince", "steamID", "location"].forEach(el => data[el] ? newInfos.push({ [el]: Object.values(data[el])[0] }) : null)
+    }
+    if (type === "friendsList") {
+      newInfos.push({ friendsNumber: data.friends.length })
+    }
+    if (type === "playerAchievements") {
+      newInfos.push([{ achievementCompleted: data.achievements.filter(el => el.achieved === 1).length }])
+      newInfos.push([{ achievementHacked: data.achievements.every(el => el === data.achievements[0].unlocktime) }])
+    }
+    if (type === "recentlyPlayedGames") {
+
+    }
+    if (type === "faceitProfile") {
+      if (data.games.csgo) {
+        newInfos.push({ faceitElo: data.games.csgo.faceit_elo })
+        newInfos.push({ faceitLevel: data.games.csgo.skill_level })
+        newInfos.push({ faceitNickname: data.nickname })
+      }
+    }
+    const concatInfos = newInfos.concat(profile)
+    console.log(concatInfos)
+    setProfile(concatInfos)
+
+  }
 
   return (
     <Container className="Profile">
@@ -118,6 +82,5 @@ const Profile = () => {
     </Container>
   );
 };
-// example https://www.bootdey.com/snippets/view/profile-with-data-and-skills#html
 
 export default Profile;
