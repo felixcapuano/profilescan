@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { apiInstance } from "./globals";
+import { apiInstance } from "../services/globals";
 
 const time_converter = (num) => {
   const hours = Math.floor(num / 60);
