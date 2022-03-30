@@ -29,7 +29,6 @@ const Profile = () => {
 
         apiInstance(`/api/v2/steam/getplayerachievements/${steamId}`)
           .then(({ data }) => {
-            // give id look for use this instead of getcommunity profile
             fetchUserInfos(data, "playerAchievements");
           })
           .catch(console.error);
@@ -45,7 +44,7 @@ const Profile = () => {
   }, []);
 
   const fetchUserInfos = (data, type) => {
-    const newInfos = [];
+    const newInfos = profile;
     if (type === "steamPage") {
       ["steamID64", "vacBanned", "memberSince", "steamID", "location"].forEach(el => data[el] ? newInfos.push({ [el]: Object.values(data[el])[0] }) : null)
     }
@@ -57,8 +56,15 @@ const Profile = () => {
       newInfos.push({ achievementHacked: data.achievements.every(el => el === data.achievements[0].unlocktime) })
     }
     if (type === "recentlyPlayedGames") {
-
+      console.log(data)
+      if (data.total_count > 0) {
+        // appid c'est quoi ?
+        newInfos.push({ minutesPlayed: data.games[0].playtime_forever })
+        newInfos.push({ minutesPlayedLast2Weeks: data.games[0].playtime_2weeks })
+        newInfos.push({ minutesPlayedOnWindows: data.games[0].playtime_2weeks })
+      }
     }
+
     if (type === "faceitProfile") {
       if (data.games.csgo) {
         newInfos.push({ faceitElo: data.games.csgo.faceit_elo })
@@ -66,9 +72,8 @@ const Profile = () => {
         newInfos.push({ faceitNickname: data.nickname })
       }
     }
-    const concatInfos = newInfos.concat(profile)
-    console.log(concatInfos)
-    setProfile(concatInfos)
+    const newInfoWithoutDoublons = [...new Set(newInfos)]
+    setProfile(newInfoWithoutDoublons)
 
   }
 
@@ -76,6 +81,7 @@ const Profile = () => {
     <Container className="Profile">
       <Row>
         <Col>
+          {console.log(profile)}
           <Card>hello</Card>
         </Col>
       </Row>
