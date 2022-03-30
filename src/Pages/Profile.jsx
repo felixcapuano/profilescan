@@ -1,33 +1,29 @@
+import React from "react"
 import { useEffect, useReducer } from "react";
 import { apiInstance } from "../services/globals";
-
-const time_converter = (num) => {
-  const hours = Math.floor(num / 60);
-  const minute = num % 60;
-  return `${hours}h ${minute}m`;
-};
-
-const initialProfile = {
-  steam: {
-    id: "",
-    vacban: "",
-    memberSince: "",
-    username: "",
-    location: "",
-    numberFriend: "",
-    achievementCompleted: "",
-    achievementHacked: "",
-    minPlayed: "",
-    minPlayedTwoWeek: "",
-  },
-  faceit: {
-    faceitElo: 0,
-    skillLevel: 0,
-    playerName: "",
-  },
-};
+import { time_converter } from "../services/utils";
 
 const Profile = () => {
+  const initialProfile = {
+    steam: {
+      id: "",
+      vacban: "",
+      memberSince: "",
+      username: "",
+      location: "",
+      numberFriend: "",
+      achievementCompleted: "",
+      achievementHacked: "",
+      minPlayed: "",
+      minPlayedTwoWeek: "",
+    },
+    faceit: {
+      faceitElo: 0,
+      skillLevel: 0,
+      playerName: "",
+    },
+  };
+
   const [profile, setProfile] = useReducer((p, d) => {
     switch (d.type) {
       case "steamPage":
