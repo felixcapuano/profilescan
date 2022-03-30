@@ -1,7 +1,9 @@
-import React from "react"
+import React from "react";
 import { useEffect, useReducer } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { apiInstance } from "../services/globals";
 import { time_converter } from "../services/utils";
+import "../styles/profile.css";
 
 const Profile = () => {
   const initialProfile = {
@@ -107,28 +109,15 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="Profile">
-      <h1>CSGO account scanner </h1>
-      <p>Profile id : {profile.steam.id}</p>
-      <p>Steam username : {profile.steam.username}</p>
-      <p>Member since : {new Date(profile.steam.memberSince).toDateString()}</p>
-      <p>Location : {profile.steam.location || "private"}</p>
-      <p>VAC ban : {profile.steam.vacBan ? "yes" : "no"}</p>
-      <p>Number of friend : {profile.steam.numberFriend}</p>
-      <p>Time Played : {time_converter(profile.steam.minPlayed)}</p>
-      <p>
-        Time Played (last 2 week) :
-        {time_converter(profile.steam.minPlayedTwoWeek)}
-      </p>
-      <p>
-        Achievements completed : {`${profile.steam.achievementCompleted}/167`}
-      </p>
-      <p>Achievements hacked : {profile.steam.achievementHacked.toString()}</p>
-      <p>Faceit Name : {profile.faceit.playerName}</p>
-      <p>Faceit Level : {profile.faceit.skillLevel}</p>
-      <p>Faceit Elo : {profile.faceit.faceitElo}</p>
-    </div>
+    <Container className="Profile">
+      <Row>
+        <Col>
+          <Card>hello</Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
+// example https://www.bootdey.com/snippets/view/profile-with-data-and-skills#html
 
 export default Profile;

@@ -5,7 +5,7 @@ const App = () => {
   console.log(process.env.NODE_ENV);
   return (
     <div className="App">
-      Senpai
+      {/* Senpai */}
       <Routes>
         <Route path="/" element={<Profile />} />
         <Route path="/profiles/:id" element={<Profile />} />
