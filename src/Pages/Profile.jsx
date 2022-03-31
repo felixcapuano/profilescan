@@ -110,7 +110,7 @@ const Profile = () => {
   return (
     <div className="Profile container">
       <div className="row gutters-sm">
-        <div className="col-md-4 mb-3">
+        <div className="col-md-2 mb-3">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-column align-items-center text-center">
@@ -219,7 +219,7 @@ const Profile = () => {
             </ul>
           </div> */}
         </div>
-        <div className="col-md-8">
+        <div className="col-md-10">
           <div className="card mb-3">
             <div className="card-body">
               <div className="row">
@@ -266,138 +266,47 @@ const Profile = () => {
                 <div className="col-sm-9 text-secondary">Not Hacked</div>
               </div>
             </div>
-
-            <div className="row gutters-sm">
-              {/* <div className="col-sm-6 mb-3">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h6 className="d-flex align-items-center mb-3">
-                      <i className="material-icons text-info mr-2">assignment</i>
-                      Project Status
-                    </h6>
-                    <small>Web Design</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "80%" }}
-                        aria-valuenow="80"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Website Markup</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "72%" }}
-                        aria-valuenow="72"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>One Page</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "89%" }}
-                        aria-valuenow="89"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Mobile Template</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "55%" }}
-                        aria-valuenow="55"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Backend API</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "66%" }}
-                        aria-valuenow="66"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
+          </div>
+        </div>
+        <div className="row gutters-sm">
+          <div className="col-sm-6 mb-3">
+            <div className="card h-100">
+              <div className="card-body">
+                <h6 className="d-flex align-items-center mb-3">
+                  <i className="material-icons text-info mr-2">Stats Faceit</i>
+                </h6>
+                <small>Web Design</small>
+                <div className="progress mb-3 progressBar">
+                  <div
+                    className="progress-bar bg-primary"
+                    role="progressbar"
+                    style={{ width: "80%" }}
+                    aria-valuenow="80"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
                 </div>
               </div>
-              <div className="col-sm-6 mb-3">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h6 className="d-flex align-items-center mb-3">
-                      <i className="material-icons text-info mr-2">assignment</i>
-                      Project Status
-                    </h6>
-                    <small>Web Design</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "80%" }}
-                        aria-valuenow="80"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Website Markup</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "72%" }}
-                        aria-valuenow="72"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>One Page</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "89%" }}
-                        aria-valuenow="89"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Mobile Template</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "55%" }}
-                        aria-valuenow="55"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    <small>Backend API</small>
-                    <div className="progress mb-3 progressBar">
-                      <div
-                        className="progress-bar bg-primary"
-                        role="progressbar"
-                        style={{ width: "66%" }}
-                        aria-valuenow="66"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
+            </div>
+          </div>
+          <div className="col-sm-6 mb-3">
+            <div className="card h-100">
+              <div className="card-body">
+                <h6 className="d-flex align-items-center mb-3">
+                  <i className="material-icons text-info mr-2">Stats Steam</i>
+                </h6>
+                <small>Web Design</small>
+                <div className="progress mb-3 progressBar">
+                  <div
+                    className="progress-bar bg-primary"
+                    role="progressbar"
+                    style={{ width: "80%" }}
+                    aria-valuenow="80"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
