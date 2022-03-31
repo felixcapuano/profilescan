@@ -39,19 +39,21 @@ You can use this command to create a example .env file.
 
 ### Development
 
-`npm install`
+1. `npm install`
 
-`npm run dev-front`
+1. `npm run dev-front`
 
-`npm run dev-back`
+1. `npm install -g nodemon` \* require to use next command
+
+1. `npm run dev-back`
 
 ### Production
 
-`npm run test`
+1. `npm run test`
 
-`npm run build`
+1. `npm run build`
 
-`npm start`
+1. `npm start`
 
 ## License
 
