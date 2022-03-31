@@ -5,6 +5,7 @@ import "./profile.css";
 import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
+import FaceitLvl from "./icons/FaceitLvl";
 
 const Profile = () => {
   const [profile, setProfile] = React.useState([]);
@@ -44,11 +45,15 @@ const Profile = () => {
           .catch(console.error);
       })
       .catch(console.error);
-  }, []);
+  });
 
   const renderCircularButton = (children) => {
     return (
-      <button type="button" className="btn btn-outline-dark btn-circle btn-sm">
+      <button
+        type="button"
+        className="btn btn-outline-dark btn-circle btn-sm"
+        key={children.name}
+      >
         {children}
       </button>
     );
@@ -65,7 +70,7 @@ const Profile = () => {
 
   const renderMainInfo = ({ key = "", value = "" }) => {
     return (
-      <div>
+      <div key={key}>
         <div className="row">
           <div className="col-sm-3">
             <h6 className="mb-0">{key}</h6>
@@ -85,12 +90,13 @@ const Profile = () => {
     { key: "Wins", value: "923" },
     { key: "Headshots", value: "63%" },
   ];
+  console.log(FaceitLogo);
 
   const steamInfo = [];
 
   const renderSecondaryInfo = ({ key = "", value = "" }) => {
     return (
-      <div className="row">
+      <div className="row" key={key}>
         <div className="col-sm-3">
           <h6 className="mb-0">{key}</h6>
         </div>
@@ -142,6 +148,7 @@ const Profile = () => {
           <div className="card h-100">
             <div className="card-body">
               <h6 className="d-flex align-items-center mb-3">Faceit</h6>
+              <FaceitLvl level={10} />
               {faceitInfo.map(renderSecondaryInfo)}
             </div>
           </div>
