@@ -10,6 +10,7 @@ import { ReactComponent as FaceitLvl7 } from "./svg/faceit7.svg";
 import { ReactComponent as FaceitLvl8 } from "./svg/faceit8.svg";
 import { ReactComponent as FaceitLvl9 } from "./svg/faceit9.svg";
 import { ReactComponent as FaceitLvl10 } from "./svg/faceit10.svg";
+import { ReactComponent as QuestionCircle } from "./svg/question-circle.svg";
 
 const iconsList = [
   FaceitLvl1,
@@ -24,12 +25,12 @@ const iconsList = [
   FaceitLvl10,
 ];
 
-const FaceitLvl = ({ width = 40, height = 40, level = 1 }) => {
-  if (level <= 1 && level >= 10) {
-    return <alert>Level should be between 1 and 10</alert>;
+const FaceitLvlIcon = ({ width = 40, height = 40, level = 1 }) => {
+  if (level < 1 || level > 10) {
+    return <QuestionCircle width={width} height={height} />;
   }
   const FaceitLvlIcon = iconsList[level - 1];
   return <FaceitLvlIcon width={width} height={height} />;
 };
 
-export default FaceitLvl;
+export default FaceitLvlIcon;

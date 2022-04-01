@@ -1,58 +1,77 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { apiInstance } from "../../services/globals";
 import { fetchUserInfos } from "../../services/fetchUserInfo";
 import "./profile.css";
 import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
-import FaceitLvl from "./icons/FaceitLvl";
+import FaceitLvlIcon from "./icons/FaceitLvlIcon";
+import { faceitProfileReducer } from "../../services/faceitReducer";
+import {
+  communityProfileReducer,
+  friendsListReducer,
+  playerAchievementsReducer,
+  recentlyPlayedGamesReducer,
+} from "../../services/steamReducers";
 
 const Profile = () => {
   const [profile, setProfile] = React.useState([]);
+  const [faceitProfile, setFaceitProfile] = useReducer(
+    faceitProfileReducer,
+    {}
+  );
+  const [steamProfile, setSteamProfile] = useReducer(
+    communityProfileReducer,
+    {}
+  );
+  const [recentlyPlayedGames, setRecentlyPlayedGames] = useReducer(
+    recentlyPlayedGamesReducer,
+    {}
+  );
+  const [achievements, setAchievements] = useReducer(
+    playerAchievementsReducer,
+    {}
+  );
+  const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
 
   React.useEffect(() => {
     apiInstance(`/api/v2/steam/getcommunityprofile`, {
       params: { path: encodeURI(window.location.pathname) },
     })
       .then(({ data }) => {
-        setProfile(fetchUserInfos(data, "steamPage", profile));
+        setSteamProfile(data);
         return data.steamID64.toString();
       })
       .then((steamId) => {
         apiInstance(`/api/v2/steam/getfriendlist/${steamId}`)
-          .then(({ data }) => {
-            setProfile(fetchUserInfos(data, "friendsList", profile));
-          })
+          .then(({ data }) => data)
+          .then(setSteamFriends)
           .catch(console.error);
 
         apiInstance(`/api/v2/steam/getrecentlyplayedgames/${steamId}`)
-          .then(({ data }) => {
-            setProfile(fetchUserInfos(data, "recentlyPlayedGames", profile));
-          })
+          .then(({ data }) => data)
+          .then(setRecentlyPlayedGames)
           .catch(console.error);
 
         apiInstance(`/api/v2/steam/getplayerachievements/${steamId}`)
-          .then(({ data }) => {
-            setProfile(fetchUserInfos(data, "playerAchievements", profile));
-          })
+          .then(({ data }) => data)
+          .then(setAchievements)
           .catch(console.error);
 
         apiInstance(`/api/v2/faceit/players/${steamId}`)
-          .then(({ data }) => {
-            // give id look for use this instead of getcommunity profile
-            setProfile(fetchUserInfos(data, "faceitProfile", profile));
-          })
+          .then(({ data }) => data)
+          .then(setFaceitProfile)
           .catch(console.error);
       })
       .catch(console.error);
-  });
+  }, []);
 
   const renderCircularButton = (children) => {
     return (
       <button
         type="button"
         className="btn btn-outline-dark btn-circle btn-sm"
-        key={children.name}
+        key={children.type.name}
       >
         {children}
       </button>
@@ -70,7 +89,7 @@ const Profile = () => {
 
   const renderMainInfo = ({ key = "", value = "" }) => {
     return (
-      <div key={key}>
+      <div key={`${key}${value}`}>
         <div className="row">
           <div className="col-sm-3">
             <h6 className="mb-0">{key}</h6>
@@ -90,13 +109,12 @@ const Profile = () => {
     { key: "Wins", value: "923" },
     { key: "Headshots", value: "63%" },
   ];
-  console.log(FaceitLogo);
 
   const steamInfo = [];
 
   const renderSecondaryInfo = ({ key = "", value = "" }) => {
     return (
-      <div className="row" key={key}>
+      <div className="row" key={`${key}${value}`}>
         <div className="col-sm-3">
           <h6 className="mb-0">{key}</h6>
         </div>
@@ -107,6 +125,15 @@ const Profile = () => {
 
   return (
     <div className="Profile container">
+      {JSON.stringify(faceitProfile)}
+      <br />
+      {JSON.stringify(steamFriends)}
+      <br />
+      {JSON.stringify(steamProfile)}
+      <br />
+      {JSON.stringify(recentlyPlayedGames)}
+      <br />
+      {JSON.stringify(achievements)}
       <div className="row gutters-sm">
         <div className="col-md-2 mb-3">
           <div className="card">
@@ -148,7 +175,7 @@ const Profile = () => {
           <div className="card h-100">
             <div className="card-body">
               <h6 className="d-flex align-items-center mb-3">Faceit</h6>
-              <FaceitLvl level={10} />
+              <FaceitLvlIcon level={0} />
               {faceitInfo.map(renderSecondaryInfo)}
             </div>
           </div>

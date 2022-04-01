@@ -24,7 +24,6 @@ const pullCache = async (req, res, next) => {
     const data = await client.get(req.cacheKey);
     if (data) {
       req.data = data;
-      req.cached = true;
     }
   } catch (error) {
     return await next({ status: 500 });
@@ -36,7 +35,7 @@ const pullCache = async (req, res, next) => {
 const pushCache = async (req, res, next) => {
   if (!(await isRedisAwake())) return await next();
 
-  if (req.cached || !req.cacheKey) {
+  if (!req.cacheKey) {
     return await next();
   }
 

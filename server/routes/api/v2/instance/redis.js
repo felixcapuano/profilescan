@@ -12,6 +12,7 @@ const isRedisAwake = async () => {
     const ping = await client.ping();
     return ping === "PONG";
   } catch (error) {
+    console.log('Redis is not awake.')
     return false;
   }
 };
