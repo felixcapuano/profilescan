@@ -40,7 +40,7 @@ const Profile = () => {
     })
       .then(({ data }) => {
         setSteamProfile(data);
-        return data.steamID64.toString();
+        return data.steamID64;
       })
       .then((steamId) => {
         apiInstance(`/api/v2/steam/getfriendlist/${steamId}`)

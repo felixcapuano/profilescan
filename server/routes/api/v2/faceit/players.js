@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const faceitInstance = require("../instance/faceit");
-// const { pullCache, pushCache } = require("../handler/cache");
+const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
@@ -24,9 +24,9 @@ const player = async (req, res, next) => {
 
 router.get("/players/:id/", [
   isValidSteamId,
-  // pullCache,
+  pullCache,
   player,
-  // pushCache,
+  pushCache,
   response,
 ]);
 

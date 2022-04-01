@@ -17,6 +17,11 @@ const getCommunityProfile = async (req, res, next) => {
     return await next({ status: 404 });
   }
 
+  // formatting object by removing useless Array
+  Object.keys(req.data).forEach((key) => {
+    req.data[key] = req.data[key][0]
+  });
+
   return await next();
 };
 
