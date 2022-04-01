@@ -12,7 +12,6 @@ export const communityProfileReducer = (
 export const recentlyPlayedGamesReducer = (state, { games }) => ({
   minutesPlayed: games[0].playtime_forever,
   minutesPlayedLast2Weeks: games[0].playtime_2weeks,
-  minutesPlayedOnWindows: games[0].playtime_2weeks,
 });
 
 export const playerAchievementsReducer = (state, { achievements }) => {
@@ -25,5 +24,5 @@ export const playerAchievementsReducer = (state, { achievements }) => {
 };
 
 export const friendsListReducer = (state, data) => ({
-  friendsCount: data.friends.length,
+  count: data.friends.length,
 });

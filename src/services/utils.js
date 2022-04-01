@@ -3,3 +3,7 @@ export const time_converter = (num) => {
   const minute = num % 60;
   return `${hours}h ${minute}m`;
 };
+
+export const minutes_to_hours = (min) => {
+  return Math.floor(min / 60);
+};

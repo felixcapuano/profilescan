@@ -11,7 +11,7 @@ export const fetchUserInfos = (data, type, oldProfileInfo) => {
     );
   }
   if (type === "friendsList") {
-    newInfos.push({ friendsNumber: data.friends.length });
+    newInfos.push({ count: data.friends.length });
   }
   if (type === "playerAchievements") {
     newInfos.push({

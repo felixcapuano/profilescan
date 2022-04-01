@@ -1,6 +1,5 @@
 import React, { useReducer } from "react";
 import { apiInstance } from "../../services/globals";
-import { fetchUserInfos } from "../../services/fetchUserInfo";
 import "./profile.css";
 import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
@@ -13,9 +12,9 @@ import {
   playerAchievementsReducer,
   recentlyPlayedGamesReducer,
 } from "../../services/steamReducers";
+import { minutes_to_hours } from "../../services/utils";
 
 const Profile = () => {
-  const [profile, setProfile] = React.useState([]);
   const [faceitProfile, setFaceitProfile] = useReducer(
     faceitProfileReducer,
     {}
@@ -82,8 +81,15 @@ const Profile = () => {
     { key: "Account status", value: "public" },
     { key: "Created", value: "08.2012" },
     { key: "Play CSGO since", value: "03.2014" },
-    { key: "Friends", value: "319 (42 banned)" },
-    { key: "time played", value: "2500 (35h last 2 weeks)" },
+    { key: "Friends", value: `${steamFriends.count} (XX banned)` },
+    {
+      key: "Time played",
+      value: `${minutes_to_hours(
+        recentlyPlayedGames.minutesPlayed
+      )} hours (${minutes_to_hours(
+        recentlyPlayedGames.minutesPlayedLast2Weeks
+      )}h last 2 weeks)`,
+    },
     { key: "Achievements", value: "Not Hacked" },
   ];
 
