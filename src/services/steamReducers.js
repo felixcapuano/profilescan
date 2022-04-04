@@ -1,13 +1,14 @@
-export const communityProfileReducer = (
-  state,
-  { steamID64, vacBanned, memberSince, steamID, location }
-) => ({
-  steamID64,
-  vacBanned,
-  memberSince,
-  steamID,
-  location,
-});
+export const communityProfileReducer = (state, data) => {
+  return {
+    id: data.steamID64,
+    vacBanned: Number(data.vacBanned),
+    memberSince: data.memberSince,
+    nickname: data.steamID,
+    location: data.location,
+    avatar: data.avatarFull,
+    url: data.steamLink,
+  };
+};
 
 export const recentlyPlayedGamesReducer = (state, { games }) => ({
   minutesPlayed: games[0].playtime_forever,

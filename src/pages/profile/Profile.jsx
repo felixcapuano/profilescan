@@ -65,15 +65,42 @@ const Profile = () => {
       .catch(console.error);
   }, []);
 
-  const renderCircularButton = (children) => {
+  const CircularButton = ({ children, link }) => {
     return (
-      <button
-        type="button"
-        className="btn btn-outline-dark btn-circle btn-sm"
-        key={children.type.name}
-      >
-        {children}
-      </button>
+      <a href={link}>
+        <button
+          type="button"
+          className="btn btn-outline-dark btn-circle btn-sm"
+          key={children.type.name}
+        >
+          {children}
+        </button>
+      </a>
+    );
+  };
+
+  const renderMainInfo = ({ key = "", value = "" }) => {
+    return (
+      <div key={`${key}${value}`}>
+        <div className="row">
+          <div className="col-sm-3">
+            <h6 className="mb-0">{key}</h6>
+          </div>
+          <div className="col-sm-9 text-secondary">{value}</div>
+        </div>
+        <hr />
+      </div>
+    );
+  };
+
+  const renderSecondaryInfo = ({ key = "", value = "" }) => {
+    return (
+      <div className="row" key={`${key}${value}`}>
+        <div className="col-sm-3">
+          <h6 className="mb-0">{key}</h6>
+        </div>
+        <div className="col-sm-9 text-secondary">{value}</div>
+      </div>
     );
   };
 
@@ -93,23 +120,9 @@ const Profile = () => {
     { key: "Achievements", value: "Not Hacked" },
   ];
 
-  const renderMainInfo = ({ key = "", value = "" }) => {
-    return (
-      <div key={`${key}${value}`}>
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">{key}</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">{value}</div>
-        </div>
-        <hr />
-      </div>
-    );
-  };
-
   const faceitInfo = [
-    { key: "Level", value: "5" },
-    { key: "ELO", value: "3507" },
+    { key: "Level", value: faceitProfile.level },
+    { key: "ELO", value: faceitProfile.elo },
     { key: "Matchs", value: "1231" },
     { key: "K/D", value: "2.80" },
     { key: "Wins", value: "923" },
@@ -118,51 +131,47 @@ const Profile = () => {
 
   const steamInfo = [];
 
-  const renderSecondaryInfo = ({ key = "", value = "" }) => {
-    return (
-      <div className="row" key={`${key}${value}`}>
-        <div className="col-sm-3">
-          <h6 className="mb-0">{key}</h6>
-        </div>
-        <div className="col-sm-9 text-secondary">{value}</div>
-      </div>
-    );
-  };
+  // const socialIcons = [<FaceitLogo />, <SteamLogo />, <TwitchLogo />];
 
   return (
     <div className="Profile container">
-      {JSON.stringify(faceitProfile)}
+      {"faceitProfile : " + JSON.stringify(faceitProfile)}
       <br />
-      {JSON.stringify(steamFriends)}
+      {"steamFriends : " + JSON.stringify(steamFriends)}
       <br />
-      {JSON.stringify(steamProfile)}
+      {"steamProfile : " + JSON.stringify(steamProfile)}
       <br />
-      {JSON.stringify(recentlyPlayedGames)}
+      {"recentlyPlayedGames : " + JSON.stringify(recentlyPlayedGames)}
       <br />
-      {JSON.stringify(achievements)}
+      {"achievements : " + JSON.stringify(achievements)}
       <div className="row gutters-sm">
-        <div className="col-md-2 mb-3">
+        <div className="col-md-3 mb-3">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-column align-items-center text-center">
                 <img
-                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                  alt="Admin"
+                  src={steamProfile.avatar}
+                  alt="Avatar"
                   className="rounded-circle"
                   width="150"
                 />
                 <div className="mt-3">
-                  <h4>Steam Username</h4>
-                  <p className="text-secondary mb-1">Faceit Username</p>
-                  {[<FaceitLogo />, <SteamLogo />, <TwitchLogo />].map(
-                    renderCircularButton
-                  )}
+                  <h4>{steamProfile.nickname}</h4>
+                  <p className="text-secondary mb-1">
+                    {faceitProfile.nickname}
+                  </p>
+                  <CircularButton link={faceitProfile.url}>
+                    <FaceitLogo />
+                  </CircularButton>
+                  <CircularButton link={steamProfile.url}>
+                    <SteamLogo />
+                  </CircularButton>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-md-10">
+        <div className="col-md-9">
           <div className="card mb-3">
             <div className="card-body">{mainInfo.map(renderMainInfo)}</div>
           </div>

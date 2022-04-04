@@ -1,9 +1,13 @@
-export const faceitProfileReducer = (state, { games, nickname }) => {
+export const faceitProfileReducer = (
+  state,
+  { games, nickname, faceit_url }
+) => {
   return games.csgo
     ? {
-      faceitElo: games.csgo.faceit_elo,
-      faceitLevel: games.csgo.skill_level,
-      faceitNickname: nickname,
+      elo: games.csgo.faceit_elo,
+      level: games.csgo.skill_level,
+      nickname,
+      url: faceit_url.replace("{lang}", "en"),
     }
     : state;
 };

@@ -7,19 +7,20 @@ const getCommunityProfile = async (req, res, next) => {
   if (req.cached) await next();
   if (!req.query.path) return await next({ status: 400 });
 
-  req.steamLink = `https://steamcommunity.com/${req.query.path}?xml=1`;
+  req.steamLink = "https://steamcommunity.com" + req.query.path;
 
   try {
-    const steamPageXml = await axios.get(req.steamLink);
+    const steamPageXml = await axios.get(req.steamLink, { params: { xml: 1 } });
     const { profile } = await parseStringPromise(steamPageXml.data);
-    req.data = profile;
+    req.data = profile || {};
+    req.data.steamLink = [req.steamLink];
   } catch (error) {
     return await next({ status: 404 });
   }
 
   // formatting object by removing useless Array
   Object.keys(req.data).forEach((key) => {
-    req.data[key] = req.data[key][0]
+    req.data[key] = req.data[key][0];
   });
 
   return await next();

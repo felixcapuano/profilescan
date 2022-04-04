@@ -5,7 +5,7 @@ const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
 const player = async (req, res, next) => {
-  // if (req.cached) return await next();
+  if (req.cached) return await next();
 
   try {
     const faceitRes = await faceitInstance.get("/players", {
