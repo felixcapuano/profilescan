@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { apiInstance } from "../../services/globals";
 import "./profile.css";
-import TwitchLogo from "./icons/TwitchLogo";
+// import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
 import FaceitLvlIcon from "./icons/FaceitLvlIcon";
