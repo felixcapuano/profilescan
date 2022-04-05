@@ -12,7 +12,7 @@ const constants = {
   },
 };
 const testValueList1 = ["players"];
-const testValueList2 = ["stats"];
+const testValueList2 = ["stats", "history"];
 
 describe("Faceit api v2", () => {
   testValueList1.forEach((value) => {
