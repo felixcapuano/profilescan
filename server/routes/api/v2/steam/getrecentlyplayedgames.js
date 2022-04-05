@@ -5,7 +5,7 @@ const steamInstance = require("../instance/steam");
 const response = require("../handler/response");
 
 const getRecentlyPlayedGames = async (req, res, next) => {
-  if (req.cached) return await next();
+  if (req.data) return await next();
 
   try {
     const steamRes = await steamInstance.get(

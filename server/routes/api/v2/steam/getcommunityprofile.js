@@ -4,7 +4,7 @@ const axios = require("axios");
 const response = require("../handler/response");
 
 const getCommunityProfile = async (req, res, next) => {
-  if (req.cached) await next();
+  if (req.data) await next();
   if (!req.query.path) return await next({ status: 400 });
 
   req.steamLink = "https://steamcommunity.com" + req.query.path;

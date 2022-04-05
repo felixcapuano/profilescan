@@ -2,30 +2,28 @@ const router = require("express").Router();
 const faceitInstance = require("../instance/faceit");
 const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
-const isValidSteamId = require("../handler/verifySteamId");
+const isValidFaceitId = require("../handler/verifyFaceitId");
 
-const player = async (req, res, next) => {
+const stats = async (req, res, next) => {
   if (req.data) return await next();
 
   try {
-    const faceitRes = await faceitInstance.get("/players", {
-      params: {
-        game: "csgo",
-        game_player_id: req.params.id,
-      },
-    });
+    const faceitRes = await faceitInstance.get(
+      `/players/${req.params.id}/stats/csgo`
+    );
 
     req.data = faceitRes.data;
   } catch (error) {
+    console.log(error);
     return await next({ status: 404 });
   }
   return await next();
 };
 
-router.get("/players/:id/", [
-  isValidSteamId,
+router.get("/stats/:id/", [
+  isValidFaceitId,
   pullCache,
-  player,
+  stats,
   pushCache,
   response,
 ]);

@@ -22,9 +22,7 @@ const pullCache = async (req, res, next) => {
 
   try {
     const data = await client.get(req.cacheKey);
-    if (data) {
-      req.data = data;
-    }
+    req.data = data;
   } catch (error) {
     return await next({ status: 500 });
   }
@@ -34,14 +32,15 @@ const pullCache = async (req, res, next) => {
 
 const pushCache = async (req, res, next) => {
   if (!(await isRedisAwake())) return await next();
-
-  if (!req.cacheKey) {
-    return await next();
-  }
+  if (!req.cacheKey) return await next();
 
   try {
-    req.data.cacheTime = Date.now();
-    await client.setEx(req.cacheKey, 3600 * 24, JSON.stringify(req.data));
+    // req.data.cacheTime = Date.now();
+    await client.setEx(
+      req.cacheKey,
+      3600 * 24,
+      JSON.stringify({ ...req.data, cacheTime: Date.now() })
+    );
   } catch (error) {
     return await next({ status: 500 });
   }

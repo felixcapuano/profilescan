@@ -5,7 +5,7 @@ const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
 const getPlayerSummaries = async (req, res, next) => {
-  if (req.cached) return await next();
+  if (req.data) return await next();
 
   try {
     const steamRes = await steamInstance.get(
