@@ -8,8 +8,11 @@ const FaceitLifetime = ({ faceitStats, faceitProfile }) => {
     { key: "ELO", value: faceitProfile.elo },
     { key: "K/D", value: stats["Average K/D Ratio"] },
     { key: "Matches", value: stats["Matches"] },
-    { key: "Wins", value: stats["Wins"] },
-    { key: "Headshots", value: `${stats["Average Headshots %"]}%` },
+    {
+      key: "Winrate",
+      value: Math.round((stats["Wins"] / stats["Matches"]) * 100) + "%",
+    },
+    { key: "Headshots", value: stats["Average Headshots %"] + "%" },
   ];
 
   const dataFormatting = ({ key, value }) => {
@@ -33,8 +36,8 @@ const FaceitLifetime = ({ faceitStats, faceitProfile }) => {
     return (
       <Item value="Last games">
         <div className="d-flex">
-          {stats["Recent Results"].map((v) => (
-            <h4 className="pe-1">
+          {stats["Recent Results"].map((v, i) => (
+            <h4 className="pe-1" key={i}>
               {Number(v) ? (
                 <span className="badge bg-success">W</span>
               ) : (
@@ -52,14 +55,16 @@ const FaceitLifetime = ({ faceitStats, faceitProfile }) => {
       <div className="col-sm-12 mb-3">
         <div className="card h-100">
           <div className="d-flex justify-content-center card-body">
-            <FaceitLvlIcon
-              width={52}
-              height={52}
-              className="d-flex-center"
-              level={faceitProfile.level}
-            />
+            <div className="d-flex" style={{ backgroundColor: "white" }}>
+              <FaceitLvlIcon
+                width={52}
+                height={"84%"}
+                className="d-flex-center"
+                level={faceitProfile.level}
+              />
+            </div>
             {profileData.map(dataFormatting)}
-            <LastGames />
+            {stats["Recent Results"] && <LastGames />}
           </div>
         </div>
       </div>

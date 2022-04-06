@@ -4,7 +4,6 @@ import "./profile.css";
 // import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
-import FaceitLvlIcon from "./icons/FaceitLvlIcon";
 import {
   faceitHistoryReducer,
   faceitProfileReducer,
@@ -144,17 +143,6 @@ const Profile = () => {
     );
   };
 
-  const renderSecondaryInfo = ({ key = "", value = "" }) => {
-    return (
-      <div className="row" key={`${key}${value}`}>
-        <div className="col-sm-3">
-          <h6 className="mb-0">{key}</h6>
-        </div>
-        <div className="col-sm-9 text-secondary">{value}</div>
-      </div>
-    );
-  };
-
   const mainInfo = [
     { key: "Account status", value: "public" },
     { key: "Created", value: "08.2012" },
@@ -170,19 +158,6 @@ const Profile = () => {
     },
     { key: "Achievements", value: "Not Hacked" },
   ];
-
-  const faceitInfo = [
-    { key: "Level", value: faceitProfile.level },
-    { key: "ELO", value: faceitProfile.elo },
-    { key: "Matchs", value: "1231" },
-    { key: "K/D", value: "2.80" },
-    { key: "Wins", value: "923" },
-    { key: "Headshots", value: "63%" },
-  ];
-
-  const steamInfo = [];
-
-  // const socialIcons = [<FaceitLogo />, <SteamLogo />, <TwitchLogo />];
 
   return (
     <div className="Profile container">
@@ -220,7 +195,7 @@ const Profile = () => {
         </div>
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />
-      <div className="row gutters-sm">
+      {/* <div className="row gutters-sm">
         <div className="col-sm-6 mb-3">
           <div className="card h-100">
             <div className="card-body">
@@ -238,7 +213,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
