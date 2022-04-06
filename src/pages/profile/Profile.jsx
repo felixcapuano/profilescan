@@ -17,6 +17,7 @@ import {
   recentlyPlayedGamesReducer,
 } from "../../services/steamReducers";
 import { minutes_to_hours } from "../../services/utils";
+import FaceitLifetime from "./components/FaceitLifetime";
 
 const Profile = () => {
   const ids = useRef({ steam: "null", faceit: "null" });
@@ -185,19 +186,6 @@ const Profile = () => {
 
   return (
     <div className="Profile container">
-      {/* {"faceitProfile : " + JSON.stringify(faceitProfile)}
-      <br />
-      {"steamFriends : " + JSON.stringify(steamFriends)}
-      <br />
-      {"steamProfile : " + JSON.stringify(steamProfile)}
-      <br />
-      {"recentlyPlayedGames : " + JSON.stringify(recentlyPlayedGames)}
-      <br />
-      {"achievements : " + JSON.stringify(achievements)}
-      <br />
-      {"faceitStats : " + JSON.stringify(faceitStats)}
-      <br />
-      {"faceitHistory : " + JSON.stringify(faceitHistory)} */}
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
           <div className="card">
@@ -231,6 +219,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />
       <div className="row gutters-sm">
         <div className="col-sm-6 mb-3">
           <div className="card h-100">
