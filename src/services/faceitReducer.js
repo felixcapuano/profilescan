@@ -9,3 +9,16 @@ export const faceitProfileReducer = (state, data) => {
     }
     : state;
 };
+
+export const faceitHistoryReducer = (state, data) => {
+  return {
+    matches: data.items,
+  };
+};
+
+export const faceitStatsReducer = (state, data) => {
+  return {
+    maps: data.segments,
+    lifetime: data.lifetime,
+  };
+};

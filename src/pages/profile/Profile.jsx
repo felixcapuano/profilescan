@@ -5,7 +5,11 @@ import "./profile.css";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
 import FaceitLvlIcon from "./icons/FaceitLvlIcon";
-import { faceitProfileReducer } from "../../services/faceitReducer";
+import {
+  faceitHistoryReducer,
+  faceitProfileReducer,
+  faceitStatsReducer,
+} from "../../services/faceitReducer";
 import {
   communityProfileReducer,
   friendsListReducer,
@@ -16,10 +20,6 @@ import { minutes_to_hours } from "../../services/utils";
 
 const Profile = () => {
   const ids = useRef({ steam: "null", faceit: "null" });
-  const [faceitProfile, setFaceitProfile] = useReducer(
-    faceitProfileReducer,
-    {}
-  );
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -32,42 +32,87 @@ const Profile = () => {
     playerAchievementsReducer,
     {}
   );
+  const [faceitProfile, setFaceitProfile] = useReducer(
+    faceitProfileReducer,
+    {}
+  );
+  const [faceitHistory, setFaceitHistory] = useReducer(
+    faceitHistoryReducer,
+    {}
+  );
+  const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer, {});
   const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
 
   React.useEffect(() => {
-    apiInstance(`/api/v2/steam/getcommunityprofile`, {
-      params: { path: encodeURI(window.location.pathname) },
-    })
-      .then(({ data }) => {
-        //get steam id
-        setSteamProfile(data);
-        ids.current.steam = data.steamID64;
-      })
-      .then(async () => {
-        //get faceit id
-        await apiInstance(`/api/v2/faceit/players/${ids.current.steam}`)
-          .then(({ data }) => data)
-          .then(setFaceitProfile)
-          .catch(console.error);
-        ids.current.faceit = faceitProfile.id;
-      })
-      .then(() => {
-        apiInstance(`/api/v2/steam/getfriendlist/${ids.current.steam}`)
-          .then(({ data }) => data)
-          .then(setSteamFriends)
-          .catch(console.error);
+    const getSteamProfile = async () => {
+      const { data } = await apiInstance(`/api/v2/steam/getcommunityprofile`, {
+        params: { path: encodeURI(window.location.pathname) },
+      });
+      console.log("steamprofile", data);
+      setSteamProfile(data);
+      return data.steamID64;
+    };
+    const getFaceitProfile = async (steamId) => {
+      const { data } = await apiInstance(`/api/v2/faceit/players/${steamId}`);
+      console.log("faceitprofile", data);
+      setFaceitProfile(data);
+      return data.player_id;
+    };
+    const getSteamFriends = async (steamId) => {
+      const { data } = await apiInstance(
+        `/api/v2/steam/getfriendlist/${steamId}`
+      );
+      console.log("steamfriends", data);
+      setSteamFriends(data);
+    };
+    const getAchievements = async (steamId) => {
+      const { data } = await apiInstance(
+        `/api/v2/steam/getplayerachievements/${steamId}`
+      );
+      console.log("achievements", data);
+      setAchievements(data);
+    };
+    const getRecentlyPlayedGames = async (steamId) => {
+      const { data } = await apiInstance(
+        `/api/v2/steam/getrecentlyplayedgames/${steamId}`
+      );
+      console.log("recentlyplayedgames", data);
+      setRecentlyPlayedGames(data);
+    };
+    const getFaceitHistory = async (faceitId) => {
+      const { data } = await apiInstance(`/api/v2/faceit/history/${faceitId}`);
+      console.log("faceithistory", data);
+      setFaceitHistory(data);
+    };
+    const getFaceitStats = async (faceitId) => {
+      const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
+      console.log("faceitstats", data);
+      setFaceitStats(data);
+    };
+    const fetchData = async () => {
+      try {
+        console.log("///////////////////////////////");
+        console.log("/////////////start/////////////");
+        console.log("///////////////////////////////");
+        const steamId = await getSteamProfile();
 
-        apiInstance(`/api/v2/steam/getrecentlyplayedgames/${ids.current.steam}`)
-          .then(({ data }) => data)
-          .then(setRecentlyPlayedGames)
-          .catch(console.error);
+        await getSteamFriends(steamId);
+        await getRecentlyPlayedGames(steamId);
+        await getSteamFriends(steamId);
+        await getAchievements(steamId);
 
-        apiInstance(`/api/v2/steam/getplayerachievements/${ids.current.steam}`)
-          .then(({ data }) => data)
-          .then(setAchievements)
-          .catch(console.error);
-      })
-      .catch(console.error);
+        const faceitId = await getFaceitProfile(steamId);
+
+        await getFaceitHistory(faceitId);
+        await getFaceitStats(faceitId);
+        console.log("///////////////////////////////");
+        console.log("//////////////end//////////////");
+        console.log("///////////////////////////////");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   const CircularButton = ({ children, link }) => {
@@ -140,7 +185,7 @@ const Profile = () => {
 
   return (
     <div className="Profile container">
-      {"faceitProfile : " + JSON.stringify(faceitProfile)}
+      {/* {"faceitProfile : " + JSON.stringify(faceitProfile)}
       <br />
       {"steamFriends : " + JSON.stringify(steamFriends)}
       <br />
@@ -149,6 +194,10 @@ const Profile = () => {
       {"recentlyPlayedGames : " + JSON.stringify(recentlyPlayedGames)}
       <br />
       {"achievements : " + JSON.stringify(achievements)}
+      <br />
+      {"faceitStats : " + JSON.stringify(faceitStats)}
+      <br />
+      {"faceitHistory : " + JSON.stringify(faceitHistory)} */}
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
           <div className="card">
