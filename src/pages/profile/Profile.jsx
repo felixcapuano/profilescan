@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import { apiInstance } from "../../services/globals";
 import "./profile.css";
 // import TwitchLogo from "./icons/TwitchLogo";
@@ -15,6 +15,7 @@ import {
 import { minutes_to_hours } from "../../services/utils";
 
 const Profile = () => {
+  const ids = useRef({ steam: "null", faceit: "null" });
   const [faceitProfile, setFaceitProfile] = useReducer(
     faceitProfileReducer,
     {}
@@ -38,28 +39,32 @@ const Profile = () => {
       params: { path: encodeURI(window.location.pathname) },
     })
       .then(({ data }) => {
+        //get steam id
         setSteamProfile(data);
-        return data.steamID64;
+        ids.current.steam = data.steamID64;
       })
-      .then((steamId) => {
-        apiInstance(`/api/v2/steam/getfriendlist/${steamId}`)
+      .then(async () => {
+        //get faceit id
+        await apiInstance(`/api/v2/faceit/players/${ids.current.steam}`)
+          .then(({ data }) => data)
+          .then(setFaceitProfile)
+          .catch(console.error);
+        ids.current.faceit = faceitProfile.id;
+      })
+      .then(() => {
+        apiInstance(`/api/v2/steam/getfriendlist/${ids.current.steam}`)
           .then(({ data }) => data)
           .then(setSteamFriends)
           .catch(console.error);
 
-        apiInstance(`/api/v2/steam/getrecentlyplayedgames/${steamId}`)
+        apiInstance(`/api/v2/steam/getrecentlyplayedgames/${ids.current.steam}`)
           .then(({ data }) => data)
           .then(setRecentlyPlayedGames)
           .catch(console.error);
 
-        apiInstance(`/api/v2/steam/getplayerachievements/${steamId}`)
+        apiInstance(`/api/v2/steam/getplayerachievements/${ids.current.steam}`)
           .then(({ data }) => data)
           .then(setAchievements)
-          .catch(console.error);
-
-        apiInstance(`/api/v2/faceit/players/${steamId}`)
-          .then(({ data }) => data)
-          .then(setFaceitProfile)
           .catch(console.error);
       })
       .catch(console.error);
@@ -190,7 +195,7 @@ const Profile = () => {
           <div className="card h-100">
             <div className="card-body">
               <h6 className="d-flex align-items-center mb-3">Faceit</h6>
-              <FaceitLvlIcon level={0} />
+              <FaceitLvlIcon level={faceitProfile.level} />
               {faceitInfo.map(renderSecondaryInfo)}
             </div>
           </div>
