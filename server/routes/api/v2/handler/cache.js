@@ -22,7 +22,7 @@ const pullCache = async (req, res, next) => {
 
   try {
     const data = await client.get(req.cacheKey);
-    req.data = data;
+    req.data = JSON.parse(data);
   } catch (error) {
     return await next({ status: 500 });
   }
