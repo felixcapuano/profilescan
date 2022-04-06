@@ -1,7 +1,6 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer } from "react";
 import { apiInstance } from "../../services/globals";
 import "./profile.css";
-// import TwitchLogo from "./icons/TwitchLogo";
 import SteamLogo from "./icons/SteamLogo";
 import FaceitLogo from "./icons/FaceitLogo";
 import {
@@ -19,7 +18,6 @@ import { minutes_to_hours } from "../../services/utils";
 import FaceitLifetime from "./components/FaceitLifetime";
 
 const Profile = () => {
-  const ids = useRef({ steam: "null", faceit: "null" });
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -32,6 +30,7 @@ const Profile = () => {
     playerAchievementsReducer,
     {}
   );
+
   const [faceitProfile, setFaceitProfile] = useReducer(
     faceitProfileReducer,
     {}
@@ -159,6 +158,7 @@ const Profile = () => {
     { key: "Achievements", value: "Not Hacked" },
   ];
 
+  console.log(achievements, faceitHistory);
   return (
     <div className="Profile container">
       <div className="row gutters-sm">
