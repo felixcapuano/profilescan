@@ -17,6 +17,7 @@ import {
 import FaceitLifetime from "./components/FaceitLifetime";
 import SteamGeneral from "./components/SteamGeneral";
 import FaceitCurrent from "./components/FaceitCurrent";
+import FaceitMaps from "./components/FaceitMaps";
 
 const Profile = () => {
   const [steamProfile, setSteamProfile] = useReducer(
@@ -179,6 +180,7 @@ const Profile = () => {
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />
       <FaceitCurrent faceitHistory={faceitHistory} />
+      <FaceitMaps faceitStats={faceitStats} />
     </div>
   );
 };

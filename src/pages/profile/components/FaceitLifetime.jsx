@@ -55,10 +55,7 @@ const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
       <div className="col-sm-12 mb-3">
         <div className="card h-100">
           <div className="d-lg-flex justify-content-center card-body">
-            <div
-              className="d-flex justify-content-center"
-              style={{ backgroundColor: "white" }}
-            >
+            <div className="d-flex justify-content-center">
               <FaceitLvlIcon
                 width={52}
                 height={"84%"}
