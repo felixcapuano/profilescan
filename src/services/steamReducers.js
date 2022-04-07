@@ -17,9 +17,12 @@ export const recentlyPlayedGamesReducer = (state, { games }) => ({
 
 export const playerAchievementsReducer = (state, { achievements }) => {
   return {
-    achievementCompleted: achievements.filter((el) => el.achieved === 1).length,
-    achievementHacked: achievements.every(
+    completed: achievements.filter((el) => el.achieved === 1).length,
+    hacked: achievements.every(
       (el) => el === achievements[0].unlocktime
+    ),
+    firstAchieved: achievements.reduce((p, c) =>
+      p.unlocktime < c.unlocktime && !c.achieved ? p : c
     ),
   };
 };

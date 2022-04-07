@@ -1,7 +1,7 @@
 import React from "react";
 import FaceitLvlIcon from "../icons/FaceitLvlIcon";
 
-const FaceitLifetime = ({ faceitStats, faceitProfile }) => {
+const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
   const stats = faceitStats.lifetime || {};
 
   const profileData = [

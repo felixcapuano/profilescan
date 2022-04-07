@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer } from "react";
 import { apiInstance } from "../../services/globals";
 import "./profile.css";
 // import TwitchLogo from "./icons/TwitchLogo";
@@ -15,11 +15,10 @@ import {
   playerAchievementsReducer,
   recentlyPlayedGamesReducer,
 } from "../../services/steamReducers";
-import { minutes_to_hours } from "../../services/utils";
 import FaceitLifetime from "./components/FaceitLifetime";
+import SteamGeneral from "./components/SteamGeneral";
 
 const Profile = () => {
-  const ids = useRef({ steam: "null", faceit: "null" });
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -129,38 +128,9 @@ const Profile = () => {
     );
   };
 
-  const renderMainInfo = ({ key = "", value = "" }) => {
-    return (
-      <div key={`${key}${value}`}>
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">{key}</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">{value}</div>
-        </div>
-        <hr />
-      </div>
-    );
-  };
-
-  const mainInfo = [
-    { key: "Account status", value: "public" },
-    { key: "Created", value: "08.2012" },
-    { key: "Play CSGO since", value: "03.2014" },
-    { key: "Friends", value: `${steamFriends.count} (XX banned)` },
-    {
-      key: "Time played",
-      value: `${minutes_to_hours(
-        recentlyPlayedGames.minutesPlayed
-      )} hours (${minutes_to_hours(
-        recentlyPlayedGames.minutesPlayedLast2Weeks
-      )}h last 2 weeks)`,
-    },
-    { key: "Achievements", value: "Not Hacked" },
-  ];
-
   return (
     <div className="Profile container">
+      {JSON.stringify(achievements)}
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
           <div className="card">
@@ -188,32 +158,14 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-9">
-          <div className="card mb-3">
-            <div className="card-body">{mainInfo.map(renderMainInfo)}</div>
-          </div>
-        </div>
+        <SteamGeneral
+          steamFriends={steamFriends}
+          recentlyPlayedGames={recentlyPlayedGames}
+          steamProfile={steamProfile}
+          achievements={achievements}
+        />
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />
-      {/* <div className="row gutters-sm">
-        <div className="col-sm-6 mb-3">
-          <div className="card h-100">
-            <div className="card-body">
-              <h6 className="d-flex align-items-center mb-3">Steam</h6>
-              {steamInfo.map(renderSecondaryInfo)}
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-6 mb-3">
-          <div className="card h-100">
-            <div className="card-body">
-              <h6 className="d-flex align-items-center mb-3">Faceit</h6>
-              <FaceitLvlIcon level={faceitProfile.level} />
-              {faceitInfo.map(renderSecondaryInfo)}
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
