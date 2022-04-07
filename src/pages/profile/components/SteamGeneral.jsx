@@ -15,7 +15,7 @@ const SteamGeneral = ({
     { key: "Account status", value: "public" },
     {
       key: "Created",
-      value: moment(steamProfile.memberSince).fromNow(),
+      value: moment(steamProfile.memberSince, "LL").fromNow(),
     },
     {
       key: "Start playing CSGO",
@@ -30,7 +30,9 @@ const SteamGeneral = ({
     },
     {
       key: "Achievements",
-      value: `Not Hacked (${achievements.completed}/167)`,
+      value: `${achievements.hacked ? "Hacked" : "Not Hacked"} (${
+        achievements.completed
+      }/167)`,
     },
   ];
 

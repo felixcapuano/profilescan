@@ -153,6 +153,18 @@ const Profile = () => {
                   <CircularButton link={steamProfile.url}>
                     <SteamLogo />
                   </CircularButton>
+                  {steamProfile.id && (
+                    <a
+                      href={`https://faceitfinder.com/profile/${steamProfile.id}`}
+                      className="d-flex"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button className="btn btn-dark">
+                        Go to Faceitfinder
+                      </button>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

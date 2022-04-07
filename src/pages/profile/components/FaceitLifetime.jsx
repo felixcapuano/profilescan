@@ -18,15 +18,15 @@ const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
   const dataFormatting = ({ key, value }) => {
     return (
       <Item value={key} key={key}>
-        <h4 className="fw-bold text-start">{value}</h4>
+        <h4 className="d-flex fw-bold text-start">{value}</h4>
       </Item>
     );
   };
 
   const Item = ({ children, value }) => {
     return (
-      <div className="ms-4 me-4">
-        <h6 className="fw-light text-start">{value}</h6>
+      <div className="d-flex flex-column ms-4 me-4">
+        <h6 className=" fw-light text-start">{value}</h6>
         {children}
       </div>
     );
@@ -54,17 +54,23 @@ const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
     <div className="row gutters-sm">
       <div className="col-sm-12 mb-3">
         <div className="card h-100">
-          <div className="d-flex justify-content-center card-body">
-            <div className="d-flex" style={{ backgroundColor: "white" }}>
+          <div className="d-lg-flex justify-content-center card-body">
+            <div
+              className="d-flex justify-content-center"
+              style={{ backgroundColor: "white" }}
+            >
               <FaceitLvlIcon
                 width={52}
                 height={"84%"}
-                className="d-flex-center"
                 level={faceitProfile.level}
               />
             </div>
-            {profileData.map(dataFormatting)}
-            {stats["Recent Results"] && <LastGames />}
+            <div className="d-sm-flex justify-content-center">
+              {profileData.map(dataFormatting)}
+            </div>
+            <div className="d-flex justify-content-center">
+              {stats["Recent Results"] && <LastGames />}
+            </div>
           </div>
         </div>
       </div>
