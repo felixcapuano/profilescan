@@ -23,6 +23,7 @@ body {
   background-clip: border-box;
   border: 0 solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  height: 100%;
 }
 
 .card-body {
@@ -36,8 +37,8 @@ body {
   margin-left: -8px;
 }
 
-.gutters-sm>.col,
-.gutters-sm>[class*="col-"] {
+.gutters-sm > .col,
+.gutters-sm > [class*="col-"] {
   padding-right: 8px;
   padding-left: 8px;
 }

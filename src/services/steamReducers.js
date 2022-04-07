@@ -6,7 +6,7 @@ export const communityProfileReducer = (state, data) => ({
   location: data.location,
   avatar: data.avatarFull,
   url: data.steamLink,
-  visibilityState: Number(data.visibilityState),
+  isPublic: Number(data.visibilityState) > 2,
 });
 
 export const recentlyPlayedGamesReducer = (state, { games }) => ({

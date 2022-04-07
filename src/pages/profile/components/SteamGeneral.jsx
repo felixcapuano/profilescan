@@ -9,10 +9,19 @@ const SteamGeneral = ({
   achievements = {},
 }) => {
   const timePlay = minutes_to_hours(recentlyPlayedGames.minutesPlayed);
-  const timePlayL2W = minutes_to_hours(recentlyPlayedGames.minutesPlayed);
+  const timePlayL2W = minutes_to_hours(
+    recentlyPlayedGames.minutesPlayedLast2Weeks
+  );
 
   const data = [
-    { key: "Account status", value: "public" },
+    {
+      key: "Account status",
+      value: steamProfile.isPublic ? "Public" : "Private",
+    },
+    {
+      key: "VAC Ban",
+      value: steamProfile.vacBanned > 0 ? "Yes" : "No",
+    },
     {
       key: "Created",
       value: moment(steamProfile.memberSince, "LL").fromNow(),
@@ -39,20 +48,19 @@ const SteamGeneral = ({
   const renderMainInfo = ({ key = "", value = "" }) => {
     return (
       <div key={`${key}${value}`}>
-        <div className="row">
+        <div className="row pb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">{key}</h6>
           </div>
           <div className="col-sm-9 text-secondary">{value}</div>
         </div>
-        <hr />
       </div>
     );
   };
 
   return (
-    <div className="col-md-9">
-      <div className="card mb-3">
+    <div className="col-md-9 mb-3">
+      <div className="card">
         <div className="card-body">{data.map(renderMainInfo)}</div>
       </div>
     </div>

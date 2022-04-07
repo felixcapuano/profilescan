@@ -17,6 +17,7 @@ import {
 } from "../../services/steamReducers";
 import FaceitLifetime from "./components/FaceitLifetime";
 import SteamGeneral from "./components/SteamGeneral";
+import FaceitCurrent from "./components/FaceitCurrent";
 
 const Profile = () => {
   const [steamProfile, setSteamProfile] = useReducer(
@@ -130,7 +131,6 @@ const Profile = () => {
 
   return (
     <div className="Profile container">
-      {JSON.stringify(achievements)}
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
           <div className="card">
@@ -178,6 +178,7 @@ const Profile = () => {
         />
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />
+      <FaceitCurrent faceitHistory={faceitHistory} />
     </div>
   );
 };
