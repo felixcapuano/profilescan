@@ -27,10 +27,10 @@ const FaceitMaps = ({ faceitStats }) => {
         <td className="d-none d-sm-block">
           <img src={map.img_small} alt={map.label} />
         </td>
-        <td className="text-center">{mapMapping[map.label] || map.label}</td>
-        <td className="text-center">{map.stats["Matches"]}</td>
-        <td className="text-center">{map.stats["Win Rate %"]}%</td>
-        <td className="text-center">{map.stats["Average Kills"]}</td>
+        <td>{mapMapping[map.label] || map.label}</td>
+        <td>{map.stats["Matches"]}</td>
+        <td>{map.stats["Win Rate %"]}%</td>
+        <td>{map.stats["Average Kills"]}</td>
       </tr>
     );
   };
@@ -38,17 +38,21 @@ const FaceitMaps = ({ faceitStats }) => {
   const Table = () => {
     return (
       <table className="table table-striped">
-        <thead>
+        <thead className="text-center">
           <tr>
             <th scope="col">#</th>
-            <th scope="col" className="d-none d-sm-block"></th>
+            <th scope="col" className="d-none d-sm-block">
+              Image
+            </th>
             <th scope="col">Name</th>
             <th scope="col">Games</th>
             <th scope="col">Win(%)</th>
             <th scope="col">Kills(Avg)</th>
           </tr>
         </thead>
-        <tbody>{maps.map(renderTable)}</tbody>
+        <tbody className="align-middle text-center">
+          {maps.map(renderTable)}
+        </tbody>
       </table>
     );
   };
