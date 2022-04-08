@@ -11,3 +11,7 @@ export const minutes_to_hours = (min) => {
 export const seconds_to_hours = (min) => {
   return Math.floor(min / 3600);
 };
+
+export const isValidSteamId = (id) => {
+  return id.match(/[0-9]{17}$/g) !== null;
+};

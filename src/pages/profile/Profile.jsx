@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { apiInstance } from "../../services/globals";
 import "./profile.css";
 import SteamLogo from "./icons/SteamLogo";
@@ -21,6 +21,8 @@ import FaceitCurrent from "./components/FaceitCurrent";
 import FaceitMaps from "./components/FaceitMaps";
 
 const Profile = () => {
+  const [playerFound, setPlayerFound] = useState(false);
+
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -48,80 +50,106 @@ const Profile = () => {
 
   React.useEffect(() => {
     const getSteamProfile = async () => {
-      const { data } = await apiInstance(`/api/v2/steam/getcommunityprofile`, {
-        params: { path: encodeURI(window.location.pathname) },
-      });
-      // console.log("steamprofile", data);
-      setSteamProfile(data);
-      return data.steamID64;
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getcommunityprofile`,
+          {
+            params: { path: encodeURI(window.location.pathname) },
+          }
+        );
+        setSteamProfile(data);
+        return data.steamID64;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
     };
     const getFaceitProfile = async (steamId) => {
-      const { data } = await apiInstance(`/api/v2/faceit/players/${steamId}`);
-      // console.log("faceitprofile", data);
-      setFaceitProfile(data);
-      return data.player_id;
+      try {
+        const { data } = await apiInstance(`/api/v2/faceit/players/${steamId}`);
+        setFaceitProfile(data);
+        return data.player_id;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
     };
     const getSteamFriends = async (steamId) => {
-      const { data } = await apiInstance(
-        `/api/v2/steam/getfriendlist/${steamId}`
-      );
-      // console.log("steamfriends", data);
-      setSteamFriends(data);
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getfriendlist/${steamId}`
+        );
+        // console.log("steamfriends", data);
+        setSteamFriends(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const getAchievements = async (steamId) => {
-      const { data } = await apiInstance(
-        `/api/v2/steam/getplayerachievements/${steamId}`
-      );
-      // console.log("achievements", data);
-      setAchievements(data);
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getplayerachievements/${steamId}`
+        );
+        setAchievements(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const getRecentlyPlayedGames = async (steamId) => {
-      const { data } = await apiInstance(
-        `/api/v2/steam/getrecentlyplayedgames/${steamId}`
-      );
-      // console.log("recentlyplayedgames", data);
-      setRecentlyPlayedGames(data);
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getrecentlyplayedgames/${steamId}`
+        );
+        setRecentlyPlayedGames(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const getFaceitHistory = async (faceitId) => {
-      const { data } = await apiInstance(`/api/v2/faceit/history/${faceitId}`);
-      // console.log("faceithistory", data);
-      setFaceitHistory(data);
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/faceit/history/${faceitId}`
+        );
+        setFaceitHistory(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const getFaceitStats = async (faceitId) => {
-      const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
-      // console.log("faceitstats", data);
-      setFaceitStats(data);
+      try {
+        const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
+        setFaceitStats(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const getUserStatsForGame = async (steamId) => {
-      const { data } = await apiInstance(
-        `/api/v2/steam/getuserstatsforgame/${steamId}`
-      );
-      // console.log("userstatsforgame", data);
-      setSteamStats(data);
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getuserstatsforgame/${steamId}`
+        );
+        setSteamStats(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
     const fetchData = async () => {
-      try {
-        // console.log("///////////////////////////////");
-        // console.log("/////////////start/////////////");
-        // console.log("///////////////////////////////");
-        const steamId = await getSteamProfile();
+      const steamId = await getSteamProfile();
 
-        await getSteamFriends(steamId);
-        await getRecentlyPlayedGames(steamId);
-        await getSteamFriends(steamId);
-        await getAchievements(steamId);
-        await getUserStatsForGame(steamId);
+      setPlayerFound(steamId ? true : false);
+      if (!steamId) return;
 
-        const faceitId = await getFaceitProfile(steamId);
+      await getSteamFriends(steamId);
+      await getRecentlyPlayedGames(steamId);
+      await getSteamFriends(steamId);
+      await getAchievements(steamId);
+      await getUserStatsForGame(steamId);
 
-        await getFaceitHistory(faceitId);
-        await getFaceitStats(faceitId);
-        // console.log("///////////////////////////////");
-        // console.log("//////////////end//////////////");
-        // console.log("///////////////////////////////");
-      } catch (error) {
-        console.log(error);
-      }
+      const faceitId = await getFaceitProfile(steamId);
+      if (!faceitId) return;
+
+      await getFaceitHistory(faceitId);
+      await getFaceitStats(faceitId);
     };
     fetchData();
   }, []);
@@ -140,8 +168,12 @@ const Profile = () => {
     );
   };
 
+  if (!playerFound) {
+    return "player not found";
+  }
+
   return (
-    <div className="Profile container">
+    <div className="Profile container p-3">
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
           <div className="card">
