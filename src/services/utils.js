@@ -7,3 +7,7 @@ export const time_converter = (num) => {
 export const minutes_to_hours = (min) => {
   return Math.floor(min / 60);
 };
+
+export const seconds_to_hours = (min) => {
+  return Math.floor(min / 3600);
+};

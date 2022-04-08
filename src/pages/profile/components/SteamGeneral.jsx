@@ -1,14 +1,15 @@
 import React from "react";
 import moment from "moment";
-import { minutes_to_hours } from "../../../services/utils";
+import { minutes_to_hours, seconds_to_hours } from "../../../services/utils";
 
 const SteamGeneral = ({
   steamFriends = {},
   recentlyPlayedGames = {},
   steamProfile = {},
   achievements = {},
+  steamStats = {},
 }) => {
-  const timePlay = minutes_to_hours(recentlyPlayedGames.minutesPlayed);
+  const timePlay = seconds_to_hours(steamStats.timePlayed);
   const timePlayL2W = minutes_to_hours(
     recentlyPlayedGames.minutesPlayedLast2Weeks
   );

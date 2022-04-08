@@ -13,6 +13,7 @@ import {
   friendsListReducer,
   playerAchievementsReducer,
   recentlyPlayedGamesReducer,
+  userStatsForGameReducer,
 } from "../../services/steamReducers";
 import FaceitLifetime from "./components/FaceitLifetime";
 import SteamGeneral from "./components/SteamGeneral";
@@ -43,19 +44,20 @@ const Profile = () => {
   );
   const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer, {});
   const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
+  const [steamStats, setSteamStats] = useReducer(userStatsForGameReducer, {});
 
   React.useEffect(() => {
     const getSteamProfile = async () => {
       const { data } = await apiInstance(`/api/v2/steam/getcommunityprofile`, {
         params: { path: encodeURI(window.location.pathname) },
       });
-      console.log("steamprofile", data);
+      // console.log("steamprofile", data);
       setSteamProfile(data);
       return data.steamID64;
     };
     const getFaceitProfile = async (steamId) => {
       const { data } = await apiInstance(`/api/v2/faceit/players/${steamId}`);
-      console.log("faceitprofile", data);
+      // console.log("faceitprofile", data);
       setFaceitProfile(data);
       return data.player_id;
     };
@@ -63,52 +65,60 @@ const Profile = () => {
       const { data } = await apiInstance(
         `/api/v2/steam/getfriendlist/${steamId}`
       );
-      console.log("steamfriends", data);
+      // console.log("steamfriends", data);
       setSteamFriends(data);
     };
     const getAchievements = async (steamId) => {
       const { data } = await apiInstance(
         `/api/v2/steam/getplayerachievements/${steamId}`
       );
-      console.log("achievements", data);
+      // console.log("achievements", data);
       setAchievements(data);
     };
     const getRecentlyPlayedGames = async (steamId) => {
       const { data } = await apiInstance(
         `/api/v2/steam/getrecentlyplayedgames/${steamId}`
       );
-      console.log("recentlyplayedgames", data);
+      // console.log("recentlyplayedgames", data);
       setRecentlyPlayedGames(data);
     };
     const getFaceitHistory = async (faceitId) => {
       const { data } = await apiInstance(`/api/v2/faceit/history/${faceitId}`);
-      console.log("faceithistory", data);
+      // console.log("faceithistory", data);
       setFaceitHistory(data);
     };
     const getFaceitStats = async (faceitId) => {
       const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
-      console.log("faceitstats", data);
+      // console.log("faceitstats", data);
       setFaceitStats(data);
+    };
+    const getUserStatsForGame = async (steamId) => {
+      const { data } = await apiInstance(
+        `/api/v2/steam/getuserstatsforgame/${steamId}`
+      );
+      // console.log("userstatsforgame", data);
+      setSteamStats(data);
     };
     const fetchData = async () => {
       try {
-        console.log("///////////////////////////////");
-        console.log("/////////////start/////////////");
-        console.log("///////////////////////////////");
+        // console.log("///////////////////////////////");
+        // console.log("/////////////start/////////////");
+        // console.log("///////////////////////////////");
         const steamId = await getSteamProfile();
 
         await getSteamFriends(steamId);
         await getRecentlyPlayedGames(steamId);
         await getSteamFriends(steamId);
         await getAchievements(steamId);
+        await getUserStatsForGame(steamId);
 
         const faceitId = await getFaceitProfile(steamId);
 
         await getFaceitHistory(faceitId);
         await getFaceitStats(faceitId);
-        console.log("///////////////////////////////");
-        console.log("//////////////end//////////////");
-        console.log("///////////////////////////////");
+        // console.log("///////////////////////////////");
+        // console.log("//////////////end//////////////");
+        // console.log("///////////////////////////////");
       } catch (error) {
         console.log(error);
       }
@@ -176,6 +186,7 @@ const Profile = () => {
           recentlyPlayedGames={recentlyPlayedGames}
           steamProfile={steamProfile}
           achievements={achievements}
+          steamStats={steamStats}
         />
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />

@@ -27,3 +27,10 @@ export const playerAchievementsReducer = (state, { achievements }) => {
 export const friendsListReducer = (state, data) => ({
   count: data.friends.length,
 });
+
+export const userStatsForGameReducer = (state, data) => {
+  return {
+    timePlayed: data.stats.filter((s) => s.name === "total_time_played")[0]
+      .value,
+  };
+};
