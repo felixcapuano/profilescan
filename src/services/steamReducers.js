@@ -8,6 +8,10 @@ export const communityProfileReducer = (state, data) => ({
   isPrivate: Number(data.communityvisibilitystate) < 3,
 });
 
+export const playerBansReducer = (state, data) => {
+  return data;
+}
+
 export const recentlyPlayedGamesReducer = (state, { games }) => ({
   minutesPlayed: games[0].playtime_forever,
   minutesPlayedLast2Weeks: games[0].playtime_2weeks,

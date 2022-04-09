@@ -11,6 +11,7 @@ import {
   communityProfileReducer,
   friendsListReducer,
   playerAchievementsReducer,
+  playerBansReducer,
   recentlyPlayedGamesReducer,
   userStatsForGameReducer,
 } from "../../../services/steamReducers";
@@ -44,6 +45,7 @@ const Player = ({ steamId }) => {
   const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer, {});
   const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
   const [steamStats, setSteamStats] = useReducer(userStatsForGameReducer, {});
+  const [playerBans, setPlayerBans] = useReducer(playerBansReducer, {});
 
   React.useEffect(() => {
     const getSteamProfile = async () => {
@@ -109,15 +111,24 @@ const Player = ({ steamId }) => {
         setSteamStats(data);
       } catch (e) {}
     };
+    const getPlayerBans = async () => {
+      try {
+        const { data } = await apiInstance(
+          `/api/v2/steam/getplayerbans/${steamId}`
+        );
+        setPlayerBans(data);
+      } catch (e) {}
+    };
     const fetchData = async () => {
       if (!steamId) return;
 
       await getSteamProfile();
       await getSteamFriends();
       await getRecentlyPlayedGames();
-      await getSteamFriends();
+      // await getSteamFriends();
       await getAchievements();
       await getSteamStats();
+      await getPlayerBans();
 
       const faceitId = await getFaceitProfile();
       if (!faceitId) return;
@@ -184,11 +195,11 @@ const Player = ({ steamId }) => {
           </div>
         </div>
         <SteamGeneral
-          steamFriends={steamFriends}
           recentlyPlayedGames={recentlyPlayedGames}
           steamProfile={steamProfile}
           achievements={achievements}
           steamStats={steamStats}
+          playerBans={playerBans}
         />
       </div>
       <FaceitLifetime faceitStats={faceitStats} faceitProfile={faceitProfile} />

@@ -3,7 +3,7 @@ import moment from "moment";
 import { minutes_to_hours, seconds_to_hours } from "../../../services/utils";
 
 const SteamGeneral = ({
-  steamFriends = {},
+  playerBans = {},
   recentlyPlayedGames = {},
   steamProfile = {},
   achievements = {},
@@ -22,11 +22,7 @@ const SteamGeneral = ({
     },
     {
       key: "VAC Ban",
-      value: steamProfile.vacBanned
-        ? steamProfile.vacBanned > 0
-          ? "Yes"
-          : "No"
-        : "",
+      value: playerBans.userVacBanned ? "Yes" : "No",
       hidden: steamProfile.isPrivate,
     },
     {
@@ -43,7 +39,7 @@ const SteamGeneral = ({
     },
     {
       key: "Friends",
-      value: steamFriends.count || "",
+      value: `${playerBans.friendCount} (${playerBans.friendBanned} banned)`,
       hidden: steamProfile.isPrivate,
     },
     {

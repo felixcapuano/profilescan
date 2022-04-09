@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const steamInstance = require("../instance/steam");
-// const { pullCache, pushCache } = require("../handler/cache");
+const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
@@ -10,7 +10,6 @@ const fetchBans = async (steamids) => {
     { params: { steamids, }, }
   );
 
-  console.log(data)
   return data.players.filter(({ VACBanned }) => VACBanned === true).length;
 }
 
@@ -52,9 +51,9 @@ const getPlayerBans = async (req, res, next) => {
 
 router.get("/getplayerbans/:id/", [
   isValidSteamId,
-  // pullCache,
+  pullCache,
   getPlayerBans,
-  // pushCache,
+  pushCache,
   response,
 ]);
 
