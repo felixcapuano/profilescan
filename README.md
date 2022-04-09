@@ -22,7 +22,6 @@ Some environments variables a require to start the project. start the project.
 
 ```
 PORT=
-REACT_APP_SERVER_PORT=
 STEAM_API_KEY=
 FACEIT_API_KEY=
 

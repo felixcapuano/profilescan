@@ -13,9 +13,10 @@ const constants = {
 const testValueList = [
   "getfriendlist",
   "getplayerachievements",
-  // "getplayersummaries",
+  "getplayersummaries",
   "getrecentlyplayedgames",
   "getuserstatsforgame",
+  "getsteamid",
 ];
 
 describe("Steam api v2", () => {

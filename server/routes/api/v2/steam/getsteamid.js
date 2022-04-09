@@ -1,33 +1,35 @@
+
 const router = require("express").Router();
 const steamInstance = require("../instance/steam");
 const { pullCache, pushCache } = require("../handler/cache");
 const response = require("../handler/response");
-const isValidSteamId = require("../handler/verifySteamId");
 
-const getPlayerSummaries = async (req, res, next) => {
+const getSteamId = async (req, res, next) => {
   if (req.data) return await next();
 
   try {
     const { data } = await steamInstance.get(
-      "/ISteamUser/GetPlayerSummaries/v0002/",
+      "/ISteamUser/ResolveVanityURL/v0001/",
       {
         params: {
-          steamids: req.params.id,
+          vanityurl: req.params.alias,
         },
       }
     );
+    if (data.response.success !== 1) {
+      return await next({ status: 404 })
+    }
 
-    req.data = data.response.players[0];
+    req.data = data.response;
   } catch (error) {
     return await next({ status: 404 });
   }
   return await next();
 };
 
-router.get("/getplayersummaries/:id/", [
-  isValidSteamId,
+router.get("/getsteamid/:alias/", [
   pullCache,
-  getPlayerSummaries,
+  getSteamId,
   pushCache,
   response,
 ]);
