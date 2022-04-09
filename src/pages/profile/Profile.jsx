@@ -28,14 +28,28 @@ const Profile = () => {
 
   switch (steamId.status) {
     case 1: // id found
-      return <div>Found {steamId.id}</div>;
+      return <Player steamId={steamId.id} />;
 
     case 2: // id not found
-      return <div>Not found</div>;
+      return (
+        <div className="text-center fs-1 text-muted p-5 m-5">
+          🤷‍♀️ USER NOT FOUND 🤷‍♂️
+        </div>
+      );
 
     default:
       // wait for id
-      return <div>Waiting</div>;
+      return (
+        <div className="d-flex justify-content-center p-5 m-5">
+          <div
+            className="spinner-border"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      );
   }
 };
 

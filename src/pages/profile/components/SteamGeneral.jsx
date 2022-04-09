@@ -17,52 +17,72 @@ const SteamGeneral = ({
   const data = [
     {
       key: "Account status",
-      value: steamProfile.isPublic ? "Public" : "Private",
+      value: steamProfile.isPrivate ? "Private" : "Public",
+      hidden: false,
     },
     {
       key: "VAC Ban",
-      value: steamProfile.vacBanned > 0 ? "Yes" : "No",
+      value: steamProfile.vacBanned
+        ? steamProfile.vacBanned > 0
+          ? "Yes"
+          : "No"
+        : "",
+      hidden: steamProfile.isPrivate,
     },
     {
       key: "Created",
-      value: moment(steamProfile.memberSince, "LL").fromNow(),
+      value: steamProfile ? moment(steamProfile.created * 1000).fromNow() : "",
+      hidden: steamProfile.isPrivate,
     },
     {
       key: "Start playing CSGO",
-      value: moment(
-        achievements.firstAchieved?.unlocktime * 1000 || 0
-      ).fromNow(),
+      value: achievements.first?.unlocktime
+        ? moment(achievements.first?.unlocktime * 1000).fromNow()
+        : "",
+      hidden: steamProfile.isPrivate,
     },
-    { key: "Friends", value: `${steamFriends.count}` },
+    {
+      key: "Friends",
+      value: steamFriends.count || "",
+      hidden: steamProfile.isPrivate,
+    },
     {
       key: "Time played",
       value: `${timePlay} hours (${timePlayL2W}h last 2 weeks)`,
+      hidden: steamProfile.isPrivate,
     },
     {
       key: "Achievements",
       value: `${achievements.hacked ? "Hacked" : "Not Hacked"} (${
         achievements.completed
       }/167)`,
+      hidden: steamProfile.isPrivate,
     },
   ];
 
-  const renderMainInfo = ({ key = "", value = "" }) => {
+  const renderMainInfo = ({ key = "", value = "", hidden }) => {
     return (
-      <div key={`${key}${value}`}>
-        <div className="row pb-3">
+      <tr key={`${key}${value}`} hidden={hidden}>
+        {/* <div className="row pb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">{key}</h6>
           </div>
           <div className="col-sm-9 text-secondary">{value}</div>
-        </div>
-      </div>
+        </div> */}
+        <td>{key}</td>
+        <td>{value}</td>
+      </tr>
     );
   };
 
   return (
     <div className="col-md-9 mb-3">
       <div className="card">
-        <div className="card-body">{data.map(renderMainInfo)}</div>
+        <div className="card-body">
+          <table className="table">
+            <tbody>{data.map(renderMainInfo)}</tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

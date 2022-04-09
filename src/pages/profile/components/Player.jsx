@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { apiInstance } from "../../../services/globals";
 import SteamLogo from "../icons/SteamLogo";
 import FaceitLogo from "../icons/FaceitLogo";
@@ -19,9 +19,7 @@ import SteamGeneral from "./SteamGeneral";
 import FaceitCurrent from "./FaceitCurrent";
 import FaceitMaps from "./FaceitMaps";
 
-const Player = () => {
-  const [playerFound, setPlayerFound] = useState(false);
-
+const Player = ({ steamId }) => {
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -51,58 +49,43 @@ const Player = () => {
     const getSteamProfile = async () => {
       try {
         const { data } = await apiInstance(
-          `/api/v2/steam/getcommunityprofile`,
-          {
-            params: { path: encodeURI(window.location.pathname) },
-          }
+          `/api/v2/steam/getplayersummaries/${steamId}`
         );
         setSteamProfile(data);
-        return data.steamID64;
-      } catch (e) {
-        console.error(e);
-        return false;
-      }
+      } catch (e) {}
     };
-    const getFaceitProfile = async (steamId) => {
+    const getFaceitProfile = async () => {
       try {
         const { data } = await apiInstance(`/api/v2/faceit/players/${steamId}`);
         setFaceitProfile(data);
         return data.player_id;
       } catch (e) {
-        console.error(e);
         return false;
       }
     };
-    const getSteamFriends = async (steamId) => {
+    const getSteamFriends = async () => {
       try {
         const { data } = await apiInstance(
           `/api/v2/steam/getfriendlist/${steamId}`
         );
-        // console.log("steamfriends", data);
         setSteamFriends(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
-    const getAchievements = async (steamId) => {
+    const getAchievements = async () => {
       try {
         const { data } = await apiInstance(
           `/api/v2/steam/getplayerachievements/${steamId}`
         );
         setAchievements(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
-    const getRecentlyPlayedGames = async (steamId) => {
+    const getRecentlyPlayedGames = async () => {
       try {
         const { data } = await apiInstance(
           `/api/v2/steam/getrecentlyplayedgames/${steamId}`
         );
         setRecentlyPlayedGames(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
     const getFaceitHistory = async (faceitId) => {
       try {
@@ -110,41 +93,33 @@ const Player = () => {
           `/api/v2/faceit/history/${faceitId}`
         );
         setFaceitHistory(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
     const getFaceitStats = async (faceitId) => {
       try {
         const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
         setFaceitStats(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
-    const getUserStatsForGame = async (steamId) => {
+    const getSteamStats = async () => {
       try {
         const { data } = await apiInstance(
           `/api/v2/steam/getuserstatsforgame/${steamId}`
         );
         setSteamStats(data);
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) {}
     };
     const fetchData = async () => {
-      const steamId = await getSteamProfile();
-
-      setPlayerFound(steamId ? true : false);
       if (!steamId) return;
 
-      await getSteamFriends(steamId);
-      await getRecentlyPlayedGames(steamId);
-      await getSteamFriends(steamId);
-      await getAchievements(steamId);
-      await getUserStatsForGame(steamId);
+      await getSteamProfile();
+      await getSteamFriends();
+      await getRecentlyPlayedGames();
+      await getSteamFriends();
+      await getAchievements();
+      await getSteamStats();
 
-      const faceitId = await getFaceitProfile(steamId);
+      const faceitId = await getFaceitProfile();
       if (!faceitId) return;
 
       await getFaceitHistory(faceitId);
@@ -166,10 +141,6 @@ const Player = () => {
       </a>
     );
   };
-
-  if (!playerFound) {
-    return "player not found";
-  }
 
   return (
     <div className="Profile container p-3">
@@ -195,9 +166,9 @@ const Player = () => {
                   <CircularButton link={steamProfile.url}>
                     <SteamLogo />
                   </CircularButton>
-                  {steamProfile.id && (
+                  {steamId && (
                     <a
-                      href={`https://faceitfinder.com/profile/${steamProfile.id}`}
+                      href={`https://faceitfinder.com/profile/${steamId}`}
                       className="d-flex"
                       target="_blank"
                       rel="noopener noreferrer"
