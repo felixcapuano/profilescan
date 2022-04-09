@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { apiInstance } from "../../services/globals";
-import { isValidSteamId } from "../../services/utils";
+import { getIdFromPathname, isValidSteamId } from "../../services/utils";
 import Player from "./components/Player";
 import "./profile.css";
-
-const getIdFromPathname = (pathname) => {
-  const regex = /^\/(?:id|profiles)\/([0-9a-zA-Z]+)\/?$/;
-  const match = pathname.match(regex);
-  return match[1] || false;
-};
 
 const Profile = () => {
   const [steamId, setSteamId] = useState({ status: 0, id: "" });

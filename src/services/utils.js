@@ -15,3 +15,10 @@ export const seconds_to_hours = (min) => {
 export const isValidSteamId = (id) => {
   return id.match(/[0-9]{17}$/g) !== null;
 };
+
+export const getIdFromPathname = (pathname) => {
+  const regex = /^\/(?:id|profiles)\/([0-9a-zA-Z]+)\/?$/;
+  const match = pathname.match(regex);
+  return match[1] || false;
+};
+
