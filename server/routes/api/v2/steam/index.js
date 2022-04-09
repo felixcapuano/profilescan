@@ -7,5 +7,6 @@ router.use(require("./getplayersummaries"));
 router.use(require("./getrecentlyplayedgames"));
 router.use(require("./getcommunityprofile"));
 router.use(require('./getsteamid'));
+router.use(require("./getplayerbans"));
 
 module.exports = router;
