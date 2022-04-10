@@ -56,8 +56,8 @@ describe("Faceit api v2", () => {
     });
   });
 
-  describe(`GET /api/v2/faceit/stats/:faceitId/`, () => {
-    testValueList2.forEach((value) => {
+  testValueList2.forEach((value) => {
+    describe(`GET /api/v2/faceit/${value}/:faceitId/`, () => {
       it("Correct user id", (done) => {
         request
           .get(`/api/v2/faceit/${value}/${constants.faceitId.correct}`)
