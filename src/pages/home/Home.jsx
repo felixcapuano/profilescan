@@ -48,7 +48,7 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className="container justify-content-center">
+      <div className="d-lg-flex justify-content-center">
         <TutorialPane />
       </div>
     </div>
