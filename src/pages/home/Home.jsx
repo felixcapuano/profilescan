@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TutorialPane from "../../components/TutorialPane";
 import { isValidSteamId } from "../../services/utils";
 import "./home.css";
 
@@ -47,11 +48,8 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className="d-flex justify-content-center">
-        <div className="alert alert-warning" role="alert">
-          Tip you can simply typing scan before the url of the steam community
-          profile.
-        </div>
+      <div className="container justify-content-center">
+        <TutorialPane />
       </div>
     </div>
   );
