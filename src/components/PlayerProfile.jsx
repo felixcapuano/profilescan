@@ -1,12 +1,12 @@
 import React, { useReducer } from "react";
-import { apiInstance } from "../../../services/globals";
-import SteamLogo from "../icons/SteamLogo";
-import FaceitLogo from "../icons/FaceitLogo";
+import { apiInstance } from "../services/globals";
+import SteamLogo from "../pages/profile/icons/SteamLogo";
+import FaceitLogo from "../pages/profile/icons/FaceitLogo";
 import {
   faceitHistoryReducer,
   faceitProfileReducer,
   faceitStatsReducer,
-} from "../../../services/faceitReducer";
+} from "../services/faceitReducer";
 import {
   communityProfileReducer,
   friendsListReducer,
@@ -14,13 +14,13 @@ import {
   playerBansReducer,
   recentlyPlayedGamesReducer,
   userStatsForGameReducer,
-} from "../../../services/steamReducers";
+} from "../services/steamReducers";
 import FaceitLifetime from "./FaceitLifetime";
 import SteamGeneral from "./SteamGeneral";
 import FaceitCurrent from "./FaceitCurrent";
 import FaceitMaps from "./FaceitMaps";
 
-const Player = ({ steamId }) => {
+const PlayerProfile = ({ steamId }) => {
   const [steamProfile, setSteamProfile] = useReducer(
     communityProfileReducer,
     {}
@@ -209,4 +209,4 @@ const Player = ({ steamId }) => {
   );
 };
 
-export default Player;
+export default PlayerProfile;

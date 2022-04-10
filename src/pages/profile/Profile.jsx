@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { apiInstance } from "../../services/globals";
 import { getIdFromPathname, isValidSteamId } from "../../services/utils";
-import Player from "./components/Player";
+import PlayerProfile from "../../components/PlayerProfile";
 import "./profile.css";
 
 const Profile = () => {
@@ -28,7 +28,7 @@ const Profile = () => {
 
   switch (steamId.status) {
     case 1: // id found
-      return <Player steamId={steamId.id} />;
+      return <PlayerProfile steamId={steamId.id} />;
 
     case 2: // id not found
       return (
