@@ -10,7 +10,7 @@ export const communityProfileReducer = (state, data) => ({
 
 export const playerBansReducer = (state, data) => {
   return data;
-}
+};
 
 export const recentlyPlayedGamesReducer = (state, { games }) => ({
   minutesPlayed: games[0].playtime_forever,
@@ -20,7 +20,9 @@ export const recentlyPlayedGamesReducer = (state, { games }) => ({
 export const playerAchievementsReducer = (state, { achievements }) => {
   return {
     completed: achievements.filter((el) => el.achieved === 1).length,
-    hacked: achievements.every((el) => el.unlocktime === achievements[0].unlocktime),
+    hacked: achievements.every(
+      (el) => el.unlocktime === achievements[0].unlocktime
+    ),
     first: achievements.reduce((p, c) =>
       p.unlocktime < c.unlocktime && !c.achieved ? p : c
     ),

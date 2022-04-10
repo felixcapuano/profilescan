@@ -27,7 +27,7 @@ describe("Steam api v2", () => {
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.not.have.any.keys('cacheTime')
+            res.body.should.not.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -37,7 +37,7 @@ describe("Steam api v2", () => {
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.have.any.keys('cacheTime')
+            res.body.should.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -68,7 +68,7 @@ describe("Steam api v2", () => {
         .get(`/api/v2/steam/getsteamid/${constants.name.correct}`)
         .expect(200)
         .end((err, res) => {
-          res.body.should.not.have.any.keys('cacheTime')
+          res.body.should.not.have.any.keys("cacheTime");
           done(err);
         });
     });
@@ -78,7 +78,7 @@ describe("Steam api v2", () => {
         .get(`/api/v2/steam/getsteamid/${constants.name.correct}`)
         .expect(200)
         .end((err, res) => {
-          res.body.should.have.any.keys('cacheTime')
+          res.body.should.have.any.keys("cacheTime");
           done(err);
         });
     });

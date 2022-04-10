@@ -10,7 +10,9 @@ const getCommunityProfile = async (req, res, next) => {
   req.steamLink = "https://steamcommunity.com" + req.query.path;
 
   try {
-    const steamPageXml = await axios.get(req.steamLink, { params: { xml: 1 } });
+    const steamPageXml = await axios.get(req.steamLink, {
+      params: { xml: 1 },
+    });
     const { profile } = await parseStringPromise(steamPageXml.data);
     req.data = profile;
     if (!profile) throw new Error("Profile not found.");

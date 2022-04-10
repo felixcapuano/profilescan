@@ -5,13 +5,12 @@ const response = require("../handler/response");
 const isValidSteamId = require("../handler/verifySteamId");
 
 const fetchBans = async (steamids) => {
-  const { data } = await steamInstance.get(
-    "/ISteamUser/GetPlayerBans/v0001/",
-    { params: { steamids, }, }
-  );
+  const { data } = await steamInstance.get("/ISteamUser/GetPlayerBans/v0001/", {
+    params: { steamids },
+  });
 
   return data.players.filter(({ VACBanned }) => VACBanned === true).length;
-}
+};
 
 const getPlayerBans = async (req, res, next) => {
   if (req.data) return await next();
@@ -42,7 +41,7 @@ const getPlayerBans = async (req, res, next) => {
       req.data.friendBanned += await fetchBans(friendsString);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return await next({ status: 404 });
   }
 

@@ -1,7 +1,7 @@
 const supertest = require("supertest");
 const app = require("../server/entrypoint");
 const { client } = require("../server/routes/api/v2/instance/redis");
-require('chai').should();
+require("chai").should();
 
 global.request = supertest(app);
 

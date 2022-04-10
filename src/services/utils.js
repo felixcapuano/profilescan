@@ -21,4 +21,3 @@ export const getIdFromPathname = (pathname) => {
   const match = pathname.match(regex);
   return match[1] || false;
 };
-

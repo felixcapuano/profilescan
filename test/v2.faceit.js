@@ -1,4 +1,3 @@
-
 const constants = {
   steamId: {
     correct: "76561198069504185", //mammoth
@@ -22,7 +21,7 @@ describe("Faceit api v2", () => {
           .get(`/api/v2/faceit/${value}/${constants.steamId.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.not.have.any.keys('cacheTime')
+            res.body.should.not.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -32,7 +31,7 @@ describe("Faceit api v2", () => {
           .get(`/api/v2/faceit/${value}/${constants.steamId.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.have.any.keys('cacheTime')
+            res.body.should.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -64,7 +63,7 @@ describe("Faceit api v2", () => {
           .get(`/api/v2/faceit/${value}/${constants.faceitId.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.not.have.any.keys('cacheTime')
+            res.body.should.not.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -74,7 +73,7 @@ describe("Faceit api v2", () => {
           .get(`/api/v2/faceit/${value}/${constants.faceitId.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.have.any.keys('cacheTime')
+            res.body.should.have.any.keys("cacheTime");
             done(err);
           });
       });

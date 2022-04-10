@@ -30,7 +30,7 @@
     "start": "node ./server/entrypoint",
     "build": "cross-env BUILD_PATH='./server/build' react-scripts build",
     "test": "cross-env NODE_ENV=test mocha --exit",
-    "eject": "react-scripts eject"
+    "prettier": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
