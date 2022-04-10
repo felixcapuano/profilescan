@@ -1,5 +1,5 @@
 import React from "react";
-import FaceitLvlIcon from "../pages/profile/icons/FaceitLvlIcon";
+import FaceitLvlIcon from "./FaceitLvlIcon";
 
 const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
   if (!faceitStats.lifetime || !faceitProfile.elo) return null;

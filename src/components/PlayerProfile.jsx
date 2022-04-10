@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { apiInstance } from "../services/globals";
-import SteamLogo from "../pages/profile/icons/SteamLogo";
-import FaceitLogo from "../pages/profile/icons/FaceitLogo";
+import { ReactComponent as SteamLogo } from "../assets/icons/steamLogo.svg";
+import { ReactComponent as FaceitLogo } from "../assets/icons/faceitLogo.svg";
 import {
   faceitHistoryReducer,
   faceitProfileReducer,
