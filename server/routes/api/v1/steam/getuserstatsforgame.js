@@ -15,7 +15,7 @@ router.get("/getuserstatsforgame/:id/", cache, async (req, res) => {
       }
     );
 
-    console.log(steamResponse.data)
+    console.log(steamResponse.data);
     await cacheData(req.cacheKey, steamResponse.data.playerstats);
 
     console.log(`GET ${req.originalUrl}`);

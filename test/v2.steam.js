@@ -7,13 +7,14 @@ const constants = {
   name: {
     correct: "Xnem",
     bad: "Xnemqlsdjflmqjsdjf",
+    private: "okashinafelix",
   },
 };
 
 const testValueList = [
   "getfriendlist",
   "getplayerachievements",
-  // "getplayersummaries",
+  "getplayersummaries",
   "getrecentlyplayedgames",
   "getuserstatsforgame",
 ];
@@ -26,7 +27,7 @@ describe("Steam api v2", () => {
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.not.have.any.keys('cacheTime')
+            res.body.should.not.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -36,7 +37,7 @@ describe("Steam api v2", () => {
           .get(`/api/v2/steam/${value}/${constants.id.correct}`)
           .expect(200)
           .end((err, res) => {
-            res.body.should.have.any.keys('cacheTime')
+            res.body.should.have.any.keys("cacheTime");
             done(err);
           });
       });
@@ -50,14 +51,54 @@ describe("Steam api v2", () => {
           });
       });
 
-      it("Private user id", (done) => {
-        request
-          .get(`/api/v2/steam/${value}/${constants.id.private}`)
-          .expect(404)
-          .end((err, res) => {
-            done(err);
-          });
-      });
+      // it("Private user id", (done) => {
+      //   request
+      //     .get(`/api/v2/steam/${value}/${constants.id.private}`)
+      //     .expect(404)
+      //     .end((err, res) => {
+      //       done(err);
+      //     });
+      // });
+    });
+  });
+
+  describe(`GET /api/v2/stream/getsteamid/:id/`, () => {
+    it("Correct user id", (done) => {
+      request
+        .get(`/api/v2/steam/getsteamid/${constants.name.correct}`)
+        .expect(200)
+        .end((err, res) => {
+          res.body.should.not.have.any.keys("cacheTime");
+          done(err);
+        });
+    });
+
+    it("Correct user id cached", (done) => {
+      request
+        .get(`/api/v2/steam/getsteamid/${constants.name.correct}`)
+        .expect(200)
+        .end((err, res) => {
+          res.body.should.have.any.keys("cacheTime");
+          done(err);
+        });
+    });
+
+    it("Bad user id", (done) => {
+      request
+        .get(`/api/v2/steam/getsteamid/${constants.name.bad}`)
+        .expect(404)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+
+    it("Private user id", (done) => {
+      request
+        .get(`/api/v2/steam/getsteamid/${constants.name.private}`)
+        .expect(200)
+        .end((err, res) => {
+          done(err);
+        });
     });
   });
 

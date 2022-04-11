@@ -8,7 +8,7 @@ const getPlayerSummaries = async (req, res, next) => {
   if (req.data) return await next();
 
   try {
-    const steamRes = await steamInstance.get(
+    const { data } = await steamInstance.get(
       "/ISteamUser/GetPlayerSummaries/v0002/",
       {
         params: {
@@ -17,7 +17,7 @@ const getPlayerSummaries = async (req, res, next) => {
       }
     );
 
-    req.data = steamRes.data.response;
+    req.data = data.response.players[0];
   } catch (error) {
     return await next({ status: 404 });
   }
