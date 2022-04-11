@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Modal } from "bootstrap";
+import TutorialPane from "./TutorialPane";
 
 const HelpModal = ({ toggle = false, setToggle }) => {
   const modalRef = useRef();
@@ -25,21 +26,22 @@ const HelpModal = ({ toggle = false, setToggle }) => {
         aria-hidden="false"
         ref={modalRef}
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="helpModalLabel">
-                Modal title
+                Help
               </h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                // onClick={() => setToggle && setToggle(false)}
               ></button>
             </div>
-            <div className="modal-body">...</div>
+            <div className="modal-body m-0 p-0">
+              <TutorialPane />
+            </div>
           </div>
         </div>
       </div>
