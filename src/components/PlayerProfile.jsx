@@ -9,7 +9,6 @@ import {
 } from "../services/faceitReducer";
 import {
   communityProfileReducer,
-  friendsListReducer,
   playerAchievementsReducer,
   playerBansReducer,
   recentlyPlayedGamesReducer,
@@ -43,7 +42,7 @@ const PlayerProfile = ({ steamId }) => {
     {}
   );
   const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer, {});
-  const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
+  // const [steamFriends, setSteamFriends] = useReducer(friendsListReducer, {});
   const [steamStats, setSteamStats] = useReducer(userStatsForGameReducer, {});
   const [playerBans, setPlayerBans] = useReducer(playerBansReducer, {});
 
