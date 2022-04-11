@@ -64,14 +64,14 @@ const PlayerProfile = ({ steamId }) => {
         return false;
       }
     };
-    const getSteamFriends = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getfriendlist/${steamId}`
-        );
-        setSteamFriends(data);
-      } catch (e) {}
-    };
+    // const getSteamFriends = async () => {
+    //   try {
+    //     const { data } = await apiInstance(
+    //       `/api/v2/steam/getfriendlist/${steamId}`
+    //     );
+    //     setSteamFriends(data);
+    //   } catch (e) {}
+    // };
     const getAchievements = async () => {
       try {
         const { data } = await apiInstance(
@@ -122,7 +122,6 @@ const PlayerProfile = ({ steamId }) => {
       if (!steamId) return;
 
       await getSteamProfile();
-      await getSteamFriends();
       await getRecentlyPlayedGames();
       // await getSteamFriends();
       await getAchievements();
@@ -136,7 +135,7 @@ const PlayerProfile = ({ steamId }) => {
       await getFaceitStats(faceitId);
     };
     fetchData();
-  }, []);
+  }, [steamId]);
 
   const CircularButton = ({ children, link }) => {
     return (
