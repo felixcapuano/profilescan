@@ -1,17 +1,18 @@
+html,
 body {
   text-align: left;
-  /* background-color: #e2e8f0;
-  color: #1a202c; */
 }
 
 .theme-dark {
   background-color: #e2e8f0;
   color: #1a202c;
+  height: 100%;
 }
 
 .theme-light {
   color: #e2e8f0;
   background-color: #1a202c;
+  height: 100%;
 }
 
 .item-icon {

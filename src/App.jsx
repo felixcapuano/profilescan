@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { Route, Routes } from "react-router-dom";
 import "bootstrap";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +10,10 @@ import "./app.css";
 import { ThemeContext } from "./contexts";
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useReducer((theme, newTheme) => {
+    localStorage.setItem("theme", newTheme);
+    return newTheme;
+  }, localStorage.getItem("theme") || "dark");
 
   return (
     <div className={"theme-" + theme}>
