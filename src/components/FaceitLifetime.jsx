@@ -52,24 +52,20 @@ const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
   };
 
   return (
-    <div className="row gutters-sm">
-      <div className="col-sm-12 mb-3">
-        <div className="card h-100">
-          <div className="d-lg-flex justify-content-center card-body">
-            <div className="d-flex justify-content-center">
-              <FaceitLvlIcon
-                width={52}
-                height={"84%"}
-                level={faceitProfile.level}
-              />
-            </div>
-            <div className="d-sm-flex justify-content-center">
-              {profileData.map(dataFormatting)}
-            </div>
-            <div className="d-flex justify-content-center">
-              {stats["Recent Results"] && <LastGames />}
-            </div>
-          </div>
+    <div className="card h-100">
+      <div className="d-lg-flex justify-content-center card-body">
+        <div className="d-flex justify-content-center">
+          <FaceitLvlIcon
+            width={52}
+            height={"84%"}
+            level={faceitProfile.level}
+          />
+        </div>
+        <div className="d-sm-flex justify-content-center">
+          {profileData.map(dataFormatting)}
+        </div>
+        <div className="d-flex justify-content-center">
+          {stats["Recent Results"] && <LastGames />}
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ const HelpModal = ({ toggle = false, setToggle }) => {
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="helpModalLabel">
+              <h5 className="modal-title text-dark" id="helpModalLabel">
                 Help
               </h5>
               <button
@@ -37,7 +37,7 @@ const HelpModal = ({ toggle = false, setToggle }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body m-0 p-0">
               <TutorialPane />

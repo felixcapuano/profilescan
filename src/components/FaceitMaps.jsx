@@ -58,13 +58,9 @@ const FaceitMaps = ({ faceitStats }) => {
   };
 
   return (
-    <div className="row gutters-sm">
-      <div className="col-lg-8 offset-lg-2 mb-3">
-        <div className="card h-100">
-          <div className="d-lg-flex card-body">
-            <Table />
-          </div>
-        </div>
+    <div className="card h-100">
+      <div className="d-lg-flex card-body">
+        <Table />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 html,
 body {
   text-align: left;
+  height: 100%;
 }
 
 .theme-dark {

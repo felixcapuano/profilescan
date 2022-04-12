@@ -1,12 +1,15 @@
-export const communityProfileReducer = (state, data) => ({
-  // vacBanned: Number(data.vacBanned),
-  created: data.timecreated,
-  nickname: data.personaname,
-  location: data.loccountrycode,
-  avatar: data.avatarfull,
-  url: data.profileurl,
-  isPrivate: Number(data.communityvisibilitystate) < 3,
-});
+export const communityProfileReducer = (state, data) => {
+  return {
+    // vacBanned: Number(data.vacBanned), created: data.timecreated,
+    id: data.steamid,
+    nickname: data.personaname,
+    location: data.loccountrycode,
+    avatar: data.avatarfull,
+    url: data.profileurl,
+    isPrivate: Number(data.communityvisibilitystate) < 3,
+
+  }
+}
 
 export const playerBansReducer = (state, data) => {
   return data;

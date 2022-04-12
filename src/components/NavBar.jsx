@@ -32,7 +32,7 @@ const NavBar = () => {
         <a className="navbar-brand" href="/">
           <div className="d-flex align-items-center">
             <ProfileScanLogo color="white" width={40} />
-            <div className="text-center ms-2">Alpha</div>
+            <div className="text-center ms-2">Steam Scanner Alpha</div>
           </div>
         </a>
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
