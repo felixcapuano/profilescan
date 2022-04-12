@@ -1,7 +1,17 @@
 body {
-  color: #1a202c;
   text-align: left;
+  /* background-color: #e2e8f0;
+  color: #1a202c; */
+}
+
+.theme-dark {
   background-color: #e2e8f0;
+  color: #1a202c;
+}
+
+.theme-light {
+  color: #e2e8f0;
+  background-color: #1a202c;
 }
 
 .item-icon {

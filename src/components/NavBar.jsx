@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ReactComponent as QuestionIcon } from "../assets/icons/question.svg";
 import { ReactComponent as ContrastIcon } from "../assets/icons/contrast.svg";
 import { ReactComponent as ProfileScanLogo } from "../assets/icons/profilescanLogo.svg";
 // import { useNavigate } from "react-router-dom";
 // import { isValidSteamId } from "../services/utils";
 import HelpModal from "./HelpModal";
+import { ThemeContext } from "../contexts";
 
 const NavBar = () => {
   // const navigate = useNavigate();
   // const [searchValue, setSearchValue] = useState("");
   const [toggleHelpModal, setToggleHelpModal] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const helpHandler = () => {
     setToggleHelpModal(true);
   };
   const contrastHandler = () => {
-    console.log("contrast");
+    setTheme(theme === "light" ? "dark" : "light");
   };
   // const searchHandler = (e) => {
   //   e.preventDefault();
@@ -58,7 +60,6 @@ const NavBar = () => {
           onClick={contrastHandler}
           width={30}
           height={30}
-          hidden
         />
         <HelpModal toggle={toggleHelpModal} setToggle={setToggleHelpModal} />
       </div>
