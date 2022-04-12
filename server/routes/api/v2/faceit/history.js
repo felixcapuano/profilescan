@@ -21,7 +21,6 @@ const history = async (req, res, next) => {
 
     req.data = faceitRes.data;
   } catch (error) {
-    console.log(error);
     return await next({ status: 404 });
   }
   return await next();

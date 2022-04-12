@@ -41,7 +41,6 @@ const getPlayerBans = async (req, res, next) => {
       req.data.friendBanned += await fetchBans(friendsString);
     }
   } catch (error) {
-    console.log(error);
     return await next({ status: 404 });
   }
 

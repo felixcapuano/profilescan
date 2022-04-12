@@ -12,7 +12,6 @@ router.get("/getcommunityprofile", async (req, res) => {
   try {
     steamPageXml = await axios.get(req.steamLink);
   } catch (error) {
-    console.log(error);
     console.error(`GET ${req.originalUrl} "Failed to fetch steam profile"`);
     return res.status(404).send(`Steam profile not found`);
   }
