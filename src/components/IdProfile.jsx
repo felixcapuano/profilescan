@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ReactComponent as SteamLogo } from "../assets/icons/steamLogo.svg";
 import { ReactComponent as FaceitLogo } from "../assets/icons/faceitLogo.svg";
+import notFoundImg from "../assets/images/notFoundProfilePict.png";
 
 const IdProfile = ({ steamProfile, faceitProfile }) => {
   const [pictLoaded, setPictLoaded] = useState(false);
-  const onPictLoaded = () => {
-    console.log("loaded");
-    setPictLoaded(true);
-  };
+  // const [pictError, setPictError] = useState(false);
+  const pictError = useRef(false);
+
+  const onPictLoaded = () => setPictLoaded(true);
   const onPictFailed = () => {
-    console.log("Failed to load!");
+    pictError.current = true;
+    setPictLoaded(true);
   };
 
   const CircularButton = ({ children, link, tooltips }) => {
@@ -32,7 +34,8 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
       <div className="d-flex justify-content-center align-items-center h-50 w-100 rounded-circle">
         <img
           className="rounded-circle m-2"
-          src={steamProfile.avatar}
+          src={pictError.current ? notFoundImg : steamProfile.avatar}
+          height="100%"
           onLoad={onPictLoaded}
           onError={onPictFailed}
           alt=""
