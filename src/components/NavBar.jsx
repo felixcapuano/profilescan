@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { ReactComponent as QuestionIcon } from "../assets/icons/question.svg";
 import { ReactComponent as ContrastIcon } from "../assets/icons/contrast.svg";
+import { ReactComponent as GithubIcon } from "../assets/icons/githubLogo.svg";
 import { ReactComponent as ProfileScanLogo } from "../assets/icons/profilescanLogo.svg";
 // import { useNavigate } from "react-router-dom";
 // import { isValidSteamId } from "../services/utils";
@@ -49,19 +50,22 @@ const NavBar = () => {
             </form>
           </li> */}
         </ul>
-        <QuestionIcon
-          className="item-icon"
-          onClick={helpHandler}
-          width={30}
-          height={30}
-        />
         <ContrastIcon
           className="item-icon ms-2"
           onClick={contrastHandler}
           width={30}
           height={30}
         />
+        <QuestionIcon
+          className="item-icon"
+          onClick={helpHandler}
+          width={30}
+          height={30}
+        />
         <HelpModal toggle={toggleHelpModal} setToggle={setToggleHelpModal} />
+        <a href="https://github.com/felixcapuano/profilescan">
+          <GithubIcon className="item-icon" width={30} height={30} />
+        </a>
       </div>
     </nav>
   );
