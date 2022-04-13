@@ -52,7 +52,7 @@ const FaceitLifetime = ({ faceitStats = {}, faceitProfile = {} }) => {
   };
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 text-dark">
       <div className="d-lg-flex justify-content-center card-body">
         <div className="d-flex justify-content-center">
           <FaceitLvlIcon

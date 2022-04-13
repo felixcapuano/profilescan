@@ -35,6 +35,7 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
           src={steamProfile.avatar}
           onLoad={onPictLoaded}
           onError={onPictFailed}
+          alt=""
         />
         {!pictLoaded && (
           <div className="spinner-grow" role="status">
@@ -46,7 +47,7 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
   };
 
   return (
-    <div className="card">
+    <div className="card text-dark">
       <div className="card-body h-100">
         <div className="d-flex flex-column align-items-center text-center h-100">
           <ProfileImg />
