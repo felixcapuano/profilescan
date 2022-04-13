@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#root {
   text-align: left;
   height: 100%;
 }
@@ -7,18 +8,19 @@ body {
 .theme-dark {
   background-color: #e2e8f0;
   color: #1a202c;
-  height: 100%;
+  min-height: 100%;
 }
 
 .theme-light {
-  color: #e2e8f0;
   background-color: #1a202c;
-  height: 100%;
+  color: #e2e8f0;
+  min-height: 100%;
 }
 
 .item-icon {
   color: gray;
 }
+
 .item-icon:hover {
   color: white;
 }

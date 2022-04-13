@@ -139,13 +139,15 @@ const PlayerProfile = ({ steamId }) => {
             faceitProfile={faceitProfile}
           />
         </div>
-        <SteamGeneral
-          recentlyPlayedGames={recentlyPlayedGames}
-          steamProfile={steamProfile}
-          achievements={achievements}
-          steamStats={steamStats}
-          playerBans={playerBans}
-        />
+        <div className="col-md-9 mb-3">
+          <SteamGeneral
+            recentlyPlayedGames={recentlyPlayedGames}
+            steamProfile={steamProfile}
+            achievements={achievements}
+            steamStats={steamStats}
+            playerBans={playerBans}
+          />
+        </div>
       </div>
       <div className="row gutters-sm">
         <div className="col-sm-12 mb-3">

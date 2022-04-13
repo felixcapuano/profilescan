@@ -72,13 +72,11 @@ const SteamGeneral = ({
   };
 
   return (
-    <div className="col-md-9 mb-3">
-      <div className="card">
-        <div className="card-body">
-          <table className="table">
-            <tbody>{data.map(renderMainInfo)}</tbody>
-          </table>
-        </div>
+    <div className="card">
+      <div className="card-body">
+        <table className="table">
+          <tbody>{data.map(renderMainInfo)}</tbody>
+        </table>
       </div>
     </div>
   );
