@@ -51,20 +51,20 @@ const NavBar = () => {
           </li> */}
         </ul>
         <ContrastIcon
-          className="item-icon ms-2"
+          className="item-icon me-2"
           onClick={contrastHandler}
           width={30}
           height={30}
         />
         <QuestionIcon
-          className="item-icon"
+          className="item-icon me-2"
           onClick={helpHandler}
           width={30}
           height={30}
         />
         <HelpModal toggle={toggleHelpModal} setToggle={setToggleHelpModal} />
         <a href="https://github.com/felixcapuano/profilescan">
-          <GithubIcon className="item-icon" width={30} height={30} />
+          <GithubIcon className="item-icon me-2" width={30} height={30} />
         </a>
       </div>
     </nav>
