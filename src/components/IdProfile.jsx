@@ -67,7 +67,7 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
             </CircularButton>
             <a
               href={`https://faceitfinder.com/profile/${steamProfile.id}`}
-              className="d-flex"
+              className="d-flex text-decoration-none"
               target="_blank"
               rel="noopener noreferrer"
             >
