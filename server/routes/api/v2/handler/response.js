@@ -1,7 +1,7 @@
+const logger = require("../../../../logging");
+
 const response = async (req, res) => {
-  console.log(
-    `GET ${req.originalUrl}${req.data.cacheTime ? ' "use cache"' : ""}`
-  );
+  logger.info({ url: req.originalUrl, cached: "cacheTime" in req.data });
 
   await res
     .contentType("application/json")
