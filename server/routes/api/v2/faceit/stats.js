@@ -14,7 +14,13 @@ const stats = async (req, res, next) => {
 
     req.data = faceitRes.data;
   } catch (error) {
-    return await next({ status: 404 });
+    switch (error.status) {
+      case 404:
+        req.data = { private: true }
+        return await next();
+      default:
+        return await next({ status: 404 });
+    }
   }
   return await next();
 };
