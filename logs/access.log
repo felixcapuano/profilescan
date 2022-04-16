@@ -1,3 +1,19 @@
 {"level":"info","message":"GET /api/v2/faceit/players/76561198069504185"}
 {"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561198069504185"}}
 {"level":"info","message":{"cached":true,"url":"/api/v2/faceit/players/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Nyouz"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561199040420116"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/stats/d55ea7a0-f767-46d3-9a0c-c70cfd701c17"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/history/d55ea7a0-f767-46d3-9a0c-c70cfd701c17"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Xnem"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561198104167252"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/stats/2c9dc428-c2d6-4601-beab-24b770d8bfe8"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/history/2c9dc428-c2d6-4601-beab-24b770d8bfe8"}}
+{"level":"info","message":{"cached":true,"url":"/api/v2/steam/getsteamid/Xnem"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561197989705495"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Nuunoooo"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/faceit/players/76561198806416431"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Parigo017"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayersummaries/76561197960301489"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayersummaries/76561197960301000"}}

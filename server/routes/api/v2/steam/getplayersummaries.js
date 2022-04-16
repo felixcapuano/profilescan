@@ -17,7 +17,8 @@ const getPlayerSummaries = async (req, res, next) => {
       }
     );
 
-    req.data = data.response.players[0];
+    req.data = data.response?.players[0];
+    if (!req.data) throw new Error("Player not found");
   } catch (error) {
     return await next({ status: 404 });
   }

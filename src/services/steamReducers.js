@@ -7,9 +7,8 @@ export const communityProfileReducer = (state, data) => {
     avatar: data.avatarfull,
     url: data.profileurl,
     isPrivate: Number(data.communityvisibilitystate) < 3,
-
-  }
-}
+  };
+};
 
 export const playerBansReducer = (state, data) => {
   return data;
