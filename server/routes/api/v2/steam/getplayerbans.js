@@ -12,34 +12,40 @@ const fetchBans = async (steamids) => {
   return data.players.filter(({ VACBanned }) => VACBanned === true).length;
 };
 
+const fetchFriends = async (steamid) => {
+  const { data } = await steamInstance.get(
+    "/ISteamUser/GetFriendList/v0001/",
+    {
+      params: {
+        relationship: "friend",
+        steamid: steamid,
+      },
+    }
+  );
+
+  return data.friendslist.friends;
+
+}
+
 const getPlayerBans = async (req, res, next) => {
   if (req.data) return await next();
 
   let friends = [];
   try {
-    const { data } = await steamInstance.get(
-      "/ISteamUser/GetFriendList/v0001/",
-      {
-        params: {
-          relationship: "friend",
-          steamid: req.params.id,
-        },
-      }
-    );
-
-    friends = data.friendslist.friends;
+    friends = await fetchFriends(req.params.id);
+    console.log("here")
 
     req.data = {
-      userVacBanned: await fetchBans(req.params.id),
+      // userVacBanned: await fetchBans(req.params.id),
       friendCount: friends.length,
       friendBanned: 0,
     };
 
-    while (friends.length > 0) {
-      const friendsSlice = friends.splice(-100);
-      const friendsString = friendsSlice.map((f) => f.steamid).join("-");
-      req.data.friendBanned += await fetchBans(friendsString);
-    }
+    // while (friends.length > 0) {
+    //   const friendsSlice = friends.splice(-100);
+    //   const friendsString = friendsSlice.map((f) => f.steamid).join("-");
+    //   req.data.friendBanned += await fetchBans(friendsString);
+    // }
   } catch (error) {
     return await next({ status: 404 });
   }

@@ -8,7 +8,7 @@ const getUserStatsForGame = async (req, res, next) => {
   if (req.data) return await next();
 
   try {
-    const steamRes = await steamInstance.get(
+    const { data } = await steamInstance.get(
       "/ISteamUserStats/GetUserStatsForGame/v0002/",
       {
         params: {
@@ -18,7 +18,7 @@ const getUserStatsForGame = async (req, res, next) => {
       }
     );
 
-    req.data = steamRes.data.playerstats;
+    req.data = data.playerstats;
   } catch (error) {
     return await next({ status: 404 });
   }

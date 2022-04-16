@@ -8,7 +8,7 @@ const getRecentlyPlayedGames = async (req, res, next) => {
   if (req.data) return await next();
 
   try {
-    const steamRes = await steamInstance.get(
+    const { data } = await steamInstance.get(
       "/IPlayerService/GetRecentlyPlayedGames/v0001/",
       {
         params: {
@@ -17,11 +17,12 @@ const getRecentlyPlayedGames = async (req, res, next) => {
         },
       }
     );
-    if (!steamRes.data.response.total_count) {
-      throw new Error("No recently played game or profile private.");
-    }
+    const games = data.response?.games || []
+    req.data = games.find(({ appid }) => appid === 730);
 
-    req.data = steamRes.data.response;
+    if (!req.data) {
+      throw new Error("CSGO not played recently");
+    }
   } catch (error) {
     return await next({ status: 404 });
   }

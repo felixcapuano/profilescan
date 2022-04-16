@@ -17,3 +17,10 @@
 {"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Parigo017"}}
 {"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayersummaries/76561197960301489"}}
 {"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayersummaries/76561197960301000"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getsteamid/Nyouz"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getrecentlyplayedgames/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getrecentlyplayedgames/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getuserstatsforgame/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayerbans/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayerbans/76561198069504185"}}
+{"level":"info","message":{"cached":false,"url":"/api/v2/steam/getplayerbans/76561198069504185"}}
