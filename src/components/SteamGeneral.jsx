@@ -9,57 +9,60 @@ const SteamGeneral = ({
   achievements = {},
   steamStats = {},
 }) => {
+  if (
+    !playerBans ||
+    !recentlyPlayedGames ||
+    !steamProfile ||
+    !achievements ||
+    !steamStats
+  )
+    return null;
+
   const timePlay = seconds_to_hours(steamStats.timePlayed);
   const timePlayL2W = minutes_to_hours(
     recentlyPlayedGames.minutesPlayedLast2Weeks
   );
 
+  console.log(steamProfile);
   const data = [
     {
       key: "Account status",
-      value: steamProfile.isPrivate ? "Private" : "Public",
-      hidden: false,
+      value: steamProfile.isPrivate,
     },
     {
       key: "VAC Ban",
-      value: playerBans.userVacBanned ? "Yes" : "No",
-      hidden: steamProfile.isPrivate,
+      value: playerBans.isVacBan,
     },
     {
       key: "Created",
-      value: steamProfile ? moment(steamProfile.created * 1000).fromNow() : "",
-      hidden: steamProfile.isPrivate,
+      value: moment(steamProfile.created).fromNow(),
     },
-    {
-      key: "Start playing CSGO",
-      // value: achievements.first?.unlocktime
-      //   ? moment(achievements.first?.unlocktime * 1000).fromNow()
-      //   : "",
-      value: 0,
-      hidden: steamProfile.isPrivate,
-    },
+    // {
+    //   key: "Start playing CSGO",
+    //   value: achievements.first?.unlocktime
+    //     ? moment(achievements.first?.unlocktime * 1000).fromNow()
+    //     : "",
+    //   value: 0,
+    // },
     {
       key: "Friends",
       value: `${playerBans.friendCount} (${playerBans.friendBanned} banned)`,
-      hidden: steamProfile.isPrivate,
     },
     {
       key: "Time played",
       value: `${timePlay} hours (${timePlayL2W}h last 2 weeks)`,
-      hidden: steamProfile.isPrivate,
     },
     {
       key: "Achievements",
       value: `${achievements.hacked ? "Hacked" : "Not Hacked"} (${
         achievements.completed
       }/167)`,
-      hidden: steamProfile.isPrivate,
     },
   ];
 
   const renderMainInfo = ({ key = "", value = "", hidden }) => {
     return (
-      <tr key={`${key}${value}`} hidden={hidden}>
+      <tr key={`${key}${value}`}>
         {/* <div className="row pb-3">
           <div className="col-sm-3">
             <h6 className="mb-0">{key}</h6>

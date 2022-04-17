@@ -1,17 +1,22 @@
+import moment from "moment";
+
 export const communityProfileReducer = (state, data) => {
   return {
-    // vacBanned: Number(data.vacBanned), created: data.timecreated,
     id: data.steamid,
     nickname: data.personaname,
     location: data.loccountrycode,
     avatar: data.avatarfull,
     url: data.profileurl,
-    isPrivate: Number(data.communityvisibilitystate) < 3,
+    created: data.timecreated * 1000,
+    isPrivate: Number(data.communityvisibilitystate) < 3 ? "private" : "public",
   };
 };
 
 export const playerBansReducer = (state, data) => {
-  return data;
+  return {
+    ...data,
+    isVacBan: data.userVacBanned ? "yes" : "no",
+  }
 };
 
 export const recentlyPlayedGamesReducer = (state, data) => ({
@@ -37,7 +42,6 @@ export const friendsListReducer = (state, data) => ({
 
 export const userStatsForGameReducer = (state, data) => {
   return {
-    timePlayed: data.stats.filter((s) => s.name === "total_time_played")[0]
-      .value,
+    timePlayed: data.stats.find((s) => s.name === "total_time_played").value,
   };
 };
