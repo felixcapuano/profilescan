@@ -14,9 +14,9 @@ export const playerBansReducer = (state, data) => {
   return data;
 };
 
-export const recentlyPlayedGamesReducer = (state, { games }) => ({
-  minutesPlayed: games[0].playtime_forever,
-  minutesPlayedLast2Weeks: games[0].playtime_2weeks,
+export const recentlyPlayedGamesReducer = (state, data) => ({
+  minutesPlayed: data.playtime_forever,
+  minutesPlayedLast2Weeks: data.playtime_2weeks,
 });
 
 export const playerAchievementsReducer = (state, { achievements }) => {

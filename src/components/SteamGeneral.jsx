@@ -32,9 +32,10 @@ const SteamGeneral = ({
     },
     {
       key: "Start playing CSGO",
-      value: achievements.first?.unlocktime
-        ? moment(achievements.first?.unlocktime * 1000).fromNow()
-        : "",
+      // value: achievements.first?.unlocktime
+      //   ? moment(achievements.first?.unlocktime * 1000).fromNow()
+      //   : "",
+      value: 0,
       hidden: steamProfile.isPrivate,
     },
     {

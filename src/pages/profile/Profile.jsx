@@ -33,7 +33,13 @@ const Profile = () => {
     case 2: // id not found
       return (
         <div className="text-center fs-1 text-muted p-5 m-5">
-          🤷‍♀️ USER NOT FOUND 🤷‍♂️
+          <span role="img" aria-label="?">
+            🤷
+          </span>
+          USER NOT FOUND
+          <span role="img" aria-label="?">
+            🤷
+          </span>
         </div>
       );
 
