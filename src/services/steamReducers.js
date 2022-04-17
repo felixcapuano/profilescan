@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export const communityProfileReducer = (state, data) => {
   return {
     id: data.steamid,
@@ -29,7 +27,7 @@ export const playerAchievementsReducer = (state, { achievements }) => {
     completed: achievements.filter((el) => el.achieved === 1).length,
     hacked: achievements.every(
       (el) => el.unlocktime === achievements[0].unlocktime
-    ),
+    ) ? "Hacked" : "Not Hacked",
     first: achievements.reduce((p, c) =>
       p.unlocktime < c.unlocktime && !c.achieved ? p : c
     ),

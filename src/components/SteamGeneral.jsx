@@ -23,7 +23,6 @@ const SteamGeneral = ({
     recentlyPlayedGames.minutesPlayedLast2Weeks
   );
 
-  console.log(steamProfile);
   const data = [
     {
       key: "Account status",
@@ -54,21 +53,13 @@ const SteamGeneral = ({
     },
     {
       key: "Achievements",
-      value: `${achievements.hacked ? "Hacked" : "Not Hacked"} (${
-        achievements.completed
-      }/167)`,
+      value: `${achievements.hacked} (${achievements.completed}/167)`,
     },
   ];
 
   const renderMainInfo = ({ key = "", value = "", hidden }) => {
     return (
       <tr key={`${key}${value}`}>
-        {/* <div className="row pb-3">
-          <div className="col-sm-3">
-            <h6 className="mb-0">{key}</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">{value}</div>
-        </div> */}
         <td>{key}</td>
         <td>{value}</td>
       </tr>
