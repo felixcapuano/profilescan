@@ -30,26 +30,36 @@ const fetchFriends = async (steamid) => {
 const getPlayerBans = async (req, res, next) => {
   if (req.data) return await next();
 
+  req.data = {
+    userVacBanned: "private",
+  };
+
+  try {
+    req.data.userVacBanned = await fetchBans(req.params.id);
+  } catch (error) {
+    return await next({ status: 404 })
+  }
+
+
   let friends = [];
   try {
     friends = await fetchFriends(req.params.id);
-    console.log("here")
-
-    req.data = {
-      // userVacBanned: await fetchBans(req.params.id),
-      friendCount: friends.length,
-      friendBanned: 0,
-    };
-
-    // while (friends.length > 0) {
-    //   const friendsSlice = friends.splice(-100);
-    //   const friendsString = friendsSlice.map((f) => f.steamid).join("-");
-    //   req.data.friendBanned += await fetchBans(friendsString);
-    // }
-  } catch (error) {
-    return await next({ status: 404 });
+    req.data.friendCount = friends.length;
+  }
+  catch (error) {
+    return await next();
   }
 
+  try {
+    let banCount = 0;
+    while (friends.length > 0) {
+      const friendsStr = friends.splice(-100).map((f) => f.steamid).join("-");
+      banCount += await fetchBans(friendsStr);
+    }
+    req.data.friendBanned = banCount;
+  } catch (error) {
+    return await next();
+  }
   return await next();
 };
 
