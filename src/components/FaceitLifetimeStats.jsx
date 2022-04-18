@@ -1,7 +1,7 @@
 import React from "react";
 import FaceitLvlIcon from "./FaceitLvlIcon";
 
-const FaceitLifetimeCard = ({ faceitStats = {}, faceitProfile = {} }) => {
+const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
   if (!faceitStats.lifetime || !faceitProfile.elo) return null;
   const stats = faceitStats.lifetime || {};
 
@@ -72,4 +72,4 @@ const FaceitLifetimeCard = ({ faceitStats = {}, faceitProfile = {} }) => {
   );
 };
 
-export default FaceitLifetimeCard;
+export default FaceitLifetimeStats;

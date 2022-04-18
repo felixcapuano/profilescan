@@ -13,11 +13,12 @@ import {
   userStatsForGameReducer,
 } from "../services/steamReducers";
 
-import FaceitLifetimeCard from "./FaceitLifetimeCard";
-import SteamGeneralCard from "./SteamGeneralCard";
-import FaceitMapsCard from "./FaceitMapsCard";
-import IdProfileCard from "./IdProfileCard";
-import ProfileSpinner from "./ProfileSpinner";
+import FaceitLifetimeStats from "./FaceitLifetimeStats";
+import SteamStats from "./SteamStats";
+import FaceitMapsStats from "./FaceitMapsStats";
+import GeneralProfile from "./GeneralProfile";
+import ProfileCard from "./ProfileCard";
+// import ProfileSpinner from "./ProfileSpinner";
 // import FaceitCurrent from "./FaceitCurrent";
 
 const PlayerProfile = ({ steamId }) => {
@@ -65,39 +66,32 @@ const PlayerProfile = ({ steamId }) => {
       .catch(console.error);
   }, [steamId]);
 
-  if (
-    !steamProfile ||
-    !faceitProfile ||
-    !playerBans ||
-    !faceitStats ||
-    !achievements ||
-    !recentlyPlayedGames
-  ) {
-    return <ProfileSpinner />;
-  }
-
   return (
     <div className="Profile container p-3">
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
-          <IdProfileCard
-            steamProfile={steamProfile}
-            faceitProfile={faceitProfile}
-          />
+          <ProfileCard>
+            <GeneralProfile
+              steamProfile={steamProfile}
+              faceitProfile={faceitProfile}
+            />
+          </ProfileCard>
         </div>
         <div className="col-md-9 mb-3">
-          <SteamGeneralCard
-            recentlyPlayedGames={recentlyPlayedGames}
-            steamProfile={steamProfile}
-            achievements={achievements}
-            steamStats={steamStats}
-            playerBans={playerBans}
-          />
+          <ProfileCard>
+            <SteamStats
+              recentlyPlayedGames={recentlyPlayedGames}
+              steamProfile={steamProfile}
+              achievements={achievements}
+              steamStats={steamStats}
+              playerBans={playerBans}
+            />
+          </ProfileCard>
         </div>
       </div>
       <div className="row gutters-sm">
         <div className="col-sm-12 mb-3">
-          <FaceitLifetimeCard
+          <FaceitLifetimeStats
             faceitStats={faceitStats}
             faceitProfile={faceitProfile}
           />
@@ -106,7 +100,7 @@ const PlayerProfile = ({ steamId }) => {
       {/* <FaceitCurrent faceitHistory={faceitHistory} /> */}
       <div className="row gutters-sm">
         <div className="col-lg-8 offset-lg-2 mb-3">
-          <FaceitMapsCard faceitStats={faceitStats} />
+          <FaceitMapsStats faceitStats={faceitStats} />
         </div>
       </div>
     </div>

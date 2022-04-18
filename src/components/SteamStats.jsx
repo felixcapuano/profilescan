@@ -3,7 +3,7 @@ import moment from "moment";
 import { minutes_to_hours, seconds_to_hours } from "../services/utils";
 import ProfileCard from "./ProfileCard";
 
-const SteamGeneralCard = ({
+const SteamStats = ({
   playerBans = {},
   recentlyPlayedGames = {},
   steamProfile = {},
@@ -68,12 +68,10 @@ const SteamGeneralCard = ({
   };
 
   return (
-    <ProfileCard>
-      <table className="table">
-        <tbody>{data.map(renderMainInfo)}</tbody>
-      </table>
-    </ProfileCard>
+    <table className="table">
+      <tbody>{data.map(renderMainInfo)}</tbody>
+    </table>
   );
 };
 
-export default SteamGeneralCard;
+export default SteamStats;
