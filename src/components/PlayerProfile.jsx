@@ -12,135 +12,81 @@ import {
   recentlyPlayedGamesReducer,
   userStatsForGameReducer,
 } from "../services/steamReducers";
-import FaceitLifetime from "./FaceitLifetime";
-import SteamGeneral from "./SteamGeneral";
+
+import FaceitLifetimeCard from "./FaceitLifetimeCard";
+import SteamGeneralCard from "./SteamGeneralCard";
+import FaceitMapsCard from "./FaceitMapsCard";
+import IdProfileCard from "./IdProfileCard";
+import ProfileSpinner from "./ProfileSpinner";
 // import FaceitCurrent from "./FaceitCurrent";
-import FaceitMaps from "./FaceitMaps";
-import IdProfile from "./IdProfile";
 
 const PlayerProfile = ({ steamId }) => {
-  const [steamProfile, setSteamProfile] = useReducer(
-    communityProfileReducer,
-    {}
-  );
+  const [steamProfile, setSteamProfile] = useReducer(communityProfileReducer);
   const [recentlyPlayedGames, setRecentlyPlayedGames] = useReducer(
-    recentlyPlayedGamesReducer,
-    {}
+    recentlyPlayedGamesReducer
   );
-  const [achievements, setAchievements] = useReducer(
-    playerAchievementsReducer,
-    {}
-  );
-  const [faceitProfile, setFaceitProfile] = useReducer(
-    faceitProfileReducer,
-    {}
-  );
-  // const [faceitHistory, setFaceitHistory] = useReducer(
-  //   faceitHistoryReducer,
-  //   {}
-  // );
-  const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer, {});
-  const [steamStats, setSteamStats] = useReducer(userStatsForGameReducer, {});
-  const [playerBans, setPlayerBans] = useReducer(playerBansReducer, {});
+  const [achievements, setAchievements] = useReducer(playerAchievementsReducer);
+  const [faceitProfile, setFaceitProfile] = useReducer(faceitProfileReducer);
+  // const [faceitHistory, setFaceitHistory] = useReducer(faceitHistoryReducer);
+  const [faceitStats, setFaceitStats] = useReducer(faceitStatsReducer);
+  const [steamStats, setSteamStats] = useReducer(userStatsForGameReducer);
+  const [playerBans, setPlayerBans] = useReducer(playerBansReducer);
 
   React.useEffect(() => {
-    // STEAM
-    const getSteamProfile = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getplayersummaries/${steamId}`
-        );
-        setSteamProfile(data);
-      } catch (e) {}
-    };
-    const getAchievements = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getplayerachievements/${steamId}`
-        );
-        setAchievements(data);
-      } catch (e) {}
-    };
-    const getRecentlyPlayedGames = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getrecentlyplayedgames/${steamId}`
-        );
-        setRecentlyPlayedGames(data);
-      } catch (e) {}
-    };
-    const getSteamStats = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getuserstatsforgame/${steamId}`
-        );
-        setSteamStats(data);
-      } catch (e) {}
-    };
-    const getPlayerBans = async () => {
-      try {
-        const { data } = await apiInstance(
-          `/api/v2/steam/getplayerbans/${steamId}`
-        );
-        setPlayerBans(data);
-      } catch (e) {}
-    };
-    // FACEIT
-    const getFaceitProfile = () => {
-      return new Promise(async (resolve, reject) => {
-        try {
-          const { data } = await apiInstance(
-            `/api/v2/faceit/players/${steamId}`
-          );
-          setFaceitProfile(data);
-          resolve(data.player_id);
-        } catch (e) {
-          reject();
-        }
-      });
-    };
-    const getFaceitStats = async (faceitId) => {
-      try {
-        const { data } = await apiInstance(`/api/v2/faceit/stats/${faceitId}`);
-        setFaceitStats(data);
-      } catch (e) {}
-    };
-    // const getFaceitHistory = async (faceitId) => {
-    //   try {
-    //     const { data } = await apiInstance(
-    //       `/api/v2/faceit/history/${faceitId}`
-    //     );
-    //     setFaceitHistory(data);
-    //   } catch (e) {}
-    // };
-
     if (!steamId) return;
 
-    getSteamProfile();
-    getRecentlyPlayedGames();
-    getAchievements();
-    getSteamStats();
-    getPlayerBans();
+    apiInstance(`/api/v2/steam/getuserstatsforgame/${steamId}`)
+      .then(({ data }) => setSteamStats(data))
+      .catch(console.error);
 
-    getFaceitProfile()
-      .then((faceitId) => {
-        getFaceitStats(faceitId);
-        // getFaceitHistory(faceitId);
+    apiInstance(`/steam/getplayersummaries/${steamId}`)
+      .then(({ data }) => setSteamProfile(data))
+      .catch(console.error);
+
+    apiInstance(`/steam/getrecentlyplayedgames/${steamId}`)
+      .then(({ data }) => setRecentlyPlayedGames(data))
+      .catch(console.error);
+
+    apiInstance(`/steam/getplayerachievements/${steamId}`)
+      .then(({ data }) => setAchievements(data))
+      .catch(console.error);
+
+    apiInstance(`/steam/getplayerbans/${steamId}`)
+      .then(({ data }) => setPlayerBans(data))
+      .catch(console.error);
+
+    apiInstance(`/faceit/players/${steamId}`)
+      .then(({ data }) => {
+        setFaceitProfile(data);
+        apiInstance(`/faceit/stats/${data.player_id}`)
+          .then(({ data }) => setFaceitStats(data))
+          .catch(console.error);
       })
-      .catch((e) => console.warn("No faceit profile found!"));
+      .catch(console.error);
   }, [steamId]);
+
+  if (
+    !steamProfile ||
+    !faceitProfile ||
+    !playerBans ||
+    !faceitStats ||
+    !achievements ||
+    !recentlyPlayedGames
+  ) {
+    return <ProfileSpinner />;
+  }
 
   return (
     <div className="Profile container p-3">
       <div className="row gutters-sm">
         <div className="col-md-3 mb-3">
-          <IdProfile
+          <IdProfileCard
             steamProfile={steamProfile}
             faceitProfile={faceitProfile}
           />
         </div>
         <div className="col-md-9 mb-3">
-          <SteamGeneral
+          <SteamGeneralCard
             recentlyPlayedGames={recentlyPlayedGames}
             steamProfile={steamProfile}
             achievements={achievements}
@@ -151,7 +97,7 @@ const PlayerProfile = ({ steamId }) => {
       </div>
       <div className="row gutters-sm">
         <div className="col-sm-12 mb-3">
-          <FaceitLifetime
+          <FaceitLifetimeCard
             faceitStats={faceitStats}
             faceitProfile={faceitProfile}
           />
@@ -160,7 +106,7 @@ const PlayerProfile = ({ steamId }) => {
       {/* <FaceitCurrent faceitHistory={faceitHistory} /> */}
       <div className="row gutters-sm">
         <div className="col-lg-8 offset-lg-2 mb-3">
-          <FaceitMaps faceitStats={faceitStats} />
+          <FaceitMapsCard faceitStats={faceitStats} />
         </div>
       </div>
     </div>

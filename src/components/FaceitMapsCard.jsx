@@ -13,7 +13,7 @@ const mapMapping = {
   de_cbble: "Cobblestone",
 };
 
-const FaceitMaps = ({ faceitStats }) => {
+const FaceitMapsCard = ({ faceitStats }) => {
   if (!faceitStats.maps) return null;
 
   const maps = faceitStats.maps.sort(
@@ -66,4 +66,4 @@ const FaceitMaps = ({ faceitStats }) => {
   );
 };
 
-export default FaceitMaps;
+export default FaceitMapsCard;

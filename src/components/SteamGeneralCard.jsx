@@ -1,8 +1,9 @@
 import React from "react";
 import moment from "moment";
 import { minutes_to_hours, seconds_to_hours } from "../services/utils";
+import ProfileCard from "./ProfileCard";
 
-const SteamGeneral = ({
+const SteamGeneralCard = ({
   playerBans = {},
   recentlyPlayedGames = {},
   steamProfile = {},
@@ -67,14 +68,12 @@ const SteamGeneral = ({
   };
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <table className="table">
-          <tbody>{data.map(renderMainInfo)}</tbody>
-        </table>
-      </div>
-    </div>
+    <ProfileCard>
+      <table className="table">
+        <tbody>{data.map(renderMainInfo)}</tbody>
+      </table>
+    </ProfileCard>
   );
 };
 
-export default SteamGeneral;
+export default SteamGeneralCard;

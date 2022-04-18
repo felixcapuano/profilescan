@@ -4,11 +4,7 @@ import { ReactComponent as SteamLogo } from "../assets/icons/steamLogo.svg";
 import { ReactComponent as FaceitLogo } from "../assets/icons/faceitLogo.svg";
 // import notFoundImg from "../assets/images/notFoundProfilePict.png";
 
-const profilePictStyle = {
-  minHeight: "25vh",
-};
-
-const IdProfile = ({ steamProfile, faceitProfile }) => {
+const IdProfileCard = ({ steamProfile, faceitProfile }) => {
   const CircularButton = ({ children, link, tooltips }) => {
     return (
       <a href={link}>
@@ -27,10 +23,7 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
   const ProfileImg = () => {
     return (
       // <div className="d-flex justify-content-center align-items-center h-50 w-100 rounded-circle bg-dark">
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={profilePictStyle}
-      >
+      <div className="d-flex justify-content-center align-items-center">
         <img
           className="rounded-circle"
           src={steamProfile.avatar}
@@ -81,4 +74,4 @@ const IdProfile = ({ steamProfile, faceitProfile }) => {
   );
 };
 
-export default IdProfile;
+export default IdProfileCard;

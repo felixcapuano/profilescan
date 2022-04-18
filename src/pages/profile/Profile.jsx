@@ -12,9 +12,8 @@ const Profile = () => {
     if (!rawId) return setSteamId({ status: 2, id: "" });
 
     if (!isValidSteamId(rawId)) {
-      apiInstance(`/api/v2/steam/getsteamid/${rawId}`)
+      apiInstance(`/steam/getsteamid/${rawId}`)
         .then(({ data }) => {
-          console.log(data);
           setSteamId({ status: 1, id: data.steamid });
         })
         .catch((e) => {
