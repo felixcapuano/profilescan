@@ -2,7 +2,7 @@ import React from "react";
 import FaceitLvlIcon from "./FaceitLvlIcon";
 
 const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
-  if (!faceitStats.lifetime || !faceitProfile.elo) return null;
+  if (!faceitStats || !faceitProfile) return null;
   const stats = faceitStats.lifetime || {};
 
   const profileData = [

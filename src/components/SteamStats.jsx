@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import { minutes_to_hours, seconds_to_hours } from "../services/utils";
-import ProfileCard from "./ProfileCard";
 
 const SteamStats = ({
   playerBans = {},

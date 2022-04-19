@@ -1,14 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ReactComponent as SteamLogo } from "../assets/icons/steamLogo.svg";
 import { ReactComponent as FaceitLogo } from "../assets/icons/faceitLogo.svg";
-import { CardContext } from "../contexts";
 // import notFoundImg from "../assets/images/notFoundProfilePict.png";
 
 const GeneralProfile = ({ steamProfile, faceitProfile }) => {
-  const { loaded, setLoaded } = useContext(CardContext);
-
   if (!steamProfile || !faceitProfile) {
-    setLoaded(true);
     return null;
   }
 
