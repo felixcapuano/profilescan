@@ -1,5 +1,6 @@
 const supertest = require("supertest");
 const app = require("../server/entrypoint");
+const logger = require("../server/logging");
 const { client } = require("../server/routes/api/v2/instance/redis");
 require("chai").should();
 
@@ -15,6 +16,9 @@ before(async () => {
 });
 
 beforeEach(async () => {
+  logger.clear();
+
+
   console.log = (msg) => {
     output = "";
     console.log = (msg) => {

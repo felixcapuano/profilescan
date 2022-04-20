@@ -7,12 +7,13 @@ const logger = createLogger({
     format.timestamp(),
     format.colorize(),
     format.printf((info) => {
-      let log = `${info.level} ${info.timestamp}  GET ${info.message.url}`
+      let log = `${info.level} ${info.timestamp}  GET ${info.message.url}`;
       if (info.level.includes("info")) {
-        log += ` cached=${info.message.cached}`
+        log += ` cached=${info.message.cached}`;
       }
-      return log
-    })),
+      return log;
+    })
+  ),
   transports: [new transports.Console({ level: "info" })],
 });
 
