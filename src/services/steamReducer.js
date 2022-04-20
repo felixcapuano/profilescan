@@ -14,16 +14,18 @@ const steamReducer = {
   playerBansReducer: (state, data) => {
     return {
       ...state,
-      friendBanned: data.friendBanned,
-      friendCount: data.friendCount,
+      friendBanned: data.friendBanned || "private",
+      friendCount: data.friendCount || "private",
       isVacBan: data.userVacBanned ? "yes" : "no",
     }
   },
-  recentlyPlayedGamesReducer: (state, data) => ({
-    ...state,
-    minutesPlayed: data.playtime_forever,
-    minutesPlayedLast2Weeks: data.playtime_2weeks,
-  }),
+  recentlyPlayedGamesReducer: (state, data) => {
+    return {
+      ...state,
+      minutesPlayed: data.playtime_forever,
+      minutesPlayedLast2Weeks: data.playtime_2weeks,
+    }
+  },
   playerAchievementsReducer: (state, { achievements }) => {
     return {
       ...state,

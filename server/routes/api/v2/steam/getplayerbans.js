@@ -30,9 +30,7 @@ const fetchFriends = async (steamid) => {
 const getPlayerBans = async (req, res, next) => {
   if (req.data) return await next();
 
-  req.data = {
-    userVacBanned: "private",
-  };
+  req.data = {};
 
   try {
     req.data.userVacBanned = await fetchBans(req.params.id);

@@ -14,8 +14,8 @@ const steamDefault = {
     isVacBan: "undefined",
   },
   recentlyPlayedGamesDefault: {
-    minutesPlayed: -1,
-    minutesPlayedLast2Weeks: -1,
+    minutesPlayed: 0,
+    minutesPlayedLast2Weeks: 0,
   },
   playerAchievementsDefault: {
     completed: -1,
