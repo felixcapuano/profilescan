@@ -8,7 +8,7 @@ const faceitReducer = {
       nickname: data.nickname,
       url: data.faceit_url.replace("{lang}", "en"),
       id: data.player_id,
-    }
+    };
   },
   faceitHistory: (state, data) => {
     return {
@@ -23,8 +23,6 @@ const faceitReducer = {
       lifetime: data.lifetime,
     };
   },
-}
-
-
+};
 
 export default faceitReducer;

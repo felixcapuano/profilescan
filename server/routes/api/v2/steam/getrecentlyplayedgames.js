@@ -17,7 +17,7 @@ const getRecentlyPlayedGames = async (req, res, next) => {
         },
       }
     );
-    const games = data.response?.games || []
+    const games = data.response?.games || [];
     req.data = games.find(({ appid }) => appid === 730);
 
     if (!req.data) {

@@ -10,7 +10,8 @@ const steamReducer = {
       avatar: data.avatarfull,
       url: data.profileurl,
       created: data.timecreated,
-      isPrivate: Number(data.communityvisibilitystate) < 3 ? "private" : "public",
+      isPrivate:
+        Number(data.communityvisibilitystate) < 3 ? "private" : "public",
     };
   },
   playerBans: (state, data) => {
@@ -19,14 +20,14 @@ const steamReducer = {
       friendCount: data.friendCount || defaults.playerBans.friendCount,
       friendBanned: data.friendBanned || defaults.playerBans.friendBanned,
       isVacBan: data.userVacBanned ? "yes" : "no",
-    }
+    };
   },
   recentlyPlayedGames: (state, data) => {
     return {
       ...state,
       minutesPlayed: data.playtime_forever,
       minutesPlayedLast2Weeks: data.playtime_2weeks,
-    }
+    };
   },
   playerAchievements: (state, { achievements }) => {
     const first = achievements.reduce((p, c) =>
@@ -35,7 +36,9 @@ const steamReducer = {
 
     const hacked = achievements.every(
       (el) => el.unlocktime === achievements[0].unlocktime
-    ) ? "Hacked" : "Not Hacked"
+    )
+      ? "Hacked"
+      : "Not Hacked";
 
     const completed = achievements.filter((el) => el.achieved === 1).length;
 
@@ -51,6 +54,6 @@ const steamReducer = {
       timePlayed: data.stats.find((s) => s.name === "total_time_played").value,
     };
   },
-}
+};
 
 export default steamReducer;

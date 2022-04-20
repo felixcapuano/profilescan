@@ -17,7 +17,8 @@ export const isValidSteamId = (id) => {
 };
 
 export const getIdFromPathname = (pathname) => {
-  const regex = /^\/(?:id|profiles)\/([A-z0-9[^\-\]_.~!*'();:@&=+$,?%#@"]+)\/?$/;
+  const regex =
+    /^\/(?:id|profiles)\/([A-z0-9[^\-\]_.~!*'();:@&=+$,?%#@"]+)\/?$/;
   const match = pathname.match(regex);
   return match[1] || false;
 };

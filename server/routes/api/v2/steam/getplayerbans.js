@@ -13,19 +13,15 @@ const fetchBans = async (steamids) => {
 };
 
 const fetchFriends = async (steamid) => {
-  const { data } = await steamInstance.get(
-    "/ISteamUser/GetFriendList/v0001/",
-    {
-      params: {
-        relationship: "friend",
-        steamid: steamid,
-      },
-    }
-  );
+  const { data } = await steamInstance.get("/ISteamUser/GetFriendList/v0001/", {
+    params: {
+      relationship: "friend",
+      steamid: steamid,
+    },
+  });
 
   return data.friendslist.friends;
-
-}
+};
 
 const getPlayerBans = async (req, res, next) => {
   if (req.data) return await next();
@@ -35,23 +31,24 @@ const getPlayerBans = async (req, res, next) => {
   try {
     req.data.userVacBanned = await fetchBans(req.params.id);
   } catch (error) {
-    return await next({ status: 404 })
+    return await next({ status: 404 });
   }
-
 
   let friends = [];
   try {
     friends = await fetchFriends(req.params.id);
     req.data.friendCount = friends.length;
-  }
-  catch (error) {
+  } catch (error) {
     return await next();
   }
 
   try {
     let banCount = 0;
     while (friends.length > 0) {
-      const friendsStr = friends.splice(-100).map((f) => f.steamid).join("-");
+      const friendsStr = friends
+        .splice(-100)
+        .map((f) => f.steamid)
+        .join("-");
       banCount += await fetchBans(friendsStr);
     }
     req.data.friendBanned = banCount;
