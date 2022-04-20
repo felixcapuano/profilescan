@@ -37,7 +37,7 @@ before(async () => {
 beforeEach(async () => {
   logger.clear();
   logger.add(new winston.transports.Stream({
-    stream: fs.createWriteStream('/nul')
+    stream: fs.createWriteStream('/dev/null')
   }));
 
   // console.log = (msg) => {
