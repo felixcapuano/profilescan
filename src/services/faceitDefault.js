@@ -1,15 +1,15 @@
 const faceitDefault = {
-  faceitProfileDefault: {
+  faceitProfile: {
     elo: -1,
     level: -1,
     nickname: "username",
     url: "https://faceit.com",
     id: "undefined",
   },
-  faceitHistoryDefault: {
+  faceitHistory: {
     matches: [],
   },
-  faceitStatsDefault: {
+  faceitStats: {
     maps: [],
     lifetime: {
       "Average K/D Ratio": 0,

@@ -4,10 +4,6 @@ import { ReactComponent as FaceitLogo } from "../assets/icons/faceitLogo.svg";
 // import notFoundImg from "../assets/images/notFoundProfilePict.png";
 
 const GeneralProfile = ({ steamProfile, faceitProfile }) => {
-  if (!steamProfile || !faceitProfile) {
-    return null;
-  }
-
   const CircularButton = ({ children, link, tooltips }) => {
     return (
       <a href={link}>

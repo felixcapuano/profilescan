@@ -1,5 +1,7 @@
+import defaults from "./steamDefault";
+
 const steamReducer = {
-  communityProfileReducer: (state, data) => {
+  communityProfile: (state, data) => {
     return {
       ...state,
       id: data.steamid,
@@ -7,42 +9,43 @@ const steamReducer = {
       location: data.loccountrycode,
       avatar: data.avatarfull,
       url: data.profileurl,
-      created: data.timecreated * 1000,
+      created: data.timecreated,
       isPrivate: Number(data.communityvisibilitystate) < 3 ? "private" : "public",
     };
   },
-  playerBansReducer: (state, data) => {
+  playerBans: (state, data) => {
     return {
       ...state,
-      friendBanned: data.friendBanned || "private",
-      friendCount: data.friendCount || "private",
+      friendCount: data.friendCount || defaults.playerBans.friendCount,
+      friendBanned: data.friendBanned || defaults.playerBans.friendBanned,
       isVacBan: data.userVacBanned ? "yes" : "no",
     }
   },
-  recentlyPlayedGamesReducer: (state, data) => {
+  recentlyPlayedGames: (state, data) => {
     return {
       ...state,
       minutesPlayed: data.playtime_forever,
       minutesPlayedLast2Weeks: data.playtime_2weeks,
     }
   },
-  playerAchievementsReducer: (state, { achievements }) => {
-    return {
-      ...state,
-      completed: achievements.filter((el) => el.achieved === 1).length,
-      hacked: achievements.every(
-        (el) => el.unlocktime === achievements[0].unlocktime
-      ) ? "Hacked" : "Not Hacked",
-      first: achievements.reduce((p, c) =>
-        p.unlocktime < c.unlocktime && !c.achieved ? p : c
-      ),
-    };
+  playerAchievements: (state, { achievements }) => {
+    const first = achievements.reduce((p, c) =>
+      p.unlocktime < c.unlocktime && !c.achieved ? p : c
+    );
+
+    const hacked = achievements.every(
+      (el) => el.unlocktime === achievements[0].unlocktime
+    ) ? "Hacked" : "Not Hacked"
+
+    const completed = achievements.filter((el) => el.achieved === 1).length;
+
+    return { ...state, completed, hacked, first };
   },
-  friendsListReducer: (state, data) => ({
+  friendsList: (state, data) => ({
     ...state,
     count: data.friends.length,
   }),
-  userStatsForGameReducer: (state, data) => {
+  userStatsForGame: (state, data) => {
     return {
       ...state,
       timePlayed: data.stats.find((s) => s.name === "total_time_played").value,

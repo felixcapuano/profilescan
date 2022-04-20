@@ -3,21 +3,12 @@ import moment from "moment";
 import { minutes_to_hours, seconds_to_hours } from "../services/utils";
 
 const SteamStats = ({
-  playerBans = {},
-  recentlyPlayedGames = {},
-  steamProfile = {},
-  achievements = {},
-  steamStats = {},
+  playerBans,
+  recentlyPlayedGames,
+  steamProfile,
+  achievements,
+  steamStats,
 }) => {
-  if (
-    !playerBans ||
-    !recentlyPlayedGames ||
-    !steamProfile ||
-    !achievements ||
-    !steamStats
-  )
-    return null;
-
   const timePlay = seconds_to_hours(steamStats.timePlayed);
   const timePlayL2W = minutes_to_hours(
     recentlyPlayedGames.minutesPlayedLast2Weeks
@@ -34,32 +25,33 @@ const SteamStats = ({
     },
     {
       key: "Created",
-      value: moment(steamProfile.created).fromNow(),
+      value: moment.unix(steamProfile.created).fromNow(),
     },
-    // {
-    //   key: "Start playing CSGO",
-    //   value: achievements.first?.unlocktime
-    //     ? moment(achievements.first?.unlocktime * 1000).fromNow()
-    //     : "",
-    //   value: 0,
-    // },
+    {
+      key: "Start playing CSGO",
+      value: moment.unix(achievements.first.unlocktime).fromNow(),
+      hidden: achievements.first.unlocktime === -1,
+    },
     {
       key: "Friends",
       value: `${playerBans.friendCount} (${playerBans.friendBanned} banned)`,
+      hidden: playerBans.friendCount < 0,
     },
     {
       key: "Time played",
       value: `${timePlay} hours (${timePlayL2W}h last 2 weeks)`,
+      hidden: timePlay < 0,
     },
     {
       key: "Achievements",
       value: `${achievements.hacked} (${achievements.completed}/167)`,
+      hidden: achievements.hacked === "undefined",
     },
   ];
 
   const renderMainInfo = ({ key = "", value = "", hidden }) => {
     return (
-      <tr key={`${key}${value}`}>
+      <tr key={`${key}${value}`} hidden={hidden}>
         <td>{key}</td>
         <td>{value}</td>
       </tr>

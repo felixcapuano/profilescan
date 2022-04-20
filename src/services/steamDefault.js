@@ -1,5 +1,5 @@
 const steamDefault = {
-  communityProfileDefault: {
+  communityProfile: {
     id: "undefined",
     nickname: "username",
     location: "unknown",
@@ -8,24 +8,28 @@ const steamDefault = {
     created: -1,
     isPrivate: "undefined",
   },
-  playerBansDefault: {
+  playerBans: {
     friendBanned: -1,
     friendCount: -1,
     isVacBan: "undefined",
   },
-  recentlyPlayedGamesDefault: {
+  recentlyPlayedGames: {
     minutesPlayed: 0,
     minutesPlayedLast2Weeks: 0,
   },
-  playerAchievementsDefault: {
+  playerAchievements: {
     completed: -1,
     hacked: "undefined",
-    first: {},
+    first: {
+      achieved: -1,
+      apiname: "UNDEFINED",
+      unlocktime: -1,
+    },
   },
-  friendsListDefault: {
+  friendsList: {
     count: -1,
   },
-  userStatsForGameDefault: {
+  userStatsForGame: {
     timePlayed: -1,
   },
 };

@@ -1,5 +1,5 @@
 const faceitReducer = {
-  faceitProfileReducer: (state, data) => {
+  faceitProfile: (state, data) => {
     if (!data.games.csgo) return state;
     return {
       ...state,
@@ -10,13 +10,13 @@ const faceitReducer = {
       id: data.player_id,
     }
   },
-  faceitHistoryReducer: (state, data) => {
+  faceitHistory: (state, data) => {
     return {
       ...state,
       matches: data.items,
     };
   },
-  faceitStatsReducer: (state, data) => {
+  faceitStats: (state, data) => {
     return {
       ...state,
       maps: data.segments,

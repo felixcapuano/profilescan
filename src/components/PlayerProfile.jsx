@@ -14,33 +14,33 @@ import faceitDefault from "../services/faceitDefault";
 
 const PlayerProfile = ({ steamId }) => {
   const [steamProfile, setSteamProfile] = useReducer(
-    steamReducer.communityProfileReducer,
-    steamDefault.communityProfileDefault
+    steamReducer.communityProfile,
+    steamDefault.communityProfile
   );
   const [recentlyPlayedGames, setRecentlyPlayedGames] = useReducer(
-    steamReducer.recentlyPlayedGamesReducer,
-    steamDefault.recentlyPlayedGamesDefault
+    steamReducer.recentlyPlayedGames,
+    steamDefault.recentlyPlayedGames
   );
   const [achievements, setAchievements] = useReducer(
-    steamReducer.playerAchievementsReducer,
-    steamDefault.playerAchievementsDefault
+    steamReducer.playerAchievements,
+    steamDefault.playerAchievements
   );
   const [steamStats, setSteamStats] = useReducer(
-    steamReducer.userStatsForGameReducer,
-    steamDefault.userStatsForGameDefault
+    steamReducer.userStatsForGame,
+    steamDefault.userStatsForGame
   );
   const [playerBans, setPlayerBans] = useReducer(
-    steamReducer.playerBansReducer,
-    steamDefault.playerBansDefault
+    steamReducer.playerBans,
+    steamDefault.playerBans
   );
   const [faceitProfile, setFaceitProfile] = useReducer(
-    faceitReducer.faceitProfileReducer,
-    faceitDefault.faceitProfileDefault
+    faceitReducer.faceitProfile,
+    faceitDefault.faceitProfile
   );
   // const [faceitHistory, setFaceitHistory] = useReducer(faceitHistoryReducer);
   const [faceitStats, setFaceitStats] = useReducer(
-    faceitReducer.faceitStatsReducer,
-    faceitDefault.faceitStatsDefault
+    faceitReducer.faceitStats,
+    faceitDefault.faceitStats
   );
 
   React.useEffect(() => {
