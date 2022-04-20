@@ -2,8 +2,8 @@ import React from "react";
 import FaceitLvlIcon from "./FaceitLvlIcon";
 
 const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
-  if (!faceitStats || !faceitProfile) return null;
-  const stats = faceitStats.lifetime || {};
+  const stats = faceitStats.lifetime;
+  const isStatsExist = Object.keys(stats).length === 0;
 
   const profileData = [
     { key: "ELO", value: faceitProfile.elo },
@@ -11,22 +11,27 @@ const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
     { key: "Matches", value: stats["Matches"] },
     {
       key: "Winrate",
-      value: Math.round((stats["Wins"] / stats["Matches"]) * 100) + "%",
+      value: Math.round((stats["Wins"] / stats["Matches"]) * 100) || 0 + "%",
     },
-    { key: "Headshots", value: stats["Average Headshots %"] + "%" },
+    {
+      key: "Headshots",
+      value: stats["Average Headshots %"] + "%",
+    },
   ];
 
-  const dataFormatting = ({ key, value }) => {
+  const dataFormatting = ({ key, value, hidden }) => {
     return (
-      <Item value={key} key={key}>
-        <h4 className="d-flex fw-bold text-start">{value}</h4>
-      </Item>
+      <div hidden={hidden}>
+        <Item key={key} value={key}>
+          <h4 className="d-flex fw-bold text-start">{value}</h4>
+        </Item>
+      </div>
     );
   };
 
-  const Item = ({ children, value }) => {
+  const Item = ({ children, value, hidden }) => {
     return (
-      <div className="d-flex flex-column ms-4 me-4">
+      <div className={`d-flex flex-column ms-4 me-4`}>
         <h6 className=" fw-light text-start">{value}</h6>
         {children}
       </div>

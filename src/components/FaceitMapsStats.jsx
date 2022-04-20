@@ -14,7 +14,7 @@ const mapMapping = {
 };
 
 const FaceitMapsStats = ({ faceitStats }) => {
-  if (!faceitStats) return null;
+  if (faceitStats.maps.length === 0) return null;
 
   const maps = faceitStats.maps.sort(
     (a, b) => b.stats["Matches"] - a.stats["Matches"]

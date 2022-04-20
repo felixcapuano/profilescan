@@ -11,7 +11,12 @@ const faceitDefault = {
   },
   faceitStatsDefault: {
     maps: [],
-    lifetime: {}
+    lifetime: {
+      "Average K/D Ratio": 0,
+      "Matches": 0,
+      "Wins": 0,
+      "Average Headshots %": 0,
+    }
   },
 }
 

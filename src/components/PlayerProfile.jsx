@@ -48,35 +48,34 @@ const PlayerProfile = ({ steamId }) => {
 
     apiInstance(`/steam/getplayersummaries/${steamId}`)
       .then(({ data }) => {
-        console.log(data);
         setSteamProfile(data);
       })
-      .catch(console.error);
+      .catch(() => {});
 
     apiInstance(`/steam/getuserstatsforgame/${steamId}`)
       .then(({ data }) => setSteamStats(data))
-      .catch(console.error);
+      .catch(() => {});
 
     apiInstance(`/steam/getrecentlyplayedgames/${steamId}`)
       .then(({ data }) => setRecentlyPlayedGames(data))
-      .catch(console.error);
+      .catch(() => {});
 
     apiInstance(`/steam/getplayerachievements/${steamId}`)
       .then(({ data }) => setAchievements(data))
-      .catch(console.error);
+      .catch(() => {});
 
     apiInstance(`/steam/getplayerbans/${steamId}`)
       .then(({ data }) => setPlayerBans(data))
-      .catch(console.error);
+      .catch(() => {});
 
     apiInstance(`/faceit/players/${steamId}`)
       .then(({ data }) => {
         setFaceitProfile(data);
         apiInstance(`/faceit/stats/${data.player_id}`)
           .then(({ data }) => setFaceitStats(data))
-          .catch(console.error);
+          .catch(() => {});
       })
-      .catch(console.error);
+      .catch(() => {});
   }, [steamId]);
 
   return (
