@@ -3,8 +3,27 @@ const app = require("../server/entrypoint");
 const logger = require("../server/logging");
 const { client } = require("../server/routes/api/v2/instance/redis");
 require("chai").should();
+const winston = require("winston");
+const fs = require("fs");
 
 global.request = supertest(app);
+
+global.constants = {
+  steamId: {
+    correct: "76561198069504185", //mammoth
+    bad: "6561198069504185", //mammoth
+    private: "76561197964163827", //Kenshirio
+    inexistant: "7656000006950418", //mammoth
+  },
+  steamAlias: {
+    correct: "Xnem",
+    bad: "sqdlkflkqsdjflkqdjs",
+  },
+  faceitId: {
+    correct: "87307577-6381-40a5-a7c2-97ba3ec94d55", //mammoth
+    bad: "87307577-6381-40a5-a7c2-97ba3ec94d5", //mammoth
+  },
+};
 
 before(async () => {
   try {
@@ -17,14 +36,16 @@ before(async () => {
 
 beforeEach(async () => {
   logger.clear();
+  logger.add(new winston.transports.Stream({
+    stream: fs.createWriteStream('/nul')
+  }));
 
-
-  console.log = (msg) => {
-    output = "";
-    console.log = (msg) => {
-      output += msg + "\n";
-    };
-  };
+  // console.log = (msg) => {
+  //   output = "";
+  //   console.log = (msg) => {
+  //     output += msg + "\n";
+  //   };
+  // };
 });
 
 after(async () => {
