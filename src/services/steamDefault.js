@@ -2,31 +2,31 @@ const steamDefault = {
   communityProfileDefault: {
     id: "undefined",
     nickname: "username",
-    location: "US",
+    location: "unknown",
     avatar: "undefined",
     url: "https://steamcommunity.com",
-    created: 0,
+    created: -1,
     isPrivate: "undefined",
   },
   playerBansDefault: {
-    friendBanned: 0,
-    friendCount: 0,
-    isVacBan: "no",
+    friendBanned: -1,
+    friendCount: -1,
+    isVacBan: "undefined",
   },
   recentlyPlayedGamesDefault: {
-    minutesPlayed: 0,
-    minutesPlayedLast2Weeks: 0,
+    minutesPlayed: -1,
+    minutesPlayedLast2Weeks: -1,
   },
   playerAchievementsDefault: {
-    completed: 0,
-    hacked: "Not Hacked",
+    completed: -1,
+    hacked: "undefined",
     first: {},
   },
   friendsListDefault: {
-    count: 0,
+    count: -1,
   },
   userStatsForGameDefault: {
-    timePlayed: 0,
+    timePlayed: -1,
   },
 };
 

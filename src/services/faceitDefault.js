@@ -1,7 +1,7 @@
 const faceitDefault = {
   faceitProfileDefault: {
-    elo: 0,
-    level: 0,
+    elo: -1,
+    level: -1,
     nickname: "username",
     url: "https://faceit.com",
     id: "undefined",

@@ -35,7 +35,7 @@ const PlayerProfile = ({ steamId }) => {
   );
   const [faceitProfile, setFaceitProfile] = useReducer(
     faceitReducer.faceitProfileReducer,
-    faceitReducer.faceitProfileDefault
+    faceitDefault.faceitProfileDefault
   );
   // const [faceitHistory, setFaceitHistory] = useReducer(faceitHistoryReducer);
   const [faceitStats, setFaceitStats] = useReducer(

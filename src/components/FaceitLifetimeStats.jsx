@@ -2,8 +2,8 @@ import React from "react";
 import FaceitLvlIcon from "./FaceitLvlIcon";
 
 const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
+  if (faceitProfile.elo < 1) return null;
   const stats = faceitStats.lifetime;
-  const isStatsExist = Object.keys(stats).length === 0;
 
   const profileData = [
     { key: "ELO", value: faceitProfile.elo },
@@ -21,8 +21,8 @@ const FaceitLifetimeStats = ({ faceitStats = {}, faceitProfile = {} }) => {
 
   const dataFormatting = ({ key, value, hidden }) => {
     return (
-      <div hidden={hidden}>
-        <Item key={key} value={key}>
+      <div hidden={hidden} key={key}>
+        <Item value={key}>
           <h4 className="d-flex fw-bold text-start">{value}</h4>
         </Item>
       </div>
