@@ -1,3 +1,4 @@
 [submodule "profilescan-back"]
 	path = profilescan-back
 	url = https://github.com/felixcapuano/profilescan-back
+	branch = main
