@@ -29,7 +29,7 @@
     "dev-front": "cross-env PORT=3001 react-scripts start",
     "dev-back": "cross-env NODE_ENV=development nodemon --ignore ./src/ ./server/entrypoint",
     "start": "node ./server/entrypoint",
-    "build": "cross-env BUILD_PATH='./server/build' react-scripts build",
+    "build": "react-scripts build",
     "test": "cross-env NODE_ENV=test mocha --exit",
     "prettier": "prettier --write ."
   },

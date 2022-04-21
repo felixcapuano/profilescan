@@ -44,7 +44,7 @@ jobs:
       - name: zip package
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r app.zip server node_modules package.json package-lock.json
+          args: zip -qq -r app.zip server build node_modules package.json package-lock.json
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
