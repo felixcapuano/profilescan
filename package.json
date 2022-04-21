@@ -21,7 +21,7 @@
     "dev-back": "cd ./profilescan-back && npm run dev",
     "start": "node ./server/entrypoint",
     "build": "react-scripts build",
-    "test": "cross-env NODE_ENV=test mocha --exit",
+    "test": "cd ./profilescan-back && npm run test",
     "prettier": "prettier --write ."
   },
   "eslintConfig": {

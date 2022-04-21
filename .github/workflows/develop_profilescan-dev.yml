@@ -39,10 +39,10 @@ jobs:
           npm install
 
       - name: Build
-        run: npm run build --if-present
+        run: npm run build
 
-      # - name: Test
-      #   run: npm run test --if-present
+      - name: Test
+        run: npm run test
 
       # - name: zip package
       #   uses: montudor/action-zip@v1
