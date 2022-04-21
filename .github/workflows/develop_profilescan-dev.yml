@@ -46,16 +46,16 @@ jobs:
       - name: Test
         run: npm run test
 
-      # - name: zip package
-      #   uses: montudor/action-zip@v1
-      #   with:
-      #     args: zip -qq -r app.zip server build node_modules package.json package-lock.json
+      - name: zip package
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r app.zip profilescan-back/* build
 
-      # - name: "Deploy to Azure Web App"
-      #   id: deploy-to-webapp
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #     app-name: "profilescan-dev"
-      #     slot-name: "Production"
-      #     publish-profile: ${{ secrets.AZURE_PUBLISHPROFILE_PROFILESCAN }}
-      #     package: ./app.zip
+      - name: "Deploy to Azure Web App"
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "profilescan-dev"
+          slot-name: "Production"
+          publish-profile: ${{ secrets.AZURE_PUBLISHPROFILE_PROFILESCAN }}
+          package: ./app.zip

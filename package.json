@@ -13,14 +13,14 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.2",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "dev-front": "cross-env PORT=3001 react-scripts start",
     "dev-back": "cd ./profilescan-back && npm run dev",
-    "start": "node ./server/entrypoint",
-    "build": "react-scripts build",
+    "start": "cd ./profilescan-back && npm run start",
+    "build": "cross-env BUILD_PATH='./profilescan-back/public' react-scripts build",
     "test": "cd ./profilescan-back && npm run test",
     "prettier": "prettier --write ."
   },
