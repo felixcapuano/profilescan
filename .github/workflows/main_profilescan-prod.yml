@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - profilescan-dev
+name: Build and deploy Node.js app to Azure Web App - profilescan-prod
 
 on:
   push:
     branches:
-      - main
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -26,22 +26,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
 
-      - name: npm install, build, and test
-        run: |
+      - name: Install
+        run: | 
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          cd profilescan-back
+          npm install
 
-      - name: zip package
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r app.zip server build node_modules package.json package-lock.json
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
@@ -50,4 +53,4 @@ jobs:
           app-name: "profilescan-prod"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZURE_PUBLISHPROFILE_PROFILESCAN }}
-          package: ./app.zip
+          package: ./profilescan-back
