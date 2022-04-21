@@ -17,7 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "cross-env PORT=3001 react-scripts start",
+    "dev-front": "cross-env PORT=3001 react-scripts start",
+    "dev-back": "cd ./profilescan-back && npm run dev",
     "start": "node ./server/entrypoint",
     "build": "react-scripts build",
     "test": "cross-env NODE_ENV=test mocha --exit",

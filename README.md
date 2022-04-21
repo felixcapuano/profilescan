@@ -14,11 +14,22 @@ https://**scan**steamcommunity.com/profiles/76561198069504185/
 
 It will provide you every useful faceit and steam stats of a steam community account.
 
-## Installation
+## Development
+### Installation
 
-### Environment variables
+- *Frontend*
+1. `git clone https://github.com/felixcapuano/profilescan`
+1. `npm install`
 
-Some environments variables a require to start the project. start the project.
+- *Backend*
+1. `git submodule update --init`
+1. `cd profilescan-back`
+1. `npm install`
+1. `npm install -g nodemon` \* require to use next command
+
+### Setup Environment variables
+
+Some environments variables a require in the backend to start the project. start the project.
 
 ```
 PORT=
@@ -32,27 +43,25 @@ REDIS_PASSWORD=
 REDIS_DATABASE=
 ```
 
-You can use this command to create a example .env file.
+You can use this command to create a example .env file in the backend submodule.
+1. `cd profilescan-back`
+1. `cp .env.example .env`
 
-`cp .env.example .env`
+### Start frontend and backend
 
-### Development
+In the root directory :
 
+- frontend : `npm run dev-front`
+- backend : `npm run dev-back`
+
+## Run (Prod)
+1. `git clone https://github.com/felixcapuano/profilescan`
+1. `git submodule update --init`
 1. `npm install`
-
-1. `npm run dev-front`
-
-1. `npm install -g nodemon` \* require to use next command
-
-1. `npm run dev-back`
-
-### Production
-
 1. `npm run test`
-
 1. `npm run build`
-
 1. `npm start`
+
 
 ## License
 
